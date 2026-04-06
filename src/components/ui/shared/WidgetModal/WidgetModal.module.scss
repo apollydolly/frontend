@@ -1,0 +1,64 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 960px;
+  height: 540px;
+  opacity: 1;
+  display: grid;
+  gap: 16px;
+  border-radius: 20px;
+  border: 1px solid $gray_d8;
+  padding: 20px;
+  background: $white;
+  box-shadow: 0px 4px 16px 0px #7d889326;
+  overflow: hidden;
+}
+
+.modalHeader {
+  width: 920px;
+  height: 61px;
+  opacity: 1;
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  .headerText {
+    width: 878px;
+    height: 61px;
+    opacity: 1;
+    gap: 4px;
+    display: grid;
+  }
+
+  h2 {
+    @include RBold_24;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.video {
+  height: 423px;
+  width: 920px;
+  opacity: 1;
+  border-radius: 16.08px;
+  border: 1px solid $gray_d8;
+  background: $gray_f0;
+  overflow: hidden;
+}

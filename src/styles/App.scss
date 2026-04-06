@@ -1,0 +1,45 @@
+@use "base/fonts";
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+* {
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+}
+
+body {
+  width: 1920px;
+  height: 1080px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  transition-property: left, top;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+
+.react-grid-item.resizing {
+  z-index: 1;
+  will-change: width, height;
+}
+
+.react-grid-item.react-draggable-dragging {
+  transition: none;
+  z-index: 3;
+  will-change: transform;
+}

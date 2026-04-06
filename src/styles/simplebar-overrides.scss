@@ -1,0 +1,38 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.simplebar-track {
+  &.simplebar-vertical {
+    width: 24px;
+    opacity: 1 !important; // Ползунок всегда видимый
+    visibility: visible !important;
+  }
+
+  &.simplebar-horisontal {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    height: 0;
+  }
+
+  .simplebar-scrollbar {
+    opacity: 1 !important; // Ползунок всегда видимый
+    visibility: visible !important;
+    &::before {
+      width: 4px;
+      // height: 32px;
+      background: $gray_d8;
+      border-radius: 24px;
+      opacity: 1;
+      left: 1px;
+      right: 9px;
+    }
+
+    &.simplebar-visible::before {
+      opacity: 1;
+    }
+
+    &:hover::before {
+      background: $light_gray;
+    }
+  }
+}

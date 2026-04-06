@@ -1,0 +1,28 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.buttonGray {
+  height: 43px;
+  opacity: 1;
+  gap: 8px;
+  padding-top: 12px;
+  padding-right: 16px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid $light_gray;
+  background: $gray_f0;
+  color: $light_gray;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  @include RMed_16;
+  transition: all 0.2s ease;
+  &:hover:not(:disabled) {
+    background-color: $gray_d8;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

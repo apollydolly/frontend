@@ -1,0 +1,84 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.searchBox {
+  width: 268px;
+  height: 40px;
+  justify-content: space-between;
+  opacity: 1;
+  border-width: 1px;
+  border-radius: 8px;
+  padding-left: 8px;
+  background: $white;
+  border: 1px solid $gray_d8;
+  display: flex;
+  align-items: center;
+
+  &.wide {
+    width: 920px;
+  }
+}
+
+.search {
+  height: 20px;
+  width: 100%;
+  opacity: 1;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  p {
+    @include RReg_14;
+    color: $light_gray;
+  }
+}
+
+.searchInput {
+  @include RReg_14;
+  color: $dark_gray;
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  caret-color: $primary_blue;
+
+  &::placeholder {
+    color: $light_gray;
+  }
+
+  &:focus {
+    &::placeholder {
+      color: transparent;
+    }
+  }
+}
+
+.noResults {
+  padding-left: 24px;
+  p {
+    @include RReg_20;
+    color: $light_gray;
+  }
+}
+
+.filter {
+  width: 48px;
+  height: 40px;
+  opacity: 1;
+  gap: 10px;
+  padding-top: 2px;
+  border-left: 1px solid $gray_d8;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+
+  img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+  }
+  &:hover {
+    img {
+      opacity: 3;
+    }
+  }
+}

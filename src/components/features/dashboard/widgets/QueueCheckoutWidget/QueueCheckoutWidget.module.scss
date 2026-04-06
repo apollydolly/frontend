@@ -1,0 +1,133 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.widgetContent {
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.widgetHeader {
+  height: 50px;
+  gap: 8px;
+  display: flex;
+  opacity: 1;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $gray_f0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  cursor: grab;
+
+  h2 {
+    @include RReg_20;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.widgetBody {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-self: flex-end;
+  align-items: flex-end;
+}
+
+.numPeople {
+  height: 38px;
+  gap: 4px;
+  display: flex;
+  align-items: flex-end;
+
+  h3 {
+    @include RMed_32;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.widgetButton {
+  height: 31px;
+  border-radius: 40px;
+  gap: 8px;
+  display: flex;
+  opacity: 1;
+  padding: 6px 12px;
+  border: none;
+  background: $system_good_10;
+  color: $system_good;
+  animation-timing-function: ease-in-out;
+  animation-duration: 200ms;
+
+  p {
+    @include RReg_16;
+    color: $system_good;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.low {
+    background: $system_good_10;
+    color: $system_good;
+
+    p {
+      color: $system_good;
+    }
+
+    &:hover {
+      background: $system_good_15;
+    }
+  }
+
+  &.medium {
+    background: $light_gray_10;
+    color: $light_gray;
+
+    p {
+      color: $light_gray;
+    }
+
+    &:hover {
+      background: $light_gray_15;
+    }
+  }
+
+  &.high {
+    background: $red_10;
+    color: $red;
+
+    p {
+      color: $red;
+    }
+
+    &:hover {
+      background: $red_15;
+    }
+  }
+
+  &.closed {
+    background: $primary_blue_10;
+    color: $primary_blue;
+
+    p {
+      color: $primary_blue;
+    }
+
+    &:hover {
+      background: $primary_blue_15;
+    }
+  }
+}

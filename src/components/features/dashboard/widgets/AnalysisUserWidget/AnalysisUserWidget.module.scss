@@ -1,0 +1,293 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.widgetContent {
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.widgetHeader {
+  height: 50px;
+  gap: 8px;
+  display: flex;
+  opacity: 1;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $gray_f0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: grab;
+
+  h2 {
+    @include RReg_20;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.widgetBody {
+  padding-top: 16px;
+  padding-right: 20px;
+  padding-bottom: 16px;
+  padding-left: 16px;
+  gap: 8px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  background-color: $gray_f6;
+}
+
+.movePatterns {
+  height: 91px;
+  padding-bottom: 8px;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.patternsHeader {
+  height: 43px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    @include RMed_20;
+    color: $gray;
+  }
+  p {
+    @include RReg_14;
+    color: $light_gray;
+  }
+}
+
+.patternsTabs {
+  height: 28px;
+  gap: 8px;
+  display: flex;
+}
+
+.patternTab {
+  height: 28px;
+  border-radius: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
+  gap: 4px;
+  display: flex;
+  border: 1px solid $gray_d8;
+  align-items: center;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $light_gray_10;
+  }
+
+  h3 {
+    @include RReg_14;
+    color: $light_gray;
+  }
+  p {
+    @include RMed_14;
+    color: $light_gray;
+  }
+
+  &.active {
+    border-color: $primary_blue;
+
+    h3,
+    p {
+      color: $primary_blue;
+    }
+  }
+}
+
+.routesListContainer {
+  width: 692px;
+  height: 321px;
+
+  padding-left: 2px;
+  border-top: 1px solid $gray_d8;
+  border-bottom: 1px solid $gray_d8;
+  display: flex;
+}
+
+.simplebarContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.emptyState {
+  height: 23px;
+  padding-bottom: 4px;
+  gap: 10px;
+  display: flex;
+
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.routesList {
+  width: 658px;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  padding-right: 8px;
+  gap: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.routeItem {
+  width: 100%;
+  min-width: 658px;
+  height: 87px;
+  border-radius: 8px;
+  padding: 8px 12px;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+  background: $white;
+  box-shadow: 0px 4px 16px 0px #252e380d;
+}
+
+.routeInfo {
+  width: 150px;
+  height: 71px;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+.routeInfoHeader {
+  height: 39px;
+  gap: 4px;
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+
+  h3 {
+    @include RReg_16;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_14;
+    color: $light_gray;
+  }
+}
+
+.details {
+  height: 24px;
+  border: none;
+  background: none;
+  display: flex;
+  align-items: center;
+  padding: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  p {
+    @include RReg_14;
+    color: $primary_blue;
+    text-decoration: underline;
+    text-decoration-style: solid;
+    text-decoration-thickness: 0%;
+    text-decoration-skip-ink: auto;
+  }
+
+  img {
+    margin-left: 4px;
+  }
+}
+
+.line {
+  width: 0px;
+  height: 65.5px;
+  border: 1px solid $gray_d8;
+  flex-shrink: 0;
+}
+
+.way {
+  width: 452px;
+  height: min-content;
+  gap: 4px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+
+  h3 {
+    @include RMed_14;
+    color: $gray;
+    white-space: nowrap;
+  }
+  p {
+    @include RReg_14;
+    color: $light_gray;
+    white-space: nowrap;
+  }
+  img {
+    width: 16px;
+    height: 16px;
+    border-radius: 1.33px;
+    flex-shrink: 0;
+  }
+}
+
+.widgetFooter {
+  height: 54px;
+  padding-top: 6px;
+  gap: 8px;
+  display: flex;
+}
+
+.footerBlock {
+  width: 225px;
+  height: 48px;
+  border-radius: 8px;
+  justify-content: space-between;
+  padding-top: 8px;
+  padding-right: 16px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  display: flex;
+  background: $white;
+  align-items: center;
+}
+
+.parameter {
+  height: 32px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.parameterText {
+  p {
+    @include RReg_14;
+    color: $light_gray;
+  }
+}
+
+.value {
+  gap: 10px;
+  display: flex;
+
+  p {
+    @include RMed_16;
+    color: $primary_blue;
+  }
+}

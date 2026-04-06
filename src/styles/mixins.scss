@@ -1,0 +1,66 @@
+@use "sass:map";
+@use "./base/variables.scss" as *;
+
+@mixin RMed_32 {
+  font-family: map.get($RMed_32, "font-family");
+  font-weight: map.get($RMed_32, "font-weight");
+  font-size: map.get($RMed_32, "font-size");
+  line-height: map.get($RMed_32, "line-height");
+}
+
+@mixin RMed_20 {
+  font-family: map.get($RMed_20, "font-family");
+  font-weight: map.get($RMed_20, "font-weight");
+  font-size: map.get($RMed_20, "font-size");
+  line-height: map.get($RMed_20, "line-height");
+}
+
+@mixin RMed_16 {
+  font-family: map.get($RMed_16, "font-family");
+  font-weight: map.get($RMed_16, "font-weight");
+  font-size: map.get($RMed_16, "font-size");
+  line-height: map.get($RMed_16, "line-height");
+}
+
+@mixin RMed_14 {
+  font-family: map.get($RMed_14, "font-family");
+  font-weight: map.get($RMed_14, "font-weight");
+  font-size: map.get($RMed_14, "font-size");
+  line-height: map.get($RMed_14, "line-height");
+}
+
+@mixin RReg_20 {
+  font-family: map.get($RReg_20, "font-family");
+  font-weight: map.get($RReg_20, "font-weight");
+  font-size: map.get($RReg_20, "font-size");
+  line-height: map.get($RReg_20, "line-height");
+}
+
+@mixin RReg_16 {
+  font-family: map.get($RReg_16, "font-family");
+  font-weight: map.get($RReg_16, "font-weight");
+  font-size: map.get($RReg_16, "font-size");
+  line-height: map.get($RReg_16, "line-height");
+}
+
+@mixin RReg_14 {
+  font-family: map.get($RReg_14, "font-family");
+  font-weight: map.get($RReg_14, "font-weight");
+  font-size: map.get($RReg_14, "font-size");
+  line-height: map.get($RReg_14, "line-height");
+}
+
+@mixin RBold_24 {
+  font-family: map.get($RBold_24, "font-family");
+  font-weight: map.get($RBold_24, "font-weight");
+  font-size: map.get($RBold_24, "font-size");
+  line-height: map.get($RBold_24, "line-height");
+}
+
+@mixin RREGUP_14 {
+  font-family: map.get($RREGUP_14, "font-family");
+  font-weight: map.get($RREGUP_14, "font-weight");
+  font-size: map.get($RREGUP_14, "font-size");
+  line-height: map.get($RREGUP_14, "line-height");
+  text-transform: uppercase;
+}

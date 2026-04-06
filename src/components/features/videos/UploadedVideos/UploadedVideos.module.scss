@@ -1,0 +1,207 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.mainArea {
+  height: 100%;
+  width: 1594px;
+  gap: 20px;
+  padding-right: 34px;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: $gray_f6;
+}
+
+.header {
+  width: 1540px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 1;
+  padding-top: 24px;
+  padding-bottom: 4px;
+  h2 {
+    @include RMed_32;
+    color: $dark_gray;
+  }
+  h3 {
+    @include RReg_20;
+    color: $light_gray;
+  }
+}
+
+.headerText {
+  height: 69px;
+  opacity: 1;
+  display: grid;
+  gap: 8px;
+}
+
+.headerControls {
+  height: 60px;
+  opacity: 1;
+  gap: 16px;
+  display: flex;
+  align-items: center;
+}
+
+.videosList {
+  width: 1540px;
+  height: 959px;
+  opacity: 1;
+  gap: 20px;
+  padding-top: 20px;
+  // padding-bottom: 20px;
+  border-top: 1px solid $gray_d8;
+  display: flex;
+}
+
+.videosGrid {
+  width: 1384px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.videoCard {
+  width: 448px;
+  height: fit-content;
+  opacity: 1;
+  border-radius: 16px;
+  gap: 24px;
+  border: 1px solid $gray_f0;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  box-shadow: 0px 2px 2px 0px #7d88931a;
+}
+
+.videoThumbnail {
+  width: 408px;
+  height: 230px;
+  opacity: 1;
+  border-radius: 16.08px;
+  gap: 10px;
+  border: 1px solid $gray_d8;
+  display: flex;
+  background: $gray_f0;
+  overflow: hidden;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16.08px;
+  }
+}
+
+.videoInfo {
+  width: 408px;
+  opacity: 1;
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+  p {
+    @include RReg_20;
+    color: $dark_gray;
+  }
+}
+
+.titleHeader {
+  width: 408px;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 1;
+  h2 {
+    @include RREGUP_14;
+    color: $light_gray;
+  }
+}
+
+.menuButton {
+  width: 24px;
+  height: 24px;
+  opacity: 1;
+  border: none;
+  background: none;
+  color: $light_gray;
+  cursor: pointer;
+  &:active,
+  :hover {
+    color: $primary_blue;
+  }
+}
+
+.menuContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.videoMenu {
+  width: 200px;
+  opacity: 1;
+  border-radius: 8px;
+  border: 1px solid $gray_f0;
+  background: $white;
+  box-shadow: 0px 2px 2px 0px #7d88931a;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.menuItem {
+  width: 200px;
+  height: 48px;
+  opacity: 1;
+  gap: 8px;
+  padding-top: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  background: transparent;
+  color: $light_gray;
+  transition: background-color 0.2s ease;
+
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $gray_d8;
+  }
+
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+
+  .menuIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background: $gray_f6;
+  }
+
+  &.deleteItem {
+    &:hover {
+      color: $red;
+      p {
+        color: $red;
+      }
+    }
+  }
+}

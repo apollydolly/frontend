@@ -1,0 +1,121 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.mainArea {
+  height: 100%;
+  width: 1594px;
+  display: grid;
+  justify-content: center;
+  background: $gray_f6;
+}
+
+.header {
+  width: 1540px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 1;
+  padding-top: 32px;
+  padding-bottom: 4px;
+
+  h2 {
+    @include RMed_32;
+    color: $dark_gray;
+  }
+
+  h3 {
+    @include RReg_20;
+    color: $light_gray;
+  }
+}
+
+.headerText {
+  opacity: 1;
+  display: grid;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.headerName {
+  height: 38px;
+  opacity: 1;
+  gap: 8px;
+  display: flex;
+}
+
+.headerWay {
+  height: 38px;
+  opacity: 1;
+  gap: 8px;
+  padding-bottom: 4px;
+  display: flex;
+  align-items: center;
+  color: $light_gray;
+
+  p {
+    @include RMed_20;
+    color: $light_gray;
+  }
+
+  .videoName {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 600px;
+  }
+
+  .staticText {
+    @include RMed_20;
+    color: $light_gray;
+    white-space: nowrap;
+  }
+}
+
+.buttonsContainer {
+  width: 239px;
+  height: 60px;
+  opacity: 1;
+  gap: 16px;
+  padding-top: 16px;
+  display: flex;
+  &.small {
+    width: 106px;
+    height: 48px;
+    gap: 10px;
+    padding-top: 0;
+  }
+}
+
+.mainContainer {
+  width: 1540px;
+  height: 959px;
+  opacity: 1;
+  gap: 20px;
+  padding-bottom: 20px;
+  display: flex;
+}
+
+.errorText {
+  height: 28px;
+  gap: 4px;
+  opacity: 1;
+  padding-top: 2px;
+  display: flex;
+  align-items: center;
+
+  p {
+    @include RMed_16;
+  }
+}
+
+.blue {
+  color: $primary_blue;
+}
+
+.gray {
+  color: $light_gray;
+}
+
+.red {
+  color: $red;
+}

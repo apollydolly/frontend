@@ -1,0 +1,62 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.authContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.authForm {
+  width: 100%;
+  max-width: 400px;
+  padding: 40px;
+  background: $white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  gap: 10px;
+  display: grid;
+
+  h2 {
+    text-align: center;
+    padding-top: 30px;
+    @include RReg_16;
+    color: $dark_gray;
+  }
+  .formTitle {
+    @include RBold_24;
+    color: $dark_gray;
+  }
+}
+
+.error {
+  margin-top: 10px;
+  background: $red_10;
+  color: $red;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border: 1px solid $red_30;
+}
+
+.authLinks {
+  text-align: center;
+  margin-top: 20px;
+
+  a {
+    color: $primary_blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.buttonsContainer {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,49 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.tabsContainer {
+  height: 51px;
+  width: fit-content;
+  min-width: min-content;
+  opacity: 1;
+  gap: 16px;
+  border-radius: 8px;
+  padding: 8px;
+  display: flex;
+  background: $gray_f0;
+  box-shadow: 0px 4px 8px 0px #7d889333 inset;
+}
+
+.tab {
+  height: 35px;
+  width: auto;
+  opacity: 1;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  background: $white;
+  box-shadow: 0px 2px 2px 0px #7d88931a;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  @include RReg_16;
+  color: $dark_gray;
+  white-space: nowrap;
+
+  &.tabActive {
+    background: $white;
+    color: $dark_gray;
+  }
+
+  &.tabInactive {
+    background: transparent;
+    color: $light_gray;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}

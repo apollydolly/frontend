@@ -1,0 +1,25 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.closeButton {
+  width: 32px;
+  height: 32px;
+  opacity: 1;
+  border-radius: 8px;
+  border: 1px solid $gray_d8;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  display: grid;
+  background: transparent;
+  color: $light_gray;
+
+  &:hover:not(:disabled) {
+    background: $gray_d8;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}

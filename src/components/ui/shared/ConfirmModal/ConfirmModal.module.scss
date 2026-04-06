@@ -1,0 +1,142 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modalContent {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 500px;
+  animation: slideIn 0.3s ease;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid $light_gray_15;
+}
+
+.modalTitle {
+  @include RBold_24;
+  color: $dark_gray;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: $light_gray;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    color: $dark_gray;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.modalBody {
+  padding: 24px;
+}
+
+.message {
+  @include RMed_20;
+  color: $dark_gray;
+}
+
+.errorMessage {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: $red_30;
+  border: 1px solid $red_15;
+  border-radius: 4px;
+  color: $red;
+  @include RReg_14;
+}
+
+.modalFooter {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 24px;
+  border-top: 1px solid $gray_d8;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.cancelButton {
+  background-color: $gray_f6;
+  color: $dark_gray;
+  border: 1px solid $gray_d8;
+
+  &:hover:not(:disabled) {
+    background-color: $gray_d8;
+  }
+}
+
+.confirmButton {
+  background-color: $primary_blue;
+  color: $white;
+
+  &:hover:not(:disabled) {
+    background-color: $dark_blue;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

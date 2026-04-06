@@ -1,0 +1,32 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.widgetItem {
+  width: 268px;
+  height: 120px;
+  opacity: 1;
+  gap: 8px;
+  border: 1px solid $gray_d8;
+  border-radius: 16px;
+  padding: 8px;
+  cursor: grab;
+  background: $white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  &:hover {
+    background-color: #f8f9fa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  &.dragging {
+    opacity: 0.5;
+  }
+}
+
+.widgetName {
+  @include RMed_16;
+  color: $light_gray;
+}

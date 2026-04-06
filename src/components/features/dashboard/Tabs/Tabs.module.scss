@@ -1,0 +1,117 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.tabsContainer {
+  display: flex;
+  align-items: center;
+  height: 51px;
+  gap: 16px;
+  opacity: 1;
+  padding: 8px;
+  border-radius: 8px;
+  background: $gray_f0;
+  box-shadow: 0px 4px 8px 0px #7d889333 inset;
+  justify-self: flex-start;
+}
+
+.tabsList {
+  display: flex;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.tab {
+  height: 35px;
+  gap: 8px;
+  opacity: 1;
+  padding-top: 8px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 2px 2px 0px #7d88931a;
+  animation-timing-function: ease-out;
+  animation-duration: 200ms;
+
+  .tabName {
+    @include RReg_16;
+    color: $light_gray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &.active {
+    background: $white;
+    .tabName {
+      color: $dark_gray;
+    }
+  }
+
+  &:hover .tabClose {
+    opacity: 1;
+  }
+}
+
+.widthMeasurer {
+  @include RReg_16;
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+}
+
+.tabInput {
+  height: 35px;
+  opacity: 1;
+  padding-top: 8px;
+  padding-right: 12px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  border-radius: 8px;
+  @include RReg_16;
+  border: 1px solid $primary_blue;
+  border-radius: 8px;
+  padding: 4px 8px;
+  outline: none;
+  background: $white;
+  transition: border-color 0.2s;
+  box-shadow: 0px 2px 2px 0px #7d88931a;
+  caret-color: $primary_blue;
+}
+
+.tabInputMax {
+  border-color: $gray_d8;
+}
+
+.tabClose {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 2px;
+  margin-left: 4px;
+  opacity: 0;
+
+  &:hover {
+    color: #ff4444;
+    transform: scale(1.2);
+  }
+}
+
+.addTabBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 35px;
+  gap: 10px;
+  opacity: 1;
+  border: none;
+  border-left: 1px solid $gray_d8;
+  color: $light_gray;
+  &:hover {
+    color: $primary_blue;
+  }
+}

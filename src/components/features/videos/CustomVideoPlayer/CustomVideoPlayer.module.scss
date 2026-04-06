@@ -1,0 +1,244 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.videoPlayer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: $gray_f0;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover .controls {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.controls {
+  width: 1072px;
+  height: 96px;
+  gap: 8px;
+  display: grid;
+  padding-top: 8px;
+  padding-right: 20px;
+  padding-bottom: 8px;
+  padding-left: 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(
+    360deg,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.progressContainer {
+  width: 1032px;
+  height: 8px;
+  gap: 10px;
+  opacity: 1;
+  border-radius: 8px;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(32px);
+  cursor: pointer;
+  position: relative;
+}
+
+.progressBar {
+  height: 100%;
+  background: $white;
+  border-radius: 32px;
+  transition: width 0.1s ease;
+}
+
+.controlsBottom {
+  width: 1032px;
+  height: 64px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.controlsLeft {
+  width: 136px;
+  height: 64px;
+  gap: 12px;
+  opacity: 1;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.controlButton {
+  background: transparent;
+  border: none;
+  color: $white;
+  transition: all 0.2s ease;
+  &:hover {
+    color: $gray_d8;
+  }
+  svg {
+    height: 32px;
+    width: 32px;
+  }
+  &.pause {
+    svg {
+      height: 48px;
+      width: 48px;
+    }
+  }
+}
+
+.controlsRight {
+  height: 23px;
+  gap: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.timeDisplay {
+  height: 23px;
+  gap: 4px;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+
+  .current {
+    @include RMed_20;
+    color: $white;
+  }
+  .duration {
+    @include RReg_20;
+    color: $gray_d8;
+  }
+}
+
+.speedControl {
+  position: relative;
+}
+
+.speedButton {
+  width: 70px;
+  height: 23px;
+  gap: 10px;
+  padding-right: 16px;
+  padding-left: 16px;
+  background: transparent;
+  border: none;
+  @include RMed_20;
+  color: $white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: $gray_d8;
+  }
+  &:active {
+    color: $white_20;
+  }
+}
+
+.speedMenu {
+  width: 70px;
+  height: 210px;
+  border-radius: 8px;
+  background: linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.2)
+    ),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  backdrop-filter: blur(32px);
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.speedOption {
+  width: 70px;
+  height: 35px;
+  gap: 10px;
+  opacity: 1;
+  padding-top: 8px;
+  padding-right: 20px;
+  padding-bottom: 8px;
+  padding-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $black_20;
+  border: none;
+  @include RMed_16;
+  color: $white;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+
+  // Добавляем разделитель после каждого элемента, кроме последнего
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $white_20;
+  }
+
+  &:hover {
+    background: $white_10;
+  }
+
+  &.active {
+    justify-content: space-between;
+    padding-right: 6px;
+    padding-left: 6px;
+    color: $white;
+
+    .checkIcon {
+      opacity: 1;
+      width: 12px;
+      height: 12px;
+    }
+  }
+}
+
+.checkIcon {
+  width: 16px;
+  height: 16px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}

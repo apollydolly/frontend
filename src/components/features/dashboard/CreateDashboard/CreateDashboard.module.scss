@@ -1,0 +1,214 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.mainArea {
+  display: grid;
+  width: 1594px;
+  height: 100%;
+  gap: 23px;
+  opacity: 1;
+  padding-right: 34px;
+  padding-left: 20px;
+  background: $gray_f6;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  height: 48px;
+  gap: 8px;
+  opacity: 1;
+  padding-top: 24px;
+  padding-bottom: 8px;
+}
+
+.headerFullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(246, 246, 246, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid $gray_d8;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0.5;
+}
+
+.headerCollapsed {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+}
+
+h2 {
+  @include RMed_32;
+  color: $dark_gray;
+}
+
+h3 {
+  @include RReg_20;
+  color: $light_gray;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 20px;
+  opacity: 1;
+}
+
+.dashboardInfo {
+  gap: 12px;
+  opacity: 1;
+  display: grid;
+  justify-items: start;
+}
+
+.dashboard {
+  width: 1540px;
+  height: 935px;
+  gap: 20px;
+  opacity: 1;
+  padding-bottom: 20px;
+  display: grid;
+}
+
+.dashboardContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.dashboardContainerFullscreen {
+  width: 100vw;
+  height: 100vh;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+}
+
+.layout {
+  width: 100%;
+  position: relative;
+}
+
+.layoutFullscreen {
+  width: 100%;
+  height: calc(100vh - 48px); // Минус высота header
+  position: relative;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.dashboardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f5f5f5;
+  border-bottom: 1px solid #d0d0d0;
+  padding: 0 16px;
+  height: 48px;
+  flex-shrink: 0;
+}
+
+.fullscreenBtn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+
+  &:hover {
+    background: #e0e0e0;
+  }
+}
+
+// Контейнер для сетки
+.gridContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  pointer-events: none;
+  z-index: 1;
+}
+
+// Контейнер для RGL
+.gridLayoutContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+// Ячейки сетки
+.gridCell {
+  background: $gray_f0;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: $gray_d8;
+  }
+}
+
+// Стили для активной области дропа
+.dropAreaActive {
+  .gridCell {
+    background: $primary_blue_15;
+    transition: background-color 0.2s;
+  }
+}
+
+// Анимация для подсветки
+@keyframes pulse {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+.dropPreview {
+  animation: pulse 2s infinite;
+}
+
+.titleMeasure {
+  @include RMed_32;
+  position: absolute;
+  visibility: hidden;
+  white-space: pre;
+  pointer-events: none;
+}
+
+.titleInput {
+  @include RMed_32;
+  color: $dark_gray;
+  background: $white;
+  border: 1px solid $primary_blue;
+  border-radius: 4px;
+  outline: none;
+  height: 36px;
+  caret-color: $primary_blue;
+  transition: border-color 0.2s;
+}
+
+// рамка меняется на серую при 60 символах
+.titleInputMax {
+  border-color: $gray_d8;
+}
+
+.titleDisplay {
+  cursor: pointer;
+}

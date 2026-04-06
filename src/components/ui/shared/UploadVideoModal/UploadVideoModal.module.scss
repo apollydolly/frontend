@@ -1,0 +1,262 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 960px;
+  height: 540px;
+  opacity: 1;
+  display: grid;
+  gap: 16px;
+  border-radius: 20px;
+  border: 1px solid $gray_d8;
+  padding: 20px;
+  background: $white;
+  box-shadow: 0px 4px 16px 0px #7d889326;
+  overflow: hidden;
+}
+
+.modalHeader {
+  width: 920px;
+  height: 61px;
+  opacity: 1;
+  gap: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  .headerText {
+    width: 878px;
+    height: 61px;
+    opacity: 1;
+    gap: 4px;
+    display: grid;
+  }
+
+  h2 {
+    @include RBold_24;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.tabs {
+  width: 562px;
+  height: 51px;
+  gap: 16px;
+  opacity: 1;
+  border-radius: 8px;
+  padding: 8px;
+  background: $gray_f0;
+  box-shadow: 0px 4px 8px 0px #7d889333 inset;
+  display: flex;
+}
+
+.uploadArea {
+  width: 920px;
+  height: 423px;
+  opacity: 1;
+  gap: 20px;
+  border-radius: 16px;
+  border: 1px dashed $gray_d8;
+  background: $gray_f6;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  &.dragOver {
+    border: 2px dashed $primary_blue;
+    background: $primary_blue_15;
+  }
+  &.short {
+    height: 364px;
+  }
+}
+
+.uploadText {
+  width: 511px;
+  height: 69px;
+  opacity: 1;
+  gap: 4px;
+  display: grid;
+  h2 {
+    @include RMed_20;
+    color: $light_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.fileInput {
+  display: none;
+}
+
+.errorMessage {
+  height: 40px;
+  opacity: 1;
+  gap: 8px;
+  padding-top: 12px;
+  padding-right: 16px;
+  padding-bottom: 12px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid $red_15;
+  background: $white;
+  position: absolute;
+  top: 43%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 10;
+  transition: all 0.3s ease;
+
+  p {
+    @include RReg_14;
+    color: $red;
+    margin: 0;
+  }
+}
+
+.connectRstpContainer {
+  width: 920px;
+  height: 364px;
+  gap: 20px;
+  opacity: 1;
+  border-radius: 16px;
+  border: 1px solid $gray_d8;
+  background: $gray_f6;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  text-align: center;
+  align-content: center;
+  padding: 0 60px;
+}
+
+.rstpText {
+  width: 489px;
+  height: 46px;
+  gap: 4px;
+  opacity: 1;
+  display: grid;
+
+  h2 {
+    @include RMed_20;
+    color: $light_gray;
+  }
+
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.uploadVideoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.videoListContainer {
+  width: 920px;
+  height: 248px;
+  gap: 20px;
+  opacity: 1;
+  padding-top: 8px;
+  padding-right: 24px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  border-radius: 16px;
+  border: 1px solid $gray_d8;
+  background: $gray_f6;
+}
+
+.videoList {
+  width: 872px;
+  height: 476px;
+  gap: 4px;
+  opacity: 1;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.videoListItem {
+  width: 872px;
+  height: 76px;
+  gap: 16px;
+  opacity: 1;
+  border-radius: 8px;
+  padding: 8px;
+  background: $white;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: $gray_f6;
+    border: 1px solid $gray_d8;
+    cursor: pointer;
+  }
+
+  &.selected {
+    border: 1px solid $primary_blue;
+  }
+}
+
+.video {
+  width: 106px;
+  height: 60px;
+  opacity: 1;
+  border-radius: 4px;
+  border: 1px solid $gray_d8;
+  background: $gray_f6;
+}
+
+.videoInfo {
+  width: 700px;
+  height: 43px;
+  gap: 8px;
+  opacity: 1;
+  display: grid;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  h2 {
+    @include RReg_16;
+    color: $dark_gray;
+  }
+}
+
+.timeDate {
+  height: 16px;
+  gap: 16px;
+  opacity: 1;
+  display: flex;
+
+  p {
+    @include RREGUP_14;
+    color: $light_gray;
+  }
+}

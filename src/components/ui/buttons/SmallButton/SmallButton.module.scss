@@ -1,0 +1,25 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.smallButton {
+  width: 48px;
+  height: 48px;
+  opacity: 1;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 8px;
+  background: $white;
+  box-shadow: 0px 2px 2px 0px #7d88931a;
+  border: none;
+  color: $light_gray;
+  cursor: pointer;
+  &:hover:not(:disabled) {
+    .icon {
+      color: $primary_blue;
+    }
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

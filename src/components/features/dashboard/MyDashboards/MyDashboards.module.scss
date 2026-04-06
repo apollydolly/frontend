@@ -1,0 +1,38 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.mainArea {
+  height: 100%;
+  width: 1594px;
+  display: flex;
+  justify-content: center;
+  background: $gray_f6;
+}
+
+.header {
+  display: grid;
+  width: 1540px;
+  height: 169px;
+  gap: 8px;
+  opacity: 1;
+  padding-top: 32px;
+  padding-left: 27px;
+  padding-right: 27px;
+}
+
+h2 {
+  @include RMed_32;
+  color: $dark_gray;
+}
+
+h3 {
+  @include RReg_20;
+  color: $light_gray;
+}
+
+.buttonsContainer {
+  display: flex;
+  gap: 16px;
+  opacity: 1;
+  padding-top: 16px;
+}

@@ -14,7 +14,7 @@ export default defineConfig({
       "@styles": fileURLToPath(new URL("./src/styles/", import.meta.url)),
       "@video": fileURLToPath(new URL("./src/assets/video/", import.meta.url)),
       "@components": fileURLToPath(
-        new URL("./src/components/", import.meta.url)
+        new URL("./src/components/", import.meta.url),
       ),
       "@features": fileURLToPath(new URL("./src/features/", import.meta.url)),
       "@pages": fileURLToPath(new URL("./src/pages/", import.meta.url)),
@@ -25,16 +25,19 @@ export default defineConfig({
       "@routes": fileURLToPath(new URL("./src/routes/", import.meta.url)),
       "@ui": fileURLToPath(new URL("./src/components/ui/", import.meta.url)),
       "@dashboard": fileURLToPath(
-        new URL("./src/components/features/dashboard/", import.meta.url)
+        new URL("./src/components/features/dashboard/", import.meta.url),
       ),
       "@templates": fileURLToPath(
-        new URL("./src/components/features/templates/", import.meta.url)
+        new URL("./src/components/features/templates/", import.meta.url),
+      ),
+      "@scenarios": fileURLToPath(
+        new URL("./src/components/features/scenarios/", import.meta.url),
       ),
       "@videos": fileURLToPath(
-        new URL("./src/components/features/videos/", import.meta.url)
+        new URL("./src/components/features/videos/", import.meta.url),
       ),
       "@auth": fileURLToPath(
-        new URL("./src/components/features/auth/", import.meta.url)
+        new URL("./src/components/features/auth/", import.meta.url),
       ),
     },
   },

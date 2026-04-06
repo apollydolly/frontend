@@ -57,6 +57,13 @@
   line-height: map.get($RBold_24, "line-height");
 }
 
+@mixin RBold_30 {
+  font-family: map.get($RBold_30, "font-family");
+  font-weight: map.get($RBold_30, "font-weight");
+  font-size: map.get($RBold_30, "font-size");
+  line-height: map.get($RBold_30, "line-height");
+}
+
 @mixin RREGUP_14 {
   font-family: map.get($RREGUP_14, "font-family");
   font-weight: map.get($RREGUP_14, "font-weight");

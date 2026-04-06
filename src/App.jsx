@@ -16,6 +16,8 @@ import { ProtectedRoute } from "@routes/ProtectedRoute";
 import { LoginForm } from "@auth/LoginForm";
 import { RegisterForm } from "@auth/RegisterForm";
 import { EditDashboardPage } from "@pages/EditDashboardPage";
+import { ScenariosPage } from "@pages/ScenariosPage";
+import { MyScenariosPage } from "@pages/MyScenariosPage";
 
 function App() {
   return (
@@ -46,6 +48,22 @@ function App() {
             element={
               <ProtectedRoute>
                 <TemplatesPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/my-scenarios"
+            element={
+              <ProtectedRoute>
+                <MyScenariosPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scenarios"
+            element={
+              <ProtectedRoute>
+                <ScenariosPage />
               </ProtectedRoute>
             }
           />

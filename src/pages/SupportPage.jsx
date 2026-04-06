@@ -6,18 +6,12 @@ export const SupportPage = () => {
   const navigate = useNavigate();
 
   const handleMenuItemClick = (menuItemId) => {
-    if (menuItemId === "dashboards") {
-      navigate("/dashboards");
-    } else if (menuItemId === "templates") {
-      navigate("/templates");
-    } else if (menuItemId === "videos") {
-      navigate("/videos");
-    } else if (menuItemId === "settings") {
-      navigate("/settings");
-    } else if (menuItemId === "support") {
-      // Остаемся на этой странице
-      console.log("Already on support page");
-    }
+    if (menuItemId === "dashboards") navigate("/dashboards");
+    else if (menuItemId === "templates") navigate("/templates");
+    else if (menuItemId === "videos") navigate("/videos");
+    else if (menuItemId === "settings") navigate("/settings");
+    else if (menuItemId === "scenarios") navigate("/scenarios");
+    else if (menuItemId === "my-scenarios") navigate("/my-scenarios");
   };
 
   const handleCreateDashboard = () => {

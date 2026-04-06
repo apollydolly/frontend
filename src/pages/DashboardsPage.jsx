@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Menu } from "@ui/shared/Menu";
 import { MyDashboards } from "@dashboard/MyDashboards";
-import { Template } from "@templates/Template";
 import { dashboardService } from "@services/dashboardService";
 import { DashboardViewer } from "@dashboard/DashboardViewer";
 
@@ -14,22 +13,12 @@ export const DashboardsPage = () => {
   const hasLoaded = useRef(false);
   const location = useLocation();
 
-  // Обработчик обновления выбранного дашборда
   const handleDashboardSelected = useCallback((dashboard) => {
-    console.log("Дашборд обновлен в родительском компоненте:", {
-      id: dashboard.dashboard_id,
-      name: dashboard.name,
-      videoCount: dashboard.video_id?.length || 0,
-    });
-
-    // Обновляем выбранный дашборд
     setSelectedDashboard(dashboard);
-
-    // Также обновляем список дашбордов
     setDashboards((prev) =>
       prev.map((d) =>
-        d.dashboard_id === dashboard.dashboard_id ? dashboard : d
-      )
+        d.dashboard_id === dashboard.dashboard_id ? dashboard : d,
+      ),
     );
   }, []);
 
@@ -40,17 +29,15 @@ export const DashboardsPage = () => {
       dashboards.length > 0
     ) {
       const targetDashboard = dashboards.find(
-        (d) => d.dashboard_id === location.state.selectedDashboardId
+        (d) => d.dashboard_id === location.state.selectedDashboardId,
       );
       if (targetDashboard) {
-        console.log("дашборд: ", targetDashboard.name);
         setSelectedDashboard(targetDashboard);
         navigate(location.pathname, { replace: true, state: {} });
       }
     }
   }, [dashboards, location.state, location.pathname, navigate]);
 
-  // Загружаем дашборды при монтировании
   useEffect(() => {
     if (hasLoaded.current) return;
     const loadDashboards = async () => {
@@ -59,7 +46,6 @@ export const DashboardsPage = () => {
         hasLoaded.current = true;
         const dashboardsData = await dashboardService.getUserDashboards();
         setDashboards(dashboardsData);
-
         if (!(location.state && location.state.selectedDashboardId)) {
           if (dashboardsData.length > 0 && !selectedDashboard) {
             setSelectedDashboard(dashboardsData[0]);
@@ -79,66 +65,41 @@ export const DashboardsPage = () => {
   }, [selectedDashboard, location.state]);
 
   const handleMenuItemClick = (menuItemId) => {
-    if (menuItemId === "templates") {
-      navigate("/templates");
-    } else if (menuItemId === "videos") {
-      navigate("/videos");
-    } else if (menuItemId === "settings") {
-      navigate("/settings");
-    } else if (menuItemId === "support") {
-      navigate("/support");
-    }
+    if (menuItemId === "templates") navigate("/templates");
+    else if (menuItemId === "videos") navigate("/videos");
+    else if (menuItemId === "settings") navigate("/settings");
+    else if (menuItemId === "support") navigate("/support");
+    else if (menuItemId === "scenarios") navigate("/scenarios");
+    else if (menuItemId === "my-scenarios") navigate("/my-scenarios");
   };
 
   const handleDashboardSelect = (dashboard) => {
-    console.log("Выбор дашборда на странице:", {
-      id: dashboard.dashboard_id,
-      name: dashboard.name,
-    });
     setSelectedDashboard(dashboard);
   };
 
   const handleDashboardDeleted = async (deletedDashboardId) => {
-    console.log(`Дашборд ${deletedDashboardId} удален`);
-
-    try {
-      // Перезагружаем список дашбордов
-      const dashboardsData = await dashboardService.getUserDashboards();
-      setDashboards(dashboardsData);
-
-      // Выбираем первый дашборд, если есть
-      if (dashboardsData.length > 0) {
-        setSelectedDashboard(dashboardsData[0]);
-      } else {
-        setSelectedDashboard(null);
-      }
-
-      console.log("Список дашбордов обновлен после удаления");
-    } catch (error) {
-      console.error("Ошибка при обновлении списка дашбордов:", error);
-    }
+    const dashboardsData = await dashboardService.getUserDashboards();
+    setDashboards(dashboardsData);
+    if (dashboardsData.length > 0) setSelectedDashboard(dashboardsData[0]);
+    else setSelectedDashboard(null);
   };
 
   const handleCreateDashboard = () => {
     navigate("/create_dashboard");
   };
 
-  // Обновляем handleEditDashboard для перехода на страницу редактирования
   const handleEditDashboard = () => {
     if (selectedDashboard) {
       navigate(`/edit_dashboard/${selectedDashboard.dashboard_id}`);
     }
   };
 
-  const hasDashboards = () => {
-    return dashboards.length > 0;
-  };
+  const hasDashboards = () => dashboards.length > 0;
 
   const renderContent = () => {
     if (!hasDashboards()) {
       return <MyDashboards onCreateDashboard={handleCreateDashboard} />;
     }
-
     if (selectedDashboard) {
       return (
         <DashboardViewer
@@ -152,7 +113,6 @@ export const DashboardsPage = () => {
         />
       );
     }
-
     return (
       <div>
         <p>Выберите дашборд из списка слева</p>
@@ -167,10 +127,15 @@ export const DashboardsPage = () => {
         onMenuItemClick={handleMenuItemClick}
         onTemplateSelect={() => {}}
         onDashboardSelect={handleDashboardSelect}
+        onScenarioSelect={() => {}}
+        onMyScenarioSelect={() => {}}
         onCreateDashboard={handleCreateDashboard}
         selectedTemplate={null}
         selectedDashboard={selectedDashboard}
+        selectedScenario={null}
+        selectedMyScenario={null}
         dashboards={dashboards}
+        myScenarios={[]}
         isLoadingDashboards={isLoading}
       />
       {renderContent()}

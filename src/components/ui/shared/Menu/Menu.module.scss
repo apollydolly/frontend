@@ -30,11 +30,16 @@
   opacity: 1;
   display: flex;
   align-items: center;
+
+  img {
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .logoText {
   h2 {
-    @include RBold_24;
+    @include RBold_30;
     color: $dark_gray;
   }
   h3 {
@@ -83,7 +88,6 @@
 }
 
 .accountInfo {
-  width: 172px;
   height: 40px;
   gap: 12px;
   opacity: 1;
@@ -92,6 +96,10 @@
 
 .name {
   align-self: center;
+  gap: 2px;
+  display: flex;
+  flex-direction: column;
+
   h2 {
     @include RMed_16;
     color: $dark_gray;
@@ -337,4 +345,10 @@
       opacity: 3;
     }
   }
+}
+
+.menuItemDisabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
 }

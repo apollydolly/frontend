@@ -7,34 +7,26 @@ export const TemplatesPage = () => {
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const navigate = useNavigate();
 
-  // Функция для получения первого элемента
   const getFirstItem = (itemId) => {
     const menuItem = menuItems.main.find((item) => item.id === itemId);
     return menuItem?.subItems?.[0] || null;
   };
 
-  // Автоматически выбираем первый шаблон при загрузке
   useEffect(() => {
     const firstTemplate = getFirstItem("templates");
     setSelectedTemplate(firstTemplate);
   }, []);
 
   const handleMenuItemClick = (menuItemId) => {
-    if (menuItemId === "dashboards") {
-      navigate("/dashboards");
-    } else if (menuItemId === "videos") {
-      navigate("/videos");
-    } else if (menuItemId === "settings") {
-      navigate("/settings");
-    } else if (menuItemId === "support") {
-      navigate("/support");
-    } else if (menuItemId === "templates") {
-      console.log("Already on templates page");
-    }
+    if (menuItemId === "dashboards") navigate("/dashboards");
+    else if (menuItemId === "videos") navigate("/videos");
+    else if (menuItemId === "settings") navigate("/settings");
+    else if (menuItemId === "support") navigate("/support");
+    else if (menuItemId === "scenarios") navigate("/scenarios");
+    else if (menuItemId === "my-scenarios") navigate("/my-scenarios");
   };
 
   const handleTemplateSelect = (template) => {
-    console.log("Выбран шаблон:", template);
     setSelectedTemplate(template);
   };
 
@@ -59,11 +51,16 @@ export const TemplatesPage = () => {
         activeItem="templates"
         onMenuItemClick={handleMenuItemClick}
         onTemplateSelect={handleTemplateSelect}
-        onDashboardSelect={() => {}} // Не используется на этой странице
+        onDashboardSelect={() => {}}
+        onScenarioSelect={() => {}}
+        onMyScenarioSelect={() => {}}
         onCreateDashboard={handleCreateDashboard}
         selectedTemplate={selectedTemplate}
         selectedDashboard={null}
-        dashboards={[]} // Пустой массив для шаблонов страницы
+        selectedScenario={null}
+        selectedMyScenario={null}
+        dashboards={[]}
+        myScenarios={[]}
       />
       {renderContent()}
     </div>

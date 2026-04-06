@@ -1,0 +1,20 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.mainArea {
+  height: 100%;
+  width: 1594px;
+  display: flex;
+  justify-content: center;
+  background: $gray_f6;
+}
+
+.header {
+  width: 1540px;
+  height: 129px;
+  display: flex;
+  justify-content: space-between;
+  opacity: 1;
+  padding-top: 24px;
+  padding-bottom: 4px;
+}

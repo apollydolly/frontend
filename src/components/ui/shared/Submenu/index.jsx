@@ -9,11 +9,18 @@ export const Submenu = ({
   isExpanded,
   selectedTemplate,
   selectedDashboard,
+  selectedScenario,
+  selectedMyScenario,
   onTemplateSelect,
   onDashboardSelect,
+  onScenarioSelect,
+  onMyScenarioSelect,
   onShowAllTemplates,
   onShowAllDashboards,
+  onShowAllScenarios,
+  onShowAllMyScenarios,
   onCreateDashboard,
+  onCreateScenario,
   renderListItem,
 }) => {
   if (
@@ -26,13 +33,13 @@ export const Submenu = ({
 
   let itemsToShow = item.subItems;
   let showShowAllButton = false;
-
-  if (item.subItems.length > 5) {
-    itemsToShow = item.subItems.slice(0, 5);
+  if (item.subItems.length > 4) {
+    itemsToShow = item.subItems.slice(0, 4);
     showShowAllButton = true;
   }
 
-  const shouldShowCreateButton = item.id === "dashboards";
+  const shouldShowCreateButton =
+    item.id === "dashboards" || item.id === "my-scenarios";
 
   return (
     <div className={styles.submenu}>
@@ -42,17 +49,29 @@ export const Submenu = ({
           : index === itemsToShow.length - 1;
 
         let isSelected = false;
+        let handleSelect = null;
 
-        if (item.id === "templates") {
-          // Для шаблонов сравниваем id
-          isSelected = selectedTemplate?.id === subItem.id;
-        } else {
-          // Для дашбордов сравниваем dashboard_id
-          isSelected = selectedDashboard?.dashboard_id === subItem.dashboard_id;
+        switch (item.id) {
+          case "templates":
+            isSelected = selectedTemplate?.id === subItem.id;
+            handleSelect = onTemplateSelect;
+            break;
+          case "dashboards":
+            isSelected =
+              selectedDashboard?.dashboard_id === subItem.dashboard_id;
+            handleSelect = onDashboardSelect;
+            break;
+          case "scenarios":
+            isSelected = selectedScenario?.id === subItem.id;
+            handleSelect = onScenarioSelect;
+            break;
+          case "my-scenarios":
+            isSelected = selectedMyScenario?.id === subItem.id;
+            handleSelect = onMyScenarioSelect;
+            break;
+          default:
+            return null;
         }
-
-        const handleSelect =
-          item.id === "templates" ? onTemplateSelect : onDashboardSelect;
 
         return (
           <React.Fragment
@@ -66,23 +85,31 @@ export const Submenu = ({
       <div className={styles.afterList}>
         {showShowAllButton && (
           <div
-            key="show-all-button"
             className={styles.showAllButton}
-            onClick={
-              item.id === "templates" ? onShowAllTemplates : onShowAllDashboards
-            }
+            onClick={() => {
+              if (item.id === "templates") onShowAllTemplates();
+              else if (item.id === "dashboards") onShowAllDashboards();
+              else if (item.id === "scenarios") onShowAllScenarios();
+              else if (item.id === "my-scenarios") onShowAllMyScenarios();
+            }}
           >
             <p className={styles.showAllText}>Показать все</p>
             <Arrow className={styles.showAllArrow} />
           </div>
         )}
 
-        {item.id === "dashboards" && shouldShowCreateButton && (
+        {item.id === "dashboards" && (
           <SecondaryButton
-            key="create-dashboard-button"
             text="Создать дашборд"
             icon={CreateIcon}
             onClick={onCreateDashboard}
+          />
+        )}
+        {item.id === "my-scenarios" && onCreateScenario && (
+          <SecondaryButton
+            text="Создать сценарий"
+            icon={CreateIcon}
+            onClick={onCreateScenario}
           />
         )}
       </div>

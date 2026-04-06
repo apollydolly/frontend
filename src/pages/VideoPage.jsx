@@ -28,7 +28,12 @@ export const VideoPage = () => {
 
   const handleMenuItemClick = (menuItemId) => {
     setActiveMenuItem(menuItemId);
-    if (menuItemId === "dashboards" || menuItemId === "templates") {
+    if (
+      menuItemId === "dashboards" ||
+      menuItemId === "templates" ||
+      menuItemId === "scenarios" ||
+      menuItemId === "my-scenarios"
+    ) {
       navigate("/");
     }
   };

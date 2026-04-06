@@ -6,18 +6,12 @@ export const SettingsPage = () => {
   const navigate = useNavigate();
 
   const handleMenuItemClick = (menuItemId) => {
-    if (menuItemId === "dashboards") {
-      navigate("/dashboards");
-    } else if (menuItemId === "templates") {
-      navigate("/templates");
-    } else if (menuItemId === "videos") {
-      navigate("/videos");
-    } else if (menuItemId === "support") {
-      navigate("/support");
-    } else if (menuItemId === "settings") {
-      // Остаемся на этой странице
-      console.log("Already on settings page");
-    }
+    if (menuItemId === "dashboards") navigate("/dashboards");
+    else if (menuItemId === "templates") navigate("/templates");
+    else if (menuItemId === "videos") navigate("/videos");
+    else if (menuItemId === "support") navigate("/support");
+    else if (menuItemId === "scenarios") navigate("/scenarios");
+    else if (menuItemId === "my-scenarios") navigate("/my-scenarios");
   };
 
   const handleCreateDashboard = () => {

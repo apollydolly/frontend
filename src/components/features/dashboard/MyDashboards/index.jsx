@@ -19,7 +19,10 @@ export const MyDashboards = () => {
   return (
     <div className={styles.mainArea}>
       <div className={styles.header}>
-        <h2>Приветствуем в Smart Decision!</h2>
+        <h2>
+          Приветствуем на платформе интерактивного обучения <br />
+          коммуникативным навыкам Speech Up+!
+        </h2>
         <h3>Вы еще не создали ни одного дашборда.</h3>
         <div className={styles.buttonsContainer}>
           <PrimaryButton

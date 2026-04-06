@@ -7,18 +7,12 @@ export const VideosPage = () => {
   const navigate = useNavigate();
 
   const handleMenuItemClick = (menuItemId) => {
-    if (menuItemId === "dashboards") {
-      navigate("/dashboards");
-    } else if (menuItemId === "templates") {
-      navigate("/templates");
-    } else if (menuItemId === "settings") {
-      navigate("/settings");
-    } else if (menuItemId === "support") {
-      navigate("/support");
-    } else if (menuItemId === "videos") {
-      // Остаемся на этой странице
-      console.log("Already on videos page");
-    }
+    if (menuItemId === "dashboards") navigate("/dashboards");
+    else if (menuItemId === "templates") navigate("/templates");
+    else if (menuItemId === "settings") navigate("/settings");
+    else if (menuItemId === "support") navigate("/support");
+    else if (menuItemId === "scenarios") navigate("/scenarios");
+    else if (menuItemId === "my-scenarios") navigate("/my-scenarios");
   };
 
   const handleCreateDashboard = () => {

@@ -18,14 +18,16 @@ import { Submenu } from "@ui/shared/Submenu";
 import { ButtonGray } from "@ui/buttons/ButtonGray";
 
 // тестовые данные
-const mockDashboards = [
-  { id: "dashboard-1", title: "Шаблон 1", type: "dashboard" },
-  { id: "dashboard-2", title: "Шаблон 2", type: "dashboard" },
-  { id: "dashboard-3", title: "Шаблон 3", type: "dashboard" },
-  { id: "dashboard-4", title: "Шаблон 4", type: "dashboard" },
-  { id: "dashboard-5", title: "Шаблон 5", type: "dashboard" },
-  { id: "dashboard-6", title: "Шаблон 6", type: "dashboard" },
-];
+// const mockDashboards = [
+//   { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
+//   { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
+//   { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
+//   { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
+//   { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
+//   { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
+// ];
+
+const mockDashboards = [];
 
 const mockTemplates = [
   { id: "template-1", title: "Шаблон 1", type: "template" },
@@ -55,6 +57,7 @@ export const menuItems = {
       hasSubmenu: true,
       subItems: mockDashboards,
       type: "dashboards",
+      maxVisibleItems: 3,
     },
     {
       id: "templates",
@@ -109,7 +112,9 @@ export const menuItems = {
 
 export const createMenuItems = (dashboards = [], myScenarios = []) => ({
   main: [
-    { ...menuItems.main[0], subItems: dashboards },
+    dashboards.length
+      ? { ...menuItems.main[0], subItems: dashboards }
+      : menuItems.main[0], // оставляем моковые данные
     menuItems.main[1],
     { ...menuItems.main[2], subItems: myScenarios },
     menuItems.main[3],

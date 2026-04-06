@@ -1,68 +1,81 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Menu } from "@ui/shared/Menu";
+import { Menu, menuItems } from "@ui/shared/Menu";
 import { MyDashboards } from "@dashboard/MyDashboards";
-import { dashboardService } from "@services/dashboardService";
+// import { dashboardService } from "@services/dashboardService";
 import { DashboardViewer } from "@dashboard/DashboardViewer";
 
 export const DashboardsPage = () => {
   const [selectedDashboard, setSelectedDashboard] = useState(null);
   const [dashboards, setDashboards] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false); // для моков сразу false
   const navigate = useNavigate();
-  const hasLoaded = useRef(false);
-  const location = useLocation();
+  // const hasLoaded = useRef(false);
+  // const location = useLocation();
 
-  const handleDashboardSelected = useCallback((dashboard) => {
-    setSelectedDashboard(dashboard);
-    setDashboards((prev) =>
-      prev.map((d) =>
-        d.dashboard_id === dashboard.dashboard_id ? dashboard : d,
-      ),
-    );
+  // const handleDashboardSelected = useCallback((dashboard) => {
+  //   setSelectedDashboard(dashboard);
+  //   setDashboards((prev) =>
+  //     prev.map((d) =>
+  //       d.dashboard_id === dashboard.dashboard_id ? dashboard : d,
+  //     ),
+  //   );
+  // }, []);
+
+  // useEffect(() => {
+  //   if (
+  //     location.state &&
+  //     location.state.selectedDashboardId &&
+  //     dashboards.length > 0
+  //   ) {
+  //     const targetDashboard = dashboards.find(
+  //       (d) => d.dashboard_id === location.state.selectedDashboardId,
+  //     );
+  //     if (targetDashboard) {
+  //       setSelectedDashboard(targetDashboard);
+  //       navigate(location.pathname, { replace: true, state: {} });
+  //     }
+  //   }
+  // }, [dashboards, location.state, location.pathname, navigate]);
+
+  // useEffect(() => {
+  //   if (hasLoaded.current) return;
+  //   const loadDashboards = async () => {
+  //     try {
+  //       setIsLoading(true);
+  //       hasLoaded.current = true;
+  //       const dashboardsData = await dashboardService.getUserDashboards();
+  //       setDashboards(dashboardsData);
+  //       if (!(location.state && location.state.selectedDashboardId)) {
+  //         if (dashboardsData.length > 0 && !selectedDashboard) {
+  //           setSelectedDashboard(dashboardsData[0]);
+  //         }
+  //       }
+  //     } catch (error) {
+  //       console.error("Ошибка загрузки дашбордов:", error);
+  //       hasLoaded.current = false;
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   loadDashboards();
+  //   return () => {
+  //     hasLoaded.current = false;
+  //   };
+  // }, [selectedDashboard, location.state]);
+
+  const getFirstItem = (itemId) => {
+    const menuItem = menuItems.main.find((item) => item.id === itemId);
+    return menuItem?.subItems?.[0] || null;
+  };
+
+  useEffect(() => {
+    const firstDashboard = getFirstItem("dashboards");
+    setSelectedDashboard(firstDashboard);
+    const allDashboards =
+      menuItems.main.find((i) => i.id === "dashboards")?.subItems || [];
+    setDashboards(allDashboards);
   }, []);
-
-  useEffect(() => {
-    if (
-      location.state &&
-      location.state.selectedDashboardId &&
-      dashboards.length > 0
-    ) {
-      const targetDashboard = dashboards.find(
-        (d) => d.dashboard_id === location.state.selectedDashboardId,
-      );
-      if (targetDashboard) {
-        setSelectedDashboard(targetDashboard);
-        navigate(location.pathname, { replace: true, state: {} });
-      }
-    }
-  }, [dashboards, location.state, location.pathname, navigate]);
-
-  useEffect(() => {
-    if (hasLoaded.current) return;
-    const loadDashboards = async () => {
-      try {
-        setIsLoading(true);
-        hasLoaded.current = true;
-        const dashboardsData = await dashboardService.getUserDashboards();
-        setDashboards(dashboardsData);
-        if (!(location.state && location.state.selectedDashboardId)) {
-          if (dashboardsData.length > 0 && !selectedDashboard) {
-            setSelectedDashboard(dashboardsData[0]);
-          }
-        }
-      } catch (error) {
-        console.error("Ошибка загрузки дашбордов:", error);
-        hasLoaded.current = false;
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    loadDashboards();
-    return () => {
-      hasLoaded.current = false;
-    };
-  }, [selectedDashboard, location.state]);
 
   const handleMenuItemClick = (menuItemId) => {
     if (menuItemId === "templates") navigate("/templates");
@@ -77,12 +90,27 @@ export const DashboardsPage = () => {
     setSelectedDashboard(dashboard);
   };
 
-  const handleDashboardDeleted = async (deletedDashboardId) => {
-    const dashboardsData = await dashboardService.getUserDashboards();
-    setDashboards(dashboardsData);
-    if (dashboardsData.length > 0) setSelectedDashboard(dashboardsData[0]);
-    else setSelectedDashboard(null);
+  // Для моков упрощённое удаление
+  const handleDashboardDeleted = (deletedDashboardId) => {
+    const allDashboards =
+      menuItems.main.find((i) => i.id === "dashboards")?.subItems || [];
+    const updated = allDashboards.filter(
+      (d) => d.dashboard_id !== deletedDashboardId,
+    );
+    setDashboards(updated);
+    if (updated.length > 0) {
+      setSelectedDashboard(updated[0]);
+    } else {
+      setSelectedDashboard(null);
+    }
   };
+
+  // const handleDashboardDeleted = async (deletedDashboardId) => {
+  //   const dashboardsData = await dashboardService.getUserDashboards();
+  //   setDashboards(dashboardsData);
+  //   if (dashboardsData.length > 0) setSelectedDashboard(dashboardsData[0]);
+  //   else setSelectedDashboard(null);
+  // };
 
   const handleCreateDashboard = () => {
     navigate("/create_dashboard");
@@ -103,13 +131,13 @@ export const DashboardsPage = () => {
     if (selectedDashboard) {
       return (
         <DashboardViewer
-          dashboardData={selectedDashboard.data}
-          title={selectedDashboard.name}
+          dashboardData={selectedDashboard.data || {}}
+          title={selectedDashboard.name || selectedDashboard.title}
           dashboardId={selectedDashboard.dashboard_id}
           dashboardInfo={selectedDashboard}
           onEdit={handleEditDashboard}
           onDashboardDeleted={handleDashboardDeleted}
-          onDashboardSelected={handleDashboardSelected}
+          onDashboardSelected={handleDashboardSelect}
         />
       );
     }
@@ -134,7 +162,7 @@ export const DashboardsPage = () => {
         selectedDashboard={selectedDashboard}
         selectedScenario={null}
         selectedMyScenario={null}
-        dashboards={dashboards}
+        dashboards={[]} // Пустой массив, чтобы Menu брал моки из menuItems
         myScenarios={[]}
         isLoadingDashboards={isLoading}
       />

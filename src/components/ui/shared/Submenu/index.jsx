@@ -31,12 +31,12 @@ export const Submenu = ({
   )
     return null;
 
-  let itemsToShow = item.subItems;
-  let showShowAllButton = false;
-  if (item.subItems.length > 4) {
-    itemsToShow = item.subItems.slice(0, 4);
-    showShowAllButton = true;
-  }
+  // Определяем максимальное количество отображаемых пунктов
+  const maxVisible = item.maxVisibleItems ?? 4;
+  const showShowAllButton = item.subItems.length > maxVisible;
+  const itemsToShow = showShowAllButton
+    ? item.subItems.slice(0, maxVisible)
+    : item.subItems;
 
   const shouldShowCreateButton =
     item.id === "dashboards" || item.id === "my-scenarios";
@@ -44,9 +44,8 @@ export const Submenu = ({
   return (
     <div className={styles.submenu}>
       {itemsToShow.map((subItem, index) => {
-        const isLast = showShowAllButton
-          ? index === 4
-          : index === itemsToShow.length - 1;
+        // Последний элемент среди отображаемых
+        const isLast = index === itemsToShow.length - 1;
 
         let isSelected = false;
         let handleSelect = null;

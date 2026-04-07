@@ -1,0 +1,43 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.widgetContent {
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+}
+
+.widgetHeader {
+  height: 50px;
+  gap: 8px;
+  display: flex;
+  opacity: 1;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $gray_f0;
+}
+
+.headerText {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: grab;
+
+  h2 {
+    @include RReg_20;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
+}
+
+.widgetBody {
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+  background: $white;
+  flex: 1;
+}

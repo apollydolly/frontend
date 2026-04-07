@@ -36,7 +36,7 @@ export const WidgetPanel = () => {
 
     const query = searchQuery.toLowerCase();
     return WIDGET_TYPES.filter((widget) =>
-      widget.name.toLowerCase().includes(query)
+      widget.name.toLowerCase().includes(query),
     );
   }, [searchQuery]);
 
@@ -46,8 +46,7 @@ export const WidgetPanel = () => {
         <div className={styles.logo}>
           <img src={Logo} alt="logo" />
           <div className={styles.logoText}>
-            <h2>Smart Decision</h2>
-            <h3>Система видеоаналитики</h3>
+            <h2>Speech Up+</h2>
           </div>
         </div>
       </div>

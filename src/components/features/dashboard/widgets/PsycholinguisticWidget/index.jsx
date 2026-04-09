@@ -8,7 +8,7 @@ import {
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Измените ID для другого спикера: SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
+// Измените ID для другого спикера: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const TARGET_SPEAKER_ID = "SPEAKER_03";
 
 export const PsycholinguisticWidget = ({
@@ -70,7 +70,23 @@ export const PsycholinguisticWidget = ({
     const option = {
       tooltip: {
         trigger: "axis",
+        gap: 8,
+        paddingTop: 4,
+        paddingRight: 8,
+        paddingBottom: 6,
+        paddingLeft: 8,
+        borderRadius: 4,
+        backgroundColor: "#00000066",
+        backdropFilter: "blur(24px)",
+        borderWidth: 0,
         axisPointer: { type: "cross", label: { backgroundColor: "#6a7985" } },
+        textStyle: {
+          color: "#FFFFFF",
+          fontFamily: "Roboto",
+          fontWeight: 400,
+          fontStyle: "Regular",
+          fontSize: 14,
+        },
       },
       legend: {
         data: [
@@ -79,24 +95,26 @@ export const PsycholinguisticWidget = ({
           "Коэффициент определённости действий",
         ],
         top: 10,
-        left: 0,
-        textStyle: { fontSize: 10 },
-      },
-      grid: {
-        bottom: "3%",
-        top: "18%",
-        containLabel: true,
+        left: "center",
+        textStyle: {
+          fontFamily: "Roboto",
+          fontSize: 14,
+        },
       },
       xAxis: {
         type: "category",
         boundaryGap: false,
         data: speakerData.map((item) => item.end.toFixed(2)),
-        axisLabel: { fontSize: 9, rotate: 30 },
+        axisLabel: {
+          fontFamily: "Roboto",
+          fontSize: 14,
+          rotate: 30,
+        },
         // name: "Время окончания (сек)",
       },
       yAxis: {
         type: "value",
-        axisLabel: { fontSize: 9 },
+        axisLabel: { fontFamily: "Roboto", fontSize: 14 },
         // name: "Значение коэффициента",
       },
       series: [
@@ -104,30 +122,45 @@ export const PsycholinguisticWidget = ({
           name: "Коэффициент агрессивности",
           type: "line",
           stack: "Total",
-          areaStyle: { opacity: 0.3 },
-          color: "#E74C3C",
+          areaStyle: { opacity: 0.5 },
+          color: "#EB3134",
           emphasis: { focus: "series" },
-          label: { show: true, position: "top", fontSize: 9 },
+          label: {
+            show: true,
+            position: "top",
+            fontFamily: "Roboto",
+            fontSize: 14,
+          },
           data: speakerData.map((item) => item.aggressiveness?.toFixed(2) ?? 0),
         },
         {
           name: "Коэффициент Трейгера",
           type: "line",
           stack: "Total",
-          areaStyle: { opacity: 0.3 },
-          color: "#F39C12",
+          areaStyle: { opacity: 0.5 },
+          color: "#1776E0",
           emphasis: { focus: "series" },
-          label: { show: true, position: "top", fontSize: 9 },
+          label: {
+            show: true,
+            position: "top",
+            fontFamily: "Roboto",
+            fontSize: 14,
+          },
           data: speakerData.map((item) => item.trager?.toFixed(2) ?? 0),
         },
         {
           name: "Коэффициент определённости действий",
           type: "line",
           stack: "Total",
-          areaStyle: { opacity: 0.3 },
-          color: "#2ECC71",
+          areaStyle: { opacity: 0.5 },
+          color: "#3CAB17",
           emphasis: { focus: "series" },
-          label: { show: true, position: "top", fontSize: 9 },
+          label: {
+            show: true,
+            position: "top",
+            fontFamily: "Roboto",
+            fontSize: 14,
+          },
           data: speakerData.map(
             (item) => item.action_certainty?.toFixed(2) ?? 0,
           ),

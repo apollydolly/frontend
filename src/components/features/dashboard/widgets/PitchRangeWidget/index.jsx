@@ -8,7 +8,7 @@ import {
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Измените ID для другого спикера: SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
+// Измените ID для другого спикера: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const TARGET_SPEAKER_ID = "SPEAKER_03";
 
 export const PitchRangeWidget = ({
@@ -67,19 +67,43 @@ export const PitchRangeWidget = ({
     const option = {
       tooltip: {
         trigger: "axis",
+        gap: 8,
+        paddingTop: 4,
+        paddingRight: 8,
+        paddingBottom: 6,
+        paddingLeft: 8,
+        borderRadius: 4,
+        backgroundColor: "#00000066",
+        backdropFilter: "blur(24px)",
+        borderWidth: 0,
         formatter: (params) => {
           return `Высказывание ${params[0].dataIndex + 1}<br/>
                     Время окончания: ${params[0].name} сек<br/>
                     Диапазон тона: ${params[0].value}`;
         },
+        textStyle: {
+          color: "#FFFFFF",
+          fontFamily: "Roboto",
+          fontWeight: 400,
+          fontStyle: "Regular",
+          fontSize: 14,
+        },
       },
       xAxis: {
         type: "category",
+        axisLabel: {
+          fontSize: 14,
+          fontFamily: "Roboto",
+        },
         // name: "Время окончания высказывания (сек)",
         data: speakerData.map((item) => item.end.toFixed(2)),
       },
       yAxis: {
         type: "value",
+        axisLabel: {
+          fontSize: 14,
+          fontFamily: "Roboto",
+        },
         // name: "Диапазон тона",
       },
       series: [
@@ -88,21 +112,22 @@ export const PitchRangeWidget = ({
           data: speakerData.map((item) => item.pitch_range.toFixed(2)),
           type: "line",
           symbol: "triangle",
-          symbolSize: 8,
+          symbolSize: 12,
           lineStyle: {
-            color: "#5470C6",
-            width: 3,
+            color: "#1776E0",
+            width: 4,
             type: "dashed",
           },
           itemStyle: {
             borderWidth: 2,
-            borderColor: "#EE6666",
-            color: "#FFD700",
+            borderColor: "#D429C5",
+            color: "#FDC44C",
           },
           label: {
             show: true,
             position: "top",
-            fontSize: 10,
+            fontSize: 14,
+            fontFamily: "Roboto",
             formatter: (params) => `${params.value}`,
           },
         },

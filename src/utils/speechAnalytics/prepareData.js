@@ -135,3 +135,22 @@ export const prepareAvgWordSpeedData = (data) => {
 
   return datasetSource;
 };
+
+// Подготовка данных эмоциональности
+export const prepareEmotionalityData = (data, startIdx, endIdx) => {
+  const result = {
+    speakers: [],
+    joyValues: [],
+    aggressionValues: [],
+    texts: [],
+  };
+
+  for (let i = startIdx; i < endIdx && i < data.speaker.length; i++) {
+    result.speakers.push(getSpeakerFullName(data.speaker[i]));
+    result.joyValues.push(data.joy_stamps_time_ratio?.[i] ?? 0);
+    result.aggressionValues.push(data.aggression_stamps_time_ratio?.[i] ?? 0);
+    result.texts.push(data.text?.[i] ?? "");
+  }
+
+  return result;
+};

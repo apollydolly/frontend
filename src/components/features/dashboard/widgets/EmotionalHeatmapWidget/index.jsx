@@ -1,27 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import { loadSpeechData } from "@utils/speechAnalytics/loadData";
-import { prepareHeatmapData } from "@utils/speechAnalytics/prepareData.js";
+import { prepareHeatmapData } from "@utils/speechAnalytics/prepareData";
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
 // Укажите ID спикеров, которых нужно отобразить
+// Возможные значения: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const SELECTED_SPEAKERS = ["SPEAKER_02", "SPEAKER_03"];
 
-export const EnergyHeatmapWidget = ({
+export const EmotionalHeatmapWidget = ({
   data: propData,
   widgetId,
   realTimeData,
 }) => {
   const chartRef = useRef(null);
   const chartInstance = useRef(null);
-  const [chartData, setChartData] = useState(null);
+  const [rawData, setRawData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Загрузка данных
   useEffect(() => {
     if (realTimeData?.speechData) {
-      setChartData(realTimeData.speechData);
+      setRawData(realTimeData.speechData);
       setLoading(false);
       return;
     }
@@ -30,7 +32,7 @@ export const EnergyHeatmapWidget = ({
       try {
         const data = await loadSpeechData();
         if (data) {
-          setChartData(data);
+          setRawData(data);
         } else {
           setError("Не удалось загрузить данные");
         }
@@ -44,40 +46,46 @@ export const EnergyHeatmapWidget = ({
     fetchData();
   }, [realTimeData]);
 
+  // Отрисовка графика
   useEffect(() => {
-    if (!chartRef.current || !chartData) return;
+    if (!chartRef.current || !rawData) return;
 
     if (chartInstance.current) {
       chartInstance.current.dispose();
       chartInstance.current = null;
     }
 
-    // Фильтрация данных (без изменений)
+    // Фильтруем данные только для выбранных спикеров
     const filteredSpeaker = [];
-    const filteredEnergy = [];
+    const filteredJoyWordsRatio = [];
     const filteredEnd = [];
-    chartData.speaker.forEach((speaker, idx) => {
+
+    rawData.speaker.forEach((speaker, idx) => {
       if (SELECTED_SPEAKERS.includes(speaker)) {
         filteredSpeaker.push(speaker);
-        filteredEnergy.push(chartData.mean_norm_energy[idx]);
-        filteredEnd.push(chartData.end[idx]);
+        filteredJoyWordsRatio.push(rawData.joy_words_ratio?.[idx] ?? 0);
+        filteredEnd.push(rawData.end[idx]);
       }
     });
+
     if (filteredSpeaker.length === 0) {
       setError("Нет данных для выбранных участников");
       return;
     }
+
     const filteredData = {
-      ...chartData,
+      ...rawData,
       speaker: filteredSpeaker,
-      mean_norm_energy: filteredEnergy,
+      joy_words_ratio: filteredJoyWordsRatio,
       end: filteredEnd,
     };
 
+    // Подготовка данных для тепловой карты (joy_words_ratio)
     const { days, hours, heatmapData, maxValue, timeValues } =
-      prepareHeatmapData(filteredData, "mean_norm_energy");
-    const axisInterval = Math.ceil(hours.length / 20);
+      prepareHeatmapData(filteredData, "joy_words_ratio");
+    const axisInterval = Math.ceil(hours.length / 15);
 
+    chartInstance.current = echarts.init(chartRef.current);
     const option = {
       tooltip: {
         position: "top",
@@ -92,9 +100,9 @@ export const EnergyHeatmapWidget = ({
         borderWidth: 0,
         formatter: (params) => {
           const speaker = days[params.data[1]];
-          const time = timeValues[params.data[0]];
+          const time = timeValues[params.data[0]].toFixed(1);
           const value = params.data[2];
-          return `${speaker}<br/>${time}<br/>Энергичность: ${value.toFixed(2)}`;
+          return `${speaker}<br/>Время: ${time}с<br/>Эмоциональность: ${value.toFixed(2)}`;
         },
         textStyle: {
           color: "#FFFFFF",
@@ -104,7 +112,12 @@ export const EnergyHeatmapWidget = ({
           fontSize: 14,
         },
       },
-      grid: { height: "50%", top: "10%", left: "10%", right: "5%" },
+      grid: {
+        height: "50%",
+        top: "10%",
+        left: "10%",
+        right: "5%",
+      },
       xAxis: {
         type: "category",
         data: hours,
@@ -124,25 +137,25 @@ export const EnergyHeatmapWidget = ({
       },
       visualMap: {
         min: 0,
-        max: maxValue,
+        max: 1,
         calculable: true,
         orient: "horizontal",
         left: "center",
         inRange: {
           color: [
-            "#ffffbf",
-            "#fee090",
-            "#fdae61",
-            "#f46d43",
-            "#d73027",
-            "#a50026",
+            "#fffacd",
+            "#f0e68c",
+            "#d8e887",
+            "#b8e080",
+            "#98d979",
+            "#78d173",
           ],
         },
         formatter: (value) => value.toFixed(2),
       },
       series: [
         {
-          name: "Энергичность",
+          name: "Эмоциональность",
           type: "heatmap",
           data: heatmapData,
           label: {
@@ -152,19 +165,26 @@ export const EnergyHeatmapWidget = ({
             fontFamily: "Roboto",
           },
           emphasis: {
-            itemStyle: { shadowBlur: 10, shadowColor: "rgba(0, 0, 0, 0.5)" },
+            itemStyle: {
+              shadowBlur: 10,
+              shadowColor: "rgba(0, 0, 0, 0.5)",
+            },
           },
         },
       ],
     };
 
-    chartInstance.current = echarts.init(chartRef.current);
-    chartInstance.current.setOption(option, true);
-    // Принудительно пересчитываем размеры, чтобы применить стили
-    setTimeout(() => chartInstance.current?.resize(), 0);
+    if (chartInstance.current) {
+      chartInstance.current.setOption(option);
+    }
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        chartInstance.current.resize();
+      }
+    };
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("resize", handleResize);
       if (chartInstance.current) {
@@ -172,21 +192,21 @@ export const EnergyHeatmapWidget = ({
         chartInstance.current = null;
       }
     };
-  }, [chartData]);
+  }, [rawData]);
 
   if (loading) return <div className={styles.loading}>Загрузка данных...</div>;
   if (error) return <div className={styles.error}>Ошибка: {error}</div>;
+  if (!rawData) return <div className={styles.noData}>Нет данных</div>;
 
   return (
     <div className={styles.widgetContent}>
       <div className={styles.widgetHeader}>
-        <img src={Icon} alt="energy" />
+        <img src={Icon} alt="emotion" />
         <div className={styles.headerText}>
-          <h2>Энергичность участников</h2>
+          <h2>Эмоциональный климат</h2>
           <p>
-            В целом встреча характеризуется средней энергичностью участников.
-            Наблюдается сниженная активность в начале встречи, в начале
-            длительных высказываний, в конце встречи.
+            Высказывания всех участников на протяжении встречи (тепловая карта
+            эмоциональности)
           </p>
         </div>
       </div>

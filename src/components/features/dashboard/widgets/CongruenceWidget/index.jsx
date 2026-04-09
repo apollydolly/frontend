@@ -8,10 +8,10 @@ import {
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Возможные значения: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
+// Измените ID для другого спикера: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const TARGET_SPEAKER_ID = "SPEAKER_03";
 
-export const TotalPausesRatioWidget = ({
+export const CongruenceWidget = ({
   data: propData,
   widgetId,
   realTimeData,
@@ -55,10 +55,7 @@ export const TotalPausesRatioWidget = ({
     return filtered.metrics;
   }, [rawData]);
 
-  // Имя спикера для отображения
-  const speakerName = useMemo(() => {
-    return getSpeakerFullName(TARGET_SPEAKER_ID);
-  }, []);
+  const speakerName = useMemo(() => getSpeakerFullName(TARGET_SPEAKER_ID), []);
 
   // Отрисовка графика
   useEffect(() => {
@@ -69,7 +66,7 @@ export const TotalPausesRatioWidget = ({
     }
 
     chartInstance.current = echarts.init(chartRef.current);
-    const speakerId = TARGET_SPEAKER_ID;
+
     const option = {
       tooltip: {
         trigger: "axis",
@@ -82,10 +79,14 @@ export const TotalPausesRatioWidget = ({
         backgroundColor: "#00000066",
         backdropFilter: "blur(24px)",
         borderWidth: 0,
+        axisPointer: { type: "shadow" },
         formatter: (params) => {
-          return `Высказывание ${params[0].dataIndex + 1}<br/>
-                    Время окончания: ${params[0].name} сек<br/>
-                    Доля пауз: ${params[0].value}%`;
+          const time = params[0].axisValue;
+          const happiness = params[0].value;
+          const anger = -params[1].value;
+          return `Время: ${time}<br/>
+                  Радость: ${happiness.toFixed(2)}<br/>
+                  Злость: ${anger.toFixed(2)}`;
         },
         textStyle: {
           color: "#FFFFFF",
@@ -95,49 +96,72 @@ export const TotalPausesRatioWidget = ({
           fontSize: 14,
         },
       },
-      xAxis: {
-        type: "category",
-        axisLabel: {
-          fontSize: 14,
+      legend: {
+        data: ["Радость", "Злость"],
+        top: 10,
+        left: "center",
+        textStyle: {
           fontFamily: "Roboto",
+          fontSize: 14,
         },
-        data: speakerData.map((item) => item.end.toFixed(2)),
+      },
+      xAxis: {
+        type: "value",
+        axisLabel: {
+          formatter: (value) => Math.abs(value).toFixed(2),
+          fontFamily: "Roboto",
+          fontSize: 14,
+        },
       },
       yAxis: {
+        type: "category",
+        axisTick: { show: false },
         axisLabel: {
-          fontSize: 14,
+          margin: 40,
+          align: "right",
           fontFamily: "Roboto",
+          fontSize: 14,
         },
-        //   type: "value",
-        //   axisLabel: { formatter: "{value}%" },
+        data: speakerData.map((item) => item.end.toFixed(0) + "сек"),
       },
       series: [
         {
-          name: `Доля пауз (${getSpeakerFullName(speakerId)})`,
-          data: speakerData.map((item) => item.total_pauses_ratio.toFixed(2)),
-          type: "line",
-          symbol: "circle",
-          symbolSize: 12,
-          lineStyle: {
-            color: "#1776E0",
-            width: 4,
-            type: "dashed",
-          },
-          itemStyle: {
-            borderWidth: 2,
-            borderColor: "#D429C5",
-            color: "#FDC44C",
-          },
+          name: "Радость",
+          type: "bar",
+          stack: "congruence",
           label: {
             show: true,
-            position: "top",
-            fontSize: 14,
+            position: "right",
             fontFamily: "Roboto",
-            formatter: (params) => `${params.value}%`,
+            fontSize: 14,
+            formatter: (params) => params.value.toFixed(2),
           },
+          emphasis: { focus: "series" },
+          itemStyle: { color: "#3CAB17" },
+          data: speakerData.map((item) =>
+            item.congruence_emotion === "happiness" ? item.congruence_value : 0,
+          ),
+        },
+        {
+          name: "Злость",
+          type: "bar",
+          stack: "congruence",
+          label: {
+            show: true,
+            position: "left",
+            fontFamily: "Roboto",
+            fontSize: 14,
+            formatter: (params) => (-params.value).toFixed(2),
+          },
+          emphasis: { focus: "series" },
+          itemStyle: { color: "#EB3134" },
+          data: speakerData.map((item) =>
+            item.congruence_emotion === "angry" ? -item.congruence_value : 0,
+          ),
         },
       ],
     };
+
     chartInstance.current.setOption(option);
 
     const handleResize = () => chartInstance.current?.resize();
@@ -157,7 +181,7 @@ export const TotalPausesRatioWidget = ({
   if (!speakerData || speakerData.length === 0) {
     return (
       <div className={styles.noData}>
-        Нет данных о паузах для участника {speakerName}
+        Нет данных о конгруэнтности для участника {speakerName}
       </div>
     );
   }
@@ -165,10 +189,14 @@ export const TotalPausesRatioWidget = ({
   return (
     <div className={styles.widgetContent}>
       <div className={styles.widgetHeader}>
-        <img src={Icon} alt="pauses" />
+        <img src={Icon} alt="congruence" />
         <div className={styles.headerText}>
-          <h2>Доля пауз в речи</h2>
-          <p>Отношение длительности пауз к общей длительности высказываний</p>
+          <h2>Конгруэнтность</h2>
+          <p>
+            Рассогласование эмоций (неконгруэнтность), одновременно передаваемых
+            в разных коммуникативных каналах с помощью мимики, голоса и в тексте
+            речи.
+          </p>
         </div>
       </div>
       <div className={styles.widgetBody}>

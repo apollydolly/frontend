@@ -5,6 +5,9 @@ import { TotalPausesRatioWidget } from "@dashboard/widgets/TotalPausesRatioWidge
 import { PitchRangeWidget } from "@dashboard/widgets/PitchRangeWidget";
 import { WordParasitesWidget } from "@dashboard/widgets/WordParasitesWidget";
 import { PsycholinguisticWidget } from "@dashboard/widgets/PsycholinguisticWidget";
+import { CongruenceWidget } from "@dashboard/widgets/CongruenceWidget";
+import { EmotionalHeatmapWidget } from "@dashboard/widgets/EmotionalHeatmapWidget";
+import { EmotionalityWidget } from "@dashboard/widgets/EmotionalityWidget";
 
 export const WIDGET_CONFIG = {
   speechLenght: {
@@ -42,17 +45,17 @@ export const WIDGET_CONFIG = {
   energyHeatmap: {
     name: "Энергичность участников",
     component: EnergyHeatmapWidget,
-    defaultSize: { w: 10, h: 3 },
+    defaultSize: { w: 10, h: 2 },
     availableSizes: [
-      { w: 10, h: 3 }, // default
-      { w: 10, h: 3 }, // min
-      { w: 10, h: 3 }, // max
+      { w: 10, h: 2 }, // default
+      { w: 10, h: 2 }, // min
+      { w: 10, h: 2 }, // max
     ],
     constraints: {
       minW: 10,
-      minH: 3,
+      minH: 2,
       maxW: 10,
-      maxH: 3,
+      maxH: 2,
     },
   },
   totalPausesRatio: {
@@ -106,6 +109,54 @@ export const WIDGET_CONFIG = {
   psycholinguistic: {
     name: "Психолингвистические маркеры",
     component: PsycholinguisticWidget,
+    defaultSize: { w: 6, h: 4 },
+    availableSizes: [
+      { w: 6, h: 4 },
+      { w: 6, h: 4 },
+      { w: 6, h: 4 },
+    ],
+    constraints: {
+      minW: 6,
+      minH: 4,
+      maxW: 6,
+      maxH: 4,
+    },
+  },
+  congruence: {
+    name: "Конгруэнтность",
+    component: CongruenceWidget,
+    defaultSize: { w: 6, h: 4 },
+    availableSizes: [
+      { w: 6, h: 4 },
+      { w: 6, h: 4 },
+      { w: 6, h: 4 },
+    ],
+    constraints: {
+      minW: 6,
+      minH: 4,
+      maxW: 6,
+      maxH: 4,
+    },
+  },
+  emotionalHeatmap: {
+    name: "Эмоциональный климат",
+    component: EmotionalHeatmapWidget,
+    defaultSize: { w: 10, h: 2 },
+    availableSizes: [
+      { w: 10, h: 2 },
+      { w: 10, h: 2 },
+      { w: 10, h: 2 },
+    ],
+    constraints: {
+      minW: 10,
+      minH: 2,
+      maxW: 10,
+      maxH: 2,
+    },
+  },
+  emotionality: {
+    name: "Эмоциональность высказываний",
+    component: EmotionalityWidget,
     defaultSize: { w: 6, h: 4 },
     availableSizes: [
       { w: 6, h: 4 },

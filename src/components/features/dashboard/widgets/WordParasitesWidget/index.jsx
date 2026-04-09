@@ -8,7 +8,7 @@ import {
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Измените ID для другого спикера: SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
+// Измените ID для другого спикера: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const TARGET_SPEAKER_ID = "SPEAKER_03";
 
 export const WordParasitesWidget = ({
@@ -72,21 +72,41 @@ export const WordParasitesWidget = ({
     const option = {
       tooltip: {
         trigger: "item",
+        gap: 8,
+        paddingTop: 4,
+        paddingRight: 8,
+        paddingBottom: 6,
+        paddingLeft: 8,
+        borderRadius: 4,
+        backgroundColor: "#00000066",
+        backdropFilter: "blur(24px)",
+        borderWidth: 0,
         formatter: (params) => {
           return `${params.name}<br/>Количество: ${params.value}<br/>Доля: ${params.percent.toFixed(1)}%`;
+        },
+        textStyle: {
+          color: "#FFFFFF",
+          fontFamily: "Roboto",
+          fontWeight: 400,
+          fontStyle: "Regular",
+          fontSize: 14,
         },
       },
       legend: {
         top: "bottom",
         orient: "horizontal",
         left: "center",
+        textStyle: {
+          fontFamily: "Roboto",
+          fontSize: 14,
+        },
       },
       series: [
         {
           name: "Слова-паразиты",
           type: "pie",
           radius: [50, 250],
-          center: ["50%", "50%"],
+          center: ["50%", "45%"],
           roseType: "area",
           itemStyle: {
             borderRadius: 8,
@@ -94,6 +114,8 @@ export const WordParasitesWidget = ({
           data: parasitesData,
           label: {
             formatter: "{b}: {c} ({d}%)",
+            fontFamily: "Roboto",
+            fontSize: 14,
           },
           emphasis: {
             itemStyle: {

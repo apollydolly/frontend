@@ -14,6 +14,7 @@ export const VideoPage = () => {
   const videoFile = location.state?.videoFile || null;
   const originalFileName = location.state?.originalFileName || "";
   const videoDataFromState = location.state?.videoData;
+  const isOnlineMode = location.state?.isOnlineMode || false;
 
   // Если вернулись с созданным дашбордом, используем данные из state
   const [videoData, setVideoData] = useState(videoDataFromState || null);
@@ -62,6 +63,7 @@ export const VideoPage = () => {
         isViewMode={isViewMode}
         onExit={handleExit}
         onFileSelect={handleFileSelect}
+        isOnlineMode={isOnlineMode}
       />
     </div>
   );

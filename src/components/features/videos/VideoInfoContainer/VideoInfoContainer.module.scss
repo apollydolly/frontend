@@ -228,3 +228,14 @@
     object-fit: contain;
   }
 }
+.recordButtonContainer {
+  // backdrop-filter: blur(5px);
+  background: #0000004d;
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-block;
+  position: relative;
+  left: 16px;
+  top: 16px;
+  z-index: 1000;
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./InfoContainer.module.scss";
 import VideoIcon from "@icons/video-horizontal.svg?react";
@@ -9,11 +9,10 @@ import ArrowIcon from "@icons/small_arrow.svg?react";
 import PlusIcon from "@icons/plus_small.svg?react";
 import ZoneIcon from "@icons/zona_color.svg?react";
 import MaskIcon from "@icons/mask_color.svg?react";
-import PenIcon from "@icons/pen_tool.svg?react";
 import { PrimaryButton } from "@ui/buttons/PrimaryButton";
 import { SecondaryButton } from "@ui/buttons/SecondaryButton";
 import { CloseButton } from "@ui/buttons/CloseButton";
-import { Tabs } from "@ui/shared/Tabs";
+import { InputField } from "@ui/shared/InputField";
 import SimpleBar from "simplebar-react";
 
 export const InfoContainer = ({
@@ -42,8 +41,11 @@ export const InfoContainer = ({
   onZoneLeave = () => {},
   onMaskHover = () => {},
   onMaskLeave = () => {},
+  isOnlineMode = false,
 }) => {
   const navigate = useNavigate();
+  const [scenarioName, setScenarioName] = useState("Собеседование на работу");
+
   const handleDashboardClick = (dashboardId, dashboardName) => {
     navigate("/dashboards", {
       state: {
@@ -182,6 +184,10 @@ export const InfoContainer = ({
     );
   };
 
+  const handleScenarioNameChange = useCallback((e) => {
+    setScenarioName(e.target.value);
+  }, []);
+
   // Функция для отображения списка масок
   const renderMasksList = () => {
     if (masks.length === 0) {
@@ -227,33 +233,50 @@ export const InfoContainer = ({
         return (
           <>
             <div className={styles.fileInfo}>
-              <div className={styles.fileName}>
-                <h2>Название файла</h2>
-                <p>
-                  {originalFileName ||
-                    currentVideoFile?.name ||
-                    "Файл не выбран"}
-                </p>
-              </div>
-              <div className={styles.videoFrame}>
-                {isProcessing || !thumbnailCreatedRef.current ? (
-                  <VideoIcon />
-                ) : videoThumbnail ? (
-                  <img src={videoThumbnail} alt="Кадр из видео" />
-                ) : (
-                  <VideoIcon />
-                )}
-              </div>
-              <div className={styles.uploadingInfo}>
-                <div className={styles.loadingTime}>
-                  <h2>Время загрузки</h2>
-                  <p>{parseServerDate().time}</p>
+              {!isOnlineMode && (
+                <div className={styles.fileName}>
+                  <h2>Название файла</h2>
+                  <p>
+                    {originalFileName ||
+                      currentVideoFile?.name ||
+                      "Файл не выбран"}
+                  </p>
                 </div>
-                <div className={`${styles.loadingTime} ${styles.date}`}>
-                  <h2>Дата загрузки</h2>
-                  <p>{parseServerDate().date}</p>
-                </div>
-              </div>
+              )}
+              {isOnlineMode && (
+                <InputField
+                  label="Сценарий"
+                  value={scenarioName}
+                  onChange={handleScenarioNameChange}
+                  placeholder="Введите название сценария"
+                  type="text"
+                  disabled={isProcessing || errorType || videoState === "view"}
+                />
+              )}
+              {!isOnlineMode && (
+                <>
+                  {" "}
+                  <div className={styles.videoFrame}>
+                    {isProcessing || !thumbnailCreatedRef.current ? (
+                      <VideoIcon />
+                    ) : videoThumbnail ? (
+                      <img src={videoThumbnail} alt="Кадр из видео" />
+                    ) : (
+                      <VideoIcon />
+                    )}
+                  </div>
+                  <div className={styles.uploadingInfo}>
+                    <div className={styles.loadingTime}>
+                      <h2>Время загрузки</h2>
+                      <p>{parseServerDate().time}</p>
+                    </div>
+                    <div className={`${styles.loadingTime} ${styles.date}`}>
+                      <h2>Дата загрузки</h2>
+                      <p>{parseServerDate().date}</p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <div className={styles.connectedDashboards}>
               <h2>Подключенные дашборды</h2>

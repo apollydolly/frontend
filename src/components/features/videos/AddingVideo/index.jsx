@@ -23,6 +23,7 @@ export const AddingVideo = ({
   isViewMode = false,
   onExit,
   onFileSelect,
+  isOnlineMode = false,
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -808,6 +809,16 @@ export const AddingVideo = ({
         "Начало загрузки данных видео, location.state:",
         location.state,
       );
+      if (isOnlineMode) {
+        // Подставляем тестовые данные для онлайн-режима
+        // setVideoName("Онлайн-коммуникация с ботом");
+        setServerVideoId(`online-${Date.now()}`);
+        setIsProcessing(false);
+        setIsUploading(false);
+        setUploadProgress(100);
+        thumbnailCreatedRef.current = true;
+        return;
+      }
 
       // ВАЖНО: если есть данные в state, применяем их, но ВСЕГДА загружаем свежие данные с сервера
       if (location.state?.videoData) {
@@ -1005,7 +1016,7 @@ export const AddingVideo = ({
     };
 
     loadVideoData();
-  }, [location.state]); // location.state в зависимостях
+  }, [location.state, isOnlineMode]);
 
   // Отдельный эффект для загрузки видеофайла с сервера
   useEffect(() => {
@@ -1156,6 +1167,28 @@ export const AddingVideo = ({
 
   const handleSave = async () => {
     console.log("=== ДАННЫЕ ДЛЯ СОХРАНЕНИЯ ===");
+
+    if (isOnlineMode) {
+      // Для онлайн-режима просто переходим к просмотру без вызовов API
+      navigate(`/video/${serverVideoId}/view`, {
+        state: {
+          videoData: {
+            videoName,
+            videoNote,
+            videoThumbnail,
+            originalFileName: currentOriginalFileName,
+            uploadDate: uploadDate,
+            serverVideoId: serverVideoId,
+            wasProcessed: true,
+            connectedDashboards,
+            zones,
+            masks,
+            isOnlineMode: true, // сохраняем флаг для страницы просмотра
+          },
+        },
+      });
+      return;
+    }
 
     try {
       if (serverVideoId) {
@@ -1378,7 +1411,11 @@ export const AddingVideo = ({
               <p
                 className={videoState === "edit" ? styles.videoName : undefined}
               >
-                {videoState === "add" ? "Добавление видео" : videoName}
+                {isOnlineMode
+                  ? "Онлайн коммуникация"
+                  : videoState === "add"
+                    ? "Добавление видео"
+                    : videoName}
               </p>
               {videoState === "edit" && (
                 <>
@@ -1388,11 +1425,13 @@ export const AddingVideo = ({
               )}
             </div>
           </div>
-          {(videoState === "add" || videoState === "edit") && (
-            <h3>
-              Вы можете просмотреть видео и отредактировать информацию о нём.
-            </h3>
-          )}
+
+          <h3>
+            {isOnlineMode
+              ? "Вы можете разыграть коммуникативную ситуацию с разговорным ассистентом."
+              : (videoState === "add" || videoState === "edit") &&
+                "Вы можете просмотреть видео и отредактировать информацию о нём."}
+          </h3>
         </div>
         <div
           className={`${styles.buttonsContainer} ${
@@ -1480,6 +1519,7 @@ export const AddingVideo = ({
             onZoneLeave={handleZoneLeave}
             onMaskHover={handleMaskHover}
             onMaskLeave={handleMaskLeave}
+            isOnlineMode={isOnlineMode}
           />
         )}
 
@@ -1536,6 +1576,7 @@ export const AddingVideo = ({
           }
           highlightedZoneId={highlightedZoneId}
           highlightedMaskId={highlightedMaskId}
+          isOnlineMode={isOnlineMode}
         />
       </div>
     </div>

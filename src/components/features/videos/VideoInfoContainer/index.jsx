@@ -4,6 +4,8 @@ import { CustomVideoPlayer } from "@videos/CustomVideoPlayer";
 import { PrimaryButton } from "@ui/buttons/PrimaryButton";
 import SelectFileIcon from "@icons/document.svg?react";
 import RefreshIcon from "@icons/refresh.svg?react";
+import VideoIcon from "@icons/video.svg?react";
+import VideoSaveIcon from "@icons/video-save.svg?react";
 import ErrorIcon from "@icons/error.svg?react";
 import { InputField } from "@ui/shared/InputField";
 
@@ -42,6 +44,7 @@ export const VideoInfoContainer = ({
   masks = [],
   highlightedZoneId = null,
   highlightedMaskId = null,
+  isOnlineMode = false,
 }) => {
   const canvasRef = useRef(null);
   const captureVideoRef = useRef(null);
@@ -112,13 +115,13 @@ export const VideoInfoContainer = ({
           currentVideoTime,
           timeToCapture,
           isFirstFrame,
-        }
+        },
       );
 
       const handleCanPlay = () => {
         console.log(
           "Capture video can play, capturing frame at:",
-          video.currentTime
+          video.currentTime,
         );
         captureVideoRef.current = video;
 
@@ -354,7 +357,7 @@ export const VideoInfoContainer = ({
     x,
     y,
     color = currentColor,
-    isCreating = false
+    isCreating = false,
   ) => {
     const size = isCreating ? 12 : 6;
     const borderWidth = isCreating ? 4 : 3;
@@ -479,7 +482,7 @@ export const VideoInfoContainer = ({
         }
       });
     },
-    [zones, masks, highlightedZoneId, highlightedMaskId]
+    [zones, masks, highlightedZoneId, highlightedMaskId],
   );
 
   // перерисовка при любых изменениях
@@ -646,8 +649,13 @@ export const VideoInfoContainer = ({
             )}
           </div>
         )}
+        {isOnlineMode && (
+          <div className={styles.recordButtonContainer}>
+            <PrimaryButton text="Начать" icon={VideoIcon} />
+          </div>
+        )}
 
-        {(!videoUrl || errorType === "upload") && (
+        {(!videoUrl || errorType === "upload") && !isOnlineMode && (
           <>
             {videoState === "add" && (errorType === "upload" || !videoUrl) && (
               <div className={styles.errorVideoPlaceholder}>
@@ -683,17 +691,7 @@ export const VideoInfoContainer = ({
           </>
         )}
       </div>
-
-      {activeTab === "zones" && !isCreating ? (
-        <div
-          className={`${styles.zonesMasksInfo} ${
-            videoState === "view" ? styles.creating : undefined
-          }`}
-        >
-          <h2>Зоны и Маски</h2>
-          <p>Зона - это...</p>
-        </div>
-      ) : activeTab !== "zones" ? (
+      {!isOnlineMode ? (
         <>
           <InputField
             label="Название видео"
@@ -713,7 +711,27 @@ export const VideoInfoContainer = ({
             viewMode={videoState === "view"}
           />
         </>
-      ) : null}
+      ) : (
+        <>
+          <InputField
+            label="Реплики разговорного ассистента"
+            // value={videoName}
+            // onChange={handleVideoNameChange}
+            placeholder="Здесь будут выводиться реплики разговорного ассистента"
+            type="textarea"
+            disabled={true}
+            viewMode={videoState === "view"}
+          />
+          <InputField
+            label="Заметка о видео"
+            value={videoNote}
+            onChange={handleVideoNoteChange}
+            placeholder="Ваша заметка о видео"
+            type="text"
+            disabled={isProcessing || errorType || videoState === "view"}
+          />
+        </>
+      )}
     </div>
   );
 };

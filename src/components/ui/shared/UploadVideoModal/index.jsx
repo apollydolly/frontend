@@ -311,6 +311,22 @@ export const UploadVideoModal = ({
     }
   };
 
+  const handleOnlineNext = () => {
+    // Генерируем уникальный ID для онлайн-видео
+    const onlineVideoId = `online-${Date.now()}`;
+
+    // Переходим на страницу видео с флагом isOnlineMode
+    navigate(`/video/${onlineVideoId}`, {
+      state: {
+        isOnlineMode: true,
+        fromDashboard: fromDashboard,
+        dashboardId: dashboardId,
+      },
+    });
+
+    onClose();
+  };
+
   const validateFile = (file) => {
     const allowedTypes = ["video/avi", "video/mp4", "video/x-msvideo"];
     const allowedExtensions = [".avi", ".mp4"];
@@ -599,7 +615,11 @@ export const UploadVideoModal = ({
                 могут оказаться некорректными.
               </p>
             </div>
-            <PrimaryButton text="Далее" icon={CameraIcon} />
+            <PrimaryButton
+              text="Далее"
+              icon={CameraIcon}
+              onClick={handleOnlineNext}
+            />
           </div>
         )}
 

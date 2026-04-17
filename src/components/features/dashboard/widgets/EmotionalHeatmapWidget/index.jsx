@@ -211,7 +211,15 @@ export const EmotionalHeatmapWidget = ({
         </div>
       </div>
       <div className={styles.widgetBody}>
-        <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
+        <div ref={chartRef} style={{ width: "100%", height: "80%" }} />
+        <div className={styles.widgetText}>
+          <p>
+            Общее настроение – <span>конструктивное, деловое.</span> Кандидат
+            проявляет позитивный настрой, открытость к вопросам. Рекрутёр
+            поддерживает ровную доброжелательную атмосферу. Давления или
+            конфликтных моментов не зафиксировано.
+          </p>
+        </div>
       </div>
     </div>
   );

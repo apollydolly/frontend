@@ -60,7 +60,7 @@ export const UploadedVideos = ({ onVideoUploaded }) => {
       try {
         const currentOffset = reset ? 0 : offset;
         console.log(
-          `Загрузка видео: offset=${currentOffset}, limit=${limit}, reset=${reset}`
+          `Загрузка видео: offset=${currentOffset}, limit=${limit}, reset=${reset}`,
         );
 
         const response = await videoService.getVideoList(limit, currentOffset);
@@ -91,7 +91,7 @@ export const UploadedVideos = ({ onVideoUploaded }) => {
         }
       }
     },
-    [isLoading, isLoadingMore, offset, initialLoadComplete]
+    [isLoading, isLoadingMore, offset, initialLoadComplete],
   );
 
   // Обработчик прокрутки для ленивой загрузки
@@ -359,6 +359,7 @@ export const UploadedVideos = ({ onVideoUploaded }) => {
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onVideoUploaded={handleVideoUploaded}
+        tab={"newVideo"}
       />
     </div>
   );

@@ -248,6 +248,21 @@ export const AvgWordSpeedWidget = ({
       </div>
       <div className={styles.widgetBody}>
         <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
+        <div className={styles.widgetText}>
+          <p>
+            <span>Кандидат: </span>нормальный темп, позволяет удерживать
+            внимание.
+          </p>
+          <p>
+            <span>Рекрутер (бот): </span>чуть выше среднего, характерно для
+            чётко структурированных вопросов.
+          </p>
+          <p>
+            <span>Рекомендация: </span>
+            кандидату поддерживать текущий темп, избегать ускорения в сложных
+            вопросах.
+          </p>
+        </div>
       </div>
     </div>
   );

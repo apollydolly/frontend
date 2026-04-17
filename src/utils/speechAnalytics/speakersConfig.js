@@ -1,10 +1,10 @@
 export const speakersConfig = {
-  SPEAKER_00: "Головачева Полина0",
-  SPEAKER_01: "Головачева Полина1",
+  SPEAKER_00: "Guzalya Sabiryanova",
+  SPEAKER_01: "Даниил Лебедев",
   SPEAKER_02: "Разговорный ассистент",
-  SPEAKER_03: "Головачева Полина3",
-  SPEAKER_04: "Головачева Полина4",
-  SPEAKER_05: "Головачева Полина5",
+  SPEAKER_03: "Головачева Полина",
+  SPEAKER_04: "Alex Krass",
+  SPEAKER_05: "Дарья Гартунг",
 };
 
 export const SPEAKER_COLORS = {

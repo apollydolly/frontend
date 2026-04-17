@@ -164,6 +164,18 @@ export const SpeechLenghtWidget = ({
       </div>
       <div className={styles.widgetBody}>
         <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
+        <div className={styles.widgetText}>
+          <p>
+            <span>Кандидат: </span>68% (отвечал на вопросы, приводил примеры)
+          </p>
+          <p>
+            <span>Рекрутер (бот): </span>32% (задавал вопросы, подводил итоги)
+          </p>
+          <p>
+            Неравномерность обусловлена форматом собеседования – кандидат
+            говорит больше.
+          </p>
+        </div>
       </div>
     </div>
   );

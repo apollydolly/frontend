@@ -21,7 +21,7 @@
 .headerText {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   cursor: grab;
 
   h2 {
@@ -40,4 +40,28 @@
   flex-direction: column;
   background: $white;
   flex: 1;
+}
+
+.widgetText {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-top: 10px;
+
+  &:first-of-type {
+    padding-top: 20px;
+  }
+
+  h2 {
+    @include RMed_16;
+    color: $dark_gray;
+  }
+  span {
+    @include RMed_16;
+    color: $dark_gray;
+  }
+  p {
+    @include RReg_16;
+    color: $light_gray;
+  }
 }

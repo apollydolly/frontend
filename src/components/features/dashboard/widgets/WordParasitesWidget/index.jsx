@@ -163,6 +163,13 @@ export const WordParasitesWidget = ({
       </div>
       <div className={styles.widgetBody}>
         <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
+        <div className={styles.widgetText}>
+          <p>
+            <span>Совет: </span>
+            кандидату следует избегать слов-заполнителей, особенно в начале
+            ответов.
+          </p>
+        </div>
       </div>
     </div>
   );

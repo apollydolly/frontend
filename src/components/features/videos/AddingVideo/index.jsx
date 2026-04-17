@@ -36,10 +36,10 @@ export const AddingVideo = ({
   const abortControllerRef = useRef(null);
   const [currentVideoTime, setCurrentVideoTime] = useState(0);
   const [zones, setZones] = useState(
-    videoData?.zones || location.state?.videoData?.zones || []
+    videoData?.zones || location.state?.videoData?.zones || [],
   );
   const [masks, setMasks] = useState(
-    videoData?.masks || location.state?.videoData?.masks || []
+    videoData?.masks || location.state?.videoData?.masks || [],
   );
   const [isCreatingMask, setIsCreatingMask] = useState(false);
   const [maskPoints, setMaskPoints] = useState([]);
@@ -58,17 +58,17 @@ export const AddingVideo = ({
   const [uploadDate, setUploadDate] = useState(videoData?.uploadDate || "");
   const [dashboardIdFromModal, setDashboardIdFromModal] = useState(null);
   const [videoName, setVideoName] = useState(
-    videoData?.videoName || "Видео без названия"
+    videoData?.videoName || "Видео без названия",
   );
 
   const [currentVideoFile, setCurrentVideoFile] = useState(
-    videoFile || videoData?.videoFile
+    videoFile || videoData?.videoFile,
   );
   const [currentOriginalFileName, setCurrentOriginalFileName] = useState(
     originalFileName ||
       videoData?.originalFileName ||
       currentVideoFile?.name ||
-      ""
+      "",
   );
 
   // Функции для работы с зонами
@@ -89,7 +89,7 @@ export const AddingVideo = ({
       setZoneColor("#E1760B");
       setZoneName("Новая зона");
     },
-    [zonePoints]
+    [zonePoints],
   );
 
   // Удаление зоны
@@ -117,13 +117,13 @@ export const AddingVideo = ({
   // Если переходим из режима просмотра - видео уже обработано
   const [isProcessing, setIsProcessing] = useState(videoState === "add");
   const [uploadProgress, setUploadProgress] = useState(
-    videoState === "add" ? 0 : 100
+    videoState === "add" ? 0 : 100,
   );
 
   const [videoNote, setVideoNote] = useState(videoData?.videoNote || "");
   const [videoUrl, setVideoUrl] = useState(videoData?.videoUrl || "");
   const [videoThumbnail, setVideoThumbnail] = useState(
-    videoData?.videoThumbnail || ""
+    videoData?.videoThumbnail || "",
   );
 
   const [errorType, setErrorType] = useState(null);
@@ -137,7 +137,7 @@ export const AddingVideo = ({
 
   // Моковые данные для подключенных дашбордов (для тестирования)
   const [connectedDashboards, setConnectedDashboards] = useState(
-    videoData?.connectedDashboards || []
+    videoData?.connectedDashboards || [],
   );
 
   // Цвета для выбора с названиями
@@ -213,7 +213,7 @@ export const AddingVideo = ({
       setMaskPoints([]);
       setMaskName("Новая маска");
     },
-    [maskPoints]
+    [maskPoints],
   );
 
   // Функция удаления маски
@@ -431,7 +431,7 @@ export const AddingVideo = ({
 
       video.load();
     },
-    [videoData?.videoThumbnail]
+    [videoData?.videoThumbnail],
   );
 
   // Функция для начала обработки видео
@@ -474,7 +474,7 @@ export const AddingVideo = ({
         file,
         duration,
         (progress) => setUploadProgress(progress),
-        abortControllerRef.current.signal // передаем signal для отмены
+        abortControllerRef.current.signal, // передаем signal для отмены
       );
 
       // Получаем ID видео с сервера
@@ -664,10 +664,10 @@ export const AddingVideo = ({
   const handleRemoveDashboard = useCallback(
     (dashboardId) => {
       setConnectedDashboards(
-        connectedDashboards.filter((d) => d.id !== dashboardId)
+        connectedDashboards.filter((d) => d.id !== dashboardId),
       );
     },
-    [connectedDashboards]
+    [connectedDashboards],
   );
 
   const handleAddTemplate = useCallback(() => {
@@ -698,7 +698,7 @@ export const AddingVideo = ({
           (progress) => {
             setVideoDownloadProgress(progress);
           },
-          abortControllerRef.current.signal // передаем signal для отмены
+          abortControllerRef.current.signal, // передаем signal для отмены
         );
 
         console.log("Видеофайл загружен");
@@ -740,7 +740,7 @@ export const AddingVideo = ({
         setIsLoadingFromServer(false);
       }
     },
-    [currentVideoFile, createThumbnail, isDownloadingVideo]
+    [currentVideoFile, createThumbnail, isDownloadingVideo],
   );
 
   const loadDashboardsInfo = async (dashboardIds) => {
@@ -755,7 +755,7 @@ export const AddingVideo = ({
 
       // Фильтруем только те дашборды, которые привязаны к видео
       const connectedDashboards = allDashboards.filter((dashboard) =>
-        dashboardIds.includes(dashboard.dashboard_id)
+        dashboardIds.includes(dashboard.dashboard_id),
       );
 
       console.log("Найденные подключенные дашборды:", connectedDashboards);
@@ -806,14 +806,14 @@ export const AddingVideo = ({
     const loadVideoData = async () => {
       console.log(
         "Начало загрузки данных видео, location.state:",
-        location.state
+        location.state,
       );
 
       // ВАЖНО: если есть данные в state, применяем их, но ВСЕГДА загружаем свежие данные с сервера
       if (location.state?.videoData) {
         console.log(
           "Используем данные из state как временные:",
-          location.state.videoData
+          location.state.videoData,
         );
         const { videoData } = location.state;
 
@@ -862,7 +862,7 @@ export const AddingVideo = ({
         try {
           console.log(
             "Начинаем загрузку данных с сервера для videoId:",
-            videoIdToLoad
+            videoIdToLoad,
           );
           setIsLoading(true);
 
@@ -908,7 +908,7 @@ export const AddingVideo = ({
           if (freshData.dashboards && freshData.dashboards.length > 0) {
             console.log("ID дашбордов с сервера:", freshData.dashboards);
             const dashboardsInfo = await loadDashboardsInfo(
-              freshData.dashboards
+              freshData.dashboards,
             );
             console.log("Информация о дашбордах:", dashboardsInfo);
             setConnectedDashboards(dashboardsInfo);
@@ -939,7 +939,7 @@ export const AddingVideo = ({
             }));
             console.log(
               "Загруженные зоны с сервера (после преобразования):",
-              formattedZones
+              formattedZones,
             );
             setZones(formattedZones);
           }
@@ -966,7 +966,7 @@ export const AddingVideo = ({
             }));
             console.log(
               "Загруженные маски с сервера (после преобразования):",
-              formattedMasks
+              formattedMasks,
             );
             setMasks(formattedMasks);
           }
@@ -1063,15 +1063,15 @@ export const AddingVideo = ({
     try {
       const allDashboards = await dashboardService.getUserDashboards();
       const dashboardInfo = allDashboards.find(
-        (d) => d.dashboard_id === dashboardId
+        (d) => d.dashboard_id === dashboardId,
       );
 
       if (dashboardInfo && dashboardInfo.name) {
         // Обновляем название в connectedDashboards
         setConnectedDashboards((prev) =>
           prev.map((d) =>
-            d.id === dashboardId ? { ...d, title: dashboardInfo.name } : d
-          )
+            d.id === dashboardId ? { ...d, title: dashboardInfo.name } : d,
+          ),
         );
         console.log("Название дашборда загружено сразу:", dashboardInfo.name);
       }
@@ -1099,7 +1099,7 @@ export const AddingVideo = ({
         !connectedDashboards.some((d) => d.id === dashboardIdFromModal)
       ) {
         const dashboardInfo = allDashboards.find(
-          (d) => d.dashboard_id === dashboardIdFromModal
+          (d) => d.dashboard_id === dashboardIdFromModal,
         );
         if (dashboardInfo) {
           const newDashboard = {
@@ -1123,7 +1123,7 @@ export const AddingVideo = ({
       for (let i = 0; i < updatedConnectedDashboards.length; i++) {
         const dashboard = updatedConnectedDashboards[i];
         const dashboardInfo = allDashboards.find(
-          (d) => d.dashboard_id === dashboard.id
+          (d) => d.dashboard_id === dashboard.id,
         );
 
         if (dashboardInfo) {
@@ -1146,7 +1146,7 @@ export const AddingVideo = ({
         setConnectedDashboards(updatedConnectedDashboards);
         console.log(
           "Обновленные подключенные дашборды:",
-          updatedConnectedDashboards
+          updatedConnectedDashboards,
         );
       }
     } catch (error) {
@@ -1311,7 +1311,7 @@ export const AddingVideo = ({
         await videoService.deleteVideo(serverVideoId);
       } else {
         console.warn(
-          "[handleDelete] serverVideoId отсутствует, удаляем только локально"
+          "[handleDelete] serverVideoId отсутствует, удаляем только локально",
         );
       }
       navigate("/videos");
@@ -1390,8 +1390,7 @@ export const AddingVideo = ({
           </div>
           {(videoState === "add" || videoState === "edit") && (
             <h3>
-              Вы можете отредактировать информацию, просмотреть видео и отметить
-              для него особые зоны.
+              Вы можете просмотреть видео и отредактировать информацию о нём.
             </h3>
           )}
         </div>
@@ -1489,8 +1488,8 @@ export const AddingVideo = ({
             isUploading
               ? uploadProgress
               : videoDownloadProgress > 0
-              ? videoDownloadProgress
-              : uploadProgress
+                ? videoDownloadProgress
+                : uploadProgress
           }
           isUploading={isUploading || videoDownloadProgress > 0}
           errorType={errorType}

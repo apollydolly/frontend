@@ -171,6 +171,17 @@ export const PitchRangeWidget = ({
       </div>
       <div className={styles.widgetBody}>
         <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
+        <div className={styles.widgetText}>
+          <p>
+            <span>Кандидат: </span>средняя выразительность, достаточная для
+            удержания внимания.
+          </p>
+          <p>
+            <span>Рекомендация: </span>
+            кандидату можно немного расширить диапазон тона при ответах о личных
+            достижениях – это добавит убедительности.
+          </p>
+        </div>
       </div>
     </div>
   );

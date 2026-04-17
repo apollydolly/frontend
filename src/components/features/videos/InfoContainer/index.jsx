@@ -17,7 +17,7 @@ import { Tabs } from "@ui/shared/Tabs";
 import SimpleBar from "simplebar-react";
 
 export const InfoContainer = ({
-  activeTab,
+  activeTab = "general",
   onTabClick,
   currentVideoFile,
   originalFileName,
@@ -315,7 +315,7 @@ export const InfoContainer = ({
 
   return (
     <div className={styles.infoContainer}>
-      {!isCreatingZone && (
+      {/* {!isCreatingZone && (
         <Tabs
           tabs={[
             {
@@ -333,7 +333,7 @@ export const InfoContainer = ({
           minWidth={"408px"}
           tabWidth={"188px"}
         />
-      )}
+      )} */}
       {renderTabContent()}
     </div>
   );

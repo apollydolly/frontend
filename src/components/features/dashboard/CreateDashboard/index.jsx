@@ -1005,34 +1005,34 @@ export const CreateDashboard = ({
       setIsSavingBeforeConnect(true);
 
       // Если редактируем существующий дашборд, просто открываем модалку
-      if (editMode && finalDashboardId) {
-        console.log(
-          "Режим редактирования, используем существующий ID:",
-          finalDashboardId,
-        );
-        setTempDashboardId(finalDashboardId);
-        setIsModalOpen(true);
-        setIsSavingBeforeConnect(false);
-        return;
-      }
+      // if (editMode && finalDashboardId) {
+      console.log(
+        "Режим редактирования, используем существующий ID:",
+        finalDashboardId,
+      );
+      setTempDashboardId(finalDashboardId);
+      setIsModalOpen(true);
+      setIsSavingBeforeConnect(false);
+      return;
+      // }
 
       // Если создаем новый дашборд, сохраняем его
-      if (!tempDashboardId) {
-        console.log("Создание нового дашборда перед подключением видео");
-        const result = await handleSaveDashboard(false); // false - не навигируем после сохранения
-        if (result?.dashboard_id) {
-          const dashboardId = result.dashboard_id;
-          console.log("Дашборд сохранен с ID:", dashboardId);
-          setTempDashboardId(dashboardId);
-          setIsModalOpen(true);
-        } else {
-          throw new Error("Не удалось получить ID сохраненного дашборда");
-        }
-      } else {
-        // Если уже сохранен, используем существующий ID
-        console.log("Используем существующий ID дашборда:", tempDashboardId);
-        setIsModalOpen(true);
-      }
+      // if (!tempDashboardId) {
+      //   console.log("Создание нового дашборда перед подключением видео");
+      //   const result = await handleSaveDashboard(false); // false - не навигируем после сохранения
+      //   if (result?.dashboard_id) {
+      //     const dashboardId = result.dashboard_id;
+      //     console.log("Дашборд сохранен с ID:", dashboardId);
+      //     setTempDashboardId(dashboardId);
+      //     setIsModalOpen(true);
+      //   } else {
+      //     throw new Error("Не удалось получить ID сохраненного дашборда");
+      //   }
+      // } else {
+      //   // Если уже сохранен, используем существующий ID
+      //   console.log("Используем существующий ID дашборда:", tempDashboardId);
+      //   setIsModalOpen(true);
+      // }
     } catch (error) {
       console.error("Ошибка при сохранении дашборда:", error);
     } finally {

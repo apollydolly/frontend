@@ -8,8 +8,42 @@ import { PsycholinguisticWidget } from "@dashboard/widgets/PsycholinguisticWidge
 import { CongruenceWidget } from "@dashboard/widgets/CongruenceWidget";
 import { EmotionalHeatmapWidget } from "@dashboard/widgets/EmotionalHeatmapWidget";
 import { EmotionalityWidget } from "@dashboard/widgets/EmotionalityWidget";
+import { MeetingInfoWidget } from "@dashboard/widgets/MeetingInfoWidget";
+import { MeetingSummaryWidget } from "@dashboard/widgets/MeetingSummaryWidget";
 
 export const WIDGET_CONFIG = {
+  meetingInfo: {
+    name: "Информация о встрече",
+    component: MeetingInfoWidget,
+    defaultSize: { w: 4, h: 2 },
+    availableSizes: [
+      { w: 4, h: 2 },
+      { w: 4, h: 2 },
+      { w: 4, h: 2 },
+    ],
+    constraints: {
+      minW: 4,
+      minH: 2,
+      maxW: 4,
+      maxH: 2,
+    },
+  },
+  meetingSummary: {
+    name: "Краткое содержание встречи",
+    component: MeetingSummaryWidget,
+    defaultSize: { w: 4, h: 2 },
+    availableSizes: [
+      { w: 4, h: 2 },
+      { w: 4, h: 2 },
+      { w: 4, h: 2 },
+    ],
+    constraints: {
+      minW: 4,
+      minH: 2,
+      maxW: 4,
+      maxH: 2,
+    },
+  },
   speechLenght: {
     name: "Длительность речи участников",
     component: SpeechLenghtWidget,
@@ -31,9 +65,9 @@ export const WIDGET_CONFIG = {
     component: AvgWordSpeedWidget,
     defaultSize: { w: 7, h: 5 },
     availableSizes: [
-      { w: 7, h: 5 }, // default
-      { w: 7, h: 5 }, // min
-      { w: 7, h: 5 }, // max
+      { w: 7, h: 5 },
+      { w: 7, h: 5 },
+      { w: 7, h: 5 },
     ],
     constraints: {
       minW: 7,
@@ -45,17 +79,17 @@ export const WIDGET_CONFIG = {
   energyHeatmap: {
     name: "Энергичность участников",
     component: EnergyHeatmapWidget,
-    defaultSize: { w: 10, h: 2 },
+    defaultSize: { w: 10, h: 3 },
     availableSizes: [
-      { w: 10, h: 2 }, // default
-      { w: 10, h: 2 }, // min
-      { w: 10, h: 2 }, // max
+      { w: 10, h: 3 },
+      { w: 10, h: 3 },
+      { w: 10, h: 3 },
     ],
     constraints: {
       minW: 10,
-      minH: 2,
+      minH: 3,
       maxW: 10,
-      maxH: 2,
+      maxH: 3,
     },
   },
   totalPausesRatio: {
@@ -141,17 +175,17 @@ export const WIDGET_CONFIG = {
   emotionalHeatmap: {
     name: "Эмоциональный климат",
     component: EmotionalHeatmapWidget,
-    defaultSize: { w: 10, h: 2 },
+    defaultSize: { w: 10, h: 3 },
     availableSizes: [
-      { w: 10, h: 2 },
-      { w: 10, h: 2 },
-      { w: 10, h: 2 },
+      { w: 10, h: 3 },
+      { w: 10, h: 3 },
+      { w: 10, h: 3 },
     ],
     constraints: {
       minW: 10,
-      minH: 2,
+      minH: 3,
       maxW: 10,
-      maxH: 2,
+      maxH: 3,
     },
   },
   emotionality: {

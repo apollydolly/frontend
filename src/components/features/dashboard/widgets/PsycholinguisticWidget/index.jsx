@@ -203,6 +203,21 @@ export const PsycholinguisticWidget = ({
       </div>
       <div className={styles.widgetBody}>
         <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
+        <div className={styles.widgetText}>
+          <p>
+            <span>Агрессивность: </span>низкая (речь конструктивная, без
+            конфликтных оборотов).
+          </p>
+          <p>
+            <span>Коэффициент Трейгера (активность/рефлексия): </span>
+            близок к 1 (норма), незначительное снижение в конце длительных
+            ответов.
+          </p>
+          <p>
+            <span>Определённость действий: </span>высокая – высказывания
+            синтаксически завершённые, цели понятны.
+          </p>
+        </div>
       </div>
     </div>
   );

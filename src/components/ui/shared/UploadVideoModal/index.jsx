@@ -14,7 +14,6 @@ import CameraIcon from "@icons/camera.svg?react";
 import { PrimaryButton } from "@ui/buttons/PrimaryButton";
 import { CloseButton } from "@ui/buttons/CloseButton";
 import { Tabs } from "@ui/shared/Tabs";
-import { InputField } from "@ui/shared/InputField";
 import { SearchBox } from "@ui/shared/SearchBox";
 import SimpleBar from "simplebar-react";
 import { videoService } from "@services/videoService";
@@ -27,11 +26,11 @@ export const UploadVideoModal = ({
   fromDashboard = false,
   dashboardId,
   onSuccess,
+  tab = "online",
 }) => {
   const [isDragOver, setIsDragOver] = useState(false);
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState("newVideo");
-  const [rstpLink, setRstpLink] = useState("");
+  const [activeTab, setActiveTab] = useState(tab);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [videos, setVideos] = useState([]);
@@ -40,8 +39,6 @@ export const UploadVideoModal = ({
   const [offset, setOffset] = useState(0);
   const [initialLoadComplete, setInitialLoadComplete] = useState(false);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-
-  const rstpInputRef = useRef(null);
   const simpleBarRef = useRef(null);
   const navigate = useNavigate();
 
@@ -88,7 +85,7 @@ export const UploadVideoModal = ({
         }
       }
     },
-    [loading, isLoadingMore, offset, initialLoadComplete]
+    [loading, isLoadingMore, offset, initialLoadComplete],
   );
 
   // Фильтрация видео на клиенте
@@ -101,7 +98,7 @@ export const UploadVideoModal = ({
     return videos.filter(
       (video) =>
         video.name?.toLowerCase().includes(query) ||
-        video.file_name?.toLowerCase().includes(query)
+        video.file_name?.toLowerCase().includes(query),
     );
   }, [videos, searchQuery]);
 
@@ -498,11 +495,6 @@ export const UploadVideoModal = ({
     onClose();
   };
 
-  const handleRstpLinkChange = (e) => {
-    const newLink = e.target.value;
-    setRstpLink(newLink);
-  };
-
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modal}>
@@ -521,12 +513,12 @@ export const UploadVideoModal = ({
             <Tabs
               tabs={[
                 {
-                  id: "newVideo",
-                  label: "Новое видео",
+                  id: "online",
+                  label: "Онлайн",
                 },
                 {
-                  id: "rstpStream",
-                  label: "Подключение rstp-потока",
+                  id: "newVideo",
+                  label: "Добавить видео",
                 },
                 {
                   id: "uploadVideo",
@@ -577,21 +569,37 @@ export const UploadVideoModal = ({
           </div>
         )}
 
-        {activeTab === "rstpStream" && (
-          <div className={styles.connectRstpContainer}>
-            <div className={styles.rstpText}>
-              <h2>Подключение rstp-потока</h2>
-              <p>Сформируйте ссылку на нужную камеру и вставьте в поле ниже.</p>
+        {activeTab === "online" && (
+          <div className={styles.connectOnlineContainer}>
+            <div className={styles.onlineText}>
+              <h2>Рекомендации для онлайн-записи коммуникации</h2>
+              <ol>
+                <li>
+                  На протяжении всей видеозаписи в кадре должны присутствовать
+                  только Вы, других лиц не должно быть в кадре (в том числе
+                  плакатов, принтов на одежде).
+                </li>
+                <li>
+                  Ваше лицо должно быть четко различимо (учитывайте его размер,
+                  в зависимости от качества камеры).
+                </li>
+                <li>
+                  На видео не должно присутствовать иных голосов, кроме вашего
+                  голоса.
+                </li>
+                <li>
+                  Видео не должно содержать музыки и посторонних шумов на фоне.
+                </li>
+                <li>
+                  Видео должно быть записано в хорошо совещенном помещении.
+                </li>
+              </ol>
+              <p>
+                В случае невыполнения данных требований, результаты анализа
+                могут оказаться некорректными.
+              </p>
             </div>
-            <InputField
-              ref={rstpInputRef}
-              label="Ссылка на видео"
-              value={rstpLink}
-              onChange={handleRstpLinkChange}
-              placeholder="Введите ссылку на видео"
-              type="text"
-            />
-            <PrimaryButton text="Подключить видео" icon={CameraIcon} />
+            <PrimaryButton text="Далее" icon={CameraIcon} />
           </div>
         )}
 

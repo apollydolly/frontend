@@ -45,6 +45,7 @@ export const VideoInfoContainer = ({
   highlightedZoneId = null,
   highlightedMaskId = null,
   isOnlineMode = false,
+  onCameraReady,
 }) => {
   const canvasRef = useRef(null);
   const captureVideoRef = useRef(null);
@@ -55,6 +56,9 @@ export const VideoInfoContainer = ({
   const timeoutRef = useRef(null);
   const [absoluteZonePoints, setAbsoluteZonePoints] = useState([]);
   const [absoluteMaskPoints, setAbsoluteMaskPoints] = useState([]);
+  const [mediaStream, setMediaStream] = useState(null);
+  const [cameraError, setCameraError] = useState(null);
+  const localVideoRef = useRef(null);
 
   const isCreating = isCreatingZone || isCreatingMask;
   const currentColor = isCreatingMask ? maskColor : zoneColor;
@@ -64,6 +68,39 @@ export const VideoInfoContainer = ({
   const currentOnPointsChange = isCreatingMask
     ? onMaskPointsChange
     : onZonePointsChange;
+
+  // ЗАПРОС ДОСТУПА К КАМЕРЕ И МИКРОФОНУ
+  useEffect(() => {
+    if (isOnlineMode && !mediaStream && !cameraError) {
+      const requestCamera = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
+          setMediaStream(stream);
+          if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+          if (onCameraReady) onCameraReady(true, null);
+        } catch (err) {
+          let errorMsg = "Не удалось получить доступ к камере или микрофону";
+          if (err.name === "NotAllowedError")
+            errorMsg = "Пользователь запретил доступ к камере/микрофону";
+          else if (err.name === "NotFoundError")
+            errorMsg = "Камера или микрофон не найдены";
+          setCameraError(errorMsg);
+          if (onCameraReady) onCameraReady(false, errorMsg);
+        }
+      };
+      requestCamera();
+    }
+
+    // Очистка при размонтировании
+    return () => {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach((track) => track.stop());
+      }
+    };
+  }, [isOnlineMode, mediaStream, cameraError]);
 
   // Синхронизируем локальные абсолютные точки с переданными относительными точками
   useEffect(() => {
@@ -621,41 +658,54 @@ export const VideoInfoContainer = ({
       )}
 
       <div className={styles.video}>
-        {videoUrl && errorType !== "upload" && thumbnailCreatedRef.current && (
-          <div className={styles.videoWithOverlay}>
-            <CustomVideoPlayer
-              src={videoUrl}
-              poster={videoThumbnail}
-              ref={videoRef}
-              onTimeUpdate={onVideoTimeUpdate}
-              currentTime={currentVideoTime}
-              style={{
-                display: "block",
-                width: "100%",
-                height: "100%",
-              }}
-            />
-
-            {activeTab === "zones" && (
-              <canvas
-                ref={canvasRef}
-                className={styles.zonesOverlayCanvas}
-                style={{
-                  pointerEvents: isCreating ? "auto" : "none",
-                  cursor: isCreating ? "crosshair" : "default",
-                }}
-                onClick={isCreating ? handleCanvasClick : undefined}
-              />
+        {isOnlineMode ? (
+          <div className={styles.cameraContainer}>
+            <video ref={localVideoRef} autoPlay playsInline muted={false} />
+            {cameraError && (
+              <div className={styles.errorMessage}>
+                <ErrorIcon className={styles.errorIcon} />
+                <p>{cameraError}</p>
+              </div>
+            )}
+            {!cameraError && mediaStream && (
+              <div className={styles.recordButtonContainer}>
+                <PrimaryButton text="Начать" icon={VideoIcon} />
+              </div>
             )}
           </div>
-        )}
-        {isOnlineMode && (
-          <div className={styles.recordButtonContainer}>
-            <PrimaryButton text="Начать" icon={VideoIcon} />
-          </div>
-        )}
+        ) : (
+          videoUrl &&
+          errorType !== "upload" &&
+          thumbnailCreatedRef.current && (
+            <div className={styles.videoWithOverlay}>
+              <CustomVideoPlayer
+                src={videoUrl}
+                poster={videoThumbnail}
+                ref={videoRef}
+                onTimeUpdate={onVideoTimeUpdate}
+                currentTime={currentVideoTime}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                }}
+              />
 
-        {(!videoUrl || errorType === "upload") && !isOnlineMode && (
+              {activeTab === "zones" && (
+                <canvas
+                  ref={canvasRef}
+                  className={styles.zonesOverlayCanvas}
+                  style={{
+                    pointerEvents: isCreating ? "auto" : "none",
+                    cursor: isCreating ? "crosshair" : "default",
+                  }}
+                  onClick={isCreating ? handleCanvasClick : undefined}
+                />
+              )}
+            </div>
+          )
+        )}
+        {!isOnlineMode && (!videoUrl || errorType === "upload") && (
           <>
             {videoState === "add" && (errorType === "upload" || !videoUrl) && (
               <div className={styles.errorVideoPlaceholder}>

@@ -61,6 +61,8 @@ export const AddingVideo = ({
   const [videoName, setVideoName] = useState(
     videoData?.videoName || "Видео без названия",
   );
+  const [isCameraReady, setIsCameraReady] = useState(false);
+  const [cameraErrorMessage, setCameraErrorMessage] = useState(null);
 
   const [currentVideoFile, setCurrentVideoFile] = useState(
     videoFile || videoData?.videoFile,
@@ -71,6 +73,11 @@ export const AddingVideo = ({
       currentVideoFile?.name ||
       "",
   );
+
+  const handleCameraReady = (ready, error) => {
+    setIsCameraReady(ready);
+    setCameraErrorMessage(error);
+  };
 
   // Функции для работы с зонами
   const handleCreateZone = useCallback(
@@ -262,6 +269,36 @@ export const AddingVideo = ({
         iconColor: "gray",
         showProgress: true,
         progress: currentProgress,
+      };
+    }
+
+    if (isOnlineMode) {
+      if (cameraErrorMessage) {
+        return {
+          icon: VideoIcon,
+          text: cameraErrorMessage,
+          color: "error",
+          iconColor: "gray",
+          progressBarColor: "white",
+          showProgress: false,
+        };
+      }
+      if (isCameraReady) {
+        return {
+          icon: VideoIcon,
+          text: "Платформа готова к моделированию коммуникативной ситуации",
+          color: "blue",
+          iconColor: "blue",
+          showProgress: false,
+        };
+      }
+      return {
+        icon: TimerIcon,
+        text: "Загрузка видео",
+        color: "gray",
+        iconColor: "gray",
+        showProgress: true,
+        progress: 0,
       };
     }
 
@@ -817,6 +854,16 @@ export const AddingVideo = ({
         setIsUploading(false);
         setUploadProgress(100);
         thumbnailCreatedRef.current = true;
+        // Добавляем дашборд, с которого перешли
+        if (location.state?.dashboardId) {
+          const dashboardId = location.state.dashboardId;
+          console.log("[AddingVideo] Добавляем дашборд:", dashboardId);
+          setConnectedDashboards([
+            { id: dashboardId, title: `Дашборд ${dashboardId.slice(0, 8)}...` },
+          ]);
+        } else {
+          console.warn("[AddingVideo] Нет dashboardId в location.state");
+        }
         return;
       }
 
@@ -1577,6 +1624,7 @@ export const AddingVideo = ({
           highlightedZoneId={highlightedZoneId}
           highlightedMaskId={highlightedMaskId}
           isOnlineMode={isOnlineMode}
+          onCameraReady={handleCameraReady}
         />
       </div>
     </div>

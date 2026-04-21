@@ -63,6 +63,7 @@ export const AddingVideo = ({
   );
   const [isCameraReady, setIsCameraReady] = useState(false);
   const [cameraErrorMessage, setCameraErrorMessage] = useState(null);
+  const [isRecordingCompleted, setIsRecordingCompleted] = useState(false);
 
   const [currentVideoFile, setCurrentVideoFile] = useState(
     videoFile || videoData?.videoFile,
@@ -78,6 +79,18 @@ export const AddingVideo = ({
     setIsCameraReady(ready);
     setCameraErrorMessage(error);
   };
+
+  // Обработчик изменения состояния записи из дочернего компонента
+  const handleRecordingStateChange = useCallback(
+    (isRecording, hasRecording) => {
+      if (hasRecording) {
+        setIsRecordingCompleted(true);
+      } else {
+        setIsRecordingCompleted(false);
+      }
+    },
+    [],
+  );
 
   // Функции для работы с зонами
   const handleCreateZone = useCallback(
@@ -1497,7 +1510,12 @@ export const AddingVideo = ({
                 text="Сохранить"
                 icon={UploadVideoIcon}
                 onClick={handleSave}
-                disabled={isProcessing || isUploading || errorType}
+                disabled={
+                  isProcessing ||
+                  isUploading ||
+                  errorType ||
+                  (isOnlineMode && !isRecordingCompleted)
+                }
               />
             </>
           )}
@@ -1625,6 +1643,7 @@ export const AddingVideo = ({
           highlightedMaskId={highlightedMaskId}
           isOnlineMode={isOnlineMode}
           onCameraReady={handleCameraReady}
+          onRecordingStateChange={handleRecordingStateChange}
         />
       </div>
     </div>

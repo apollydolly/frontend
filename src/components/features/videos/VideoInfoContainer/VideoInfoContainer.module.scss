@@ -252,3 +252,19 @@
   top: 16px;
   z-index: 1000;
 }
+
+.recordTimerContainer {
+  background: #0000004d;
+  padding: 10px;
+  border-radius: 8px;
+  display: inline-block;
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  z-index: 1000;
+
+  p {
+    @include RReg_20;
+    color: $white;
+  }
+}

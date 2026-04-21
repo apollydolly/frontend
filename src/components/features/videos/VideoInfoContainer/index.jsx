@@ -46,6 +46,7 @@ export const VideoInfoContainer = ({
   highlightedMaskId = null,
   isOnlineMode = false,
   onCameraReady,
+  onRecordingStateChange,
 }) => {
   const canvasRef = useRef(null);
   const captureVideoRef = useRef(null);
@@ -59,6 +60,11 @@ export const VideoInfoContainer = ({
   const [mediaStream, setMediaStream] = useState(null);
   const [cameraError, setCameraError] = useState(null);
   const localVideoRef = useRef(null);
+  const [isRecording, setIsRecording] = useState(false);
+  const [hasRecording, setHasRecording] = useState(false);
+  const mediaRecorderRef = useRef(null);
+  const recordedChunksRef = useRef([]);
+  const [recordSeconds, setRecordSeconds] = useState(0);
 
   const isCreating = isCreatingZone || isCreatingMask;
   const currentColor = isCreatingMask ? maskColor : zoneColor;
@@ -101,6 +107,81 @@ export const VideoInfoContainer = ({
       }
     };
   }, [isOnlineMode, mediaStream, cameraError]);
+
+  // Функция начала записи
+  const startRecording = useCallback(() => {
+    if (!mediaStream) return;
+
+    recordedChunksRef.current = [];
+    const options = { mimeType: "video/webm" }; // можно указать codecs, но webm работает везде
+    const mediaRecorder = new MediaRecorder(mediaStream, options);
+    mediaRecorderRef.current = mediaRecorder;
+
+    mediaRecorder.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recordedChunksRef.current.push(event.data);
+      }
+    };
+
+    mediaRecorder.onstop = () => {
+      const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
+      const url = URL.createObjectURL(blob);
+
+      // Автоматическое скачивание на компьютер
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `recording_${Date.now()}.webm`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      setHasRecording(true);
+      setIsRecording(false);
+      if (onRecordingStateChange) onRecordingStateChange(false, true);
+    };
+
+    mediaRecorder.start(1000); // собирать данные каждую секунду
+    setIsRecording(true);
+    if (onRecordingStateChange) onRecordingStateChange(true, false);
+  }, [mediaStream, onRecordingStateChange]);
+
+  // Функция остановки записи
+  const stopRecording = useCallback(() => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+    }
+  }, [isRecording]);
+
+  // Очистка при размонтировании (если запись идёт)
+  useEffect(() => {
+    return () => {
+      if (mediaRecorderRef.current && isRecording) {
+        mediaRecorderRef.current.stop();
+      }
+    };
+  }, [isRecording]);
+
+  // Функция форматирования секунд в MM:SS
+  const formatTime = (totalSeconds) => {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  // Таймер при записи
+  useEffect(() => {
+    let interval = null;
+    if (isRecording) {
+      interval = setInterval(() => {
+        setRecordSeconds((prev) => prev + 1);
+      }, 1000);
+    } else if (!isRecording && recordSeconds !== 0) {
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isRecording]);
 
   // Синхронизируем локальные абсолютные точки с переданными относительными точками
   useEffect(() => {
@@ -660,7 +741,7 @@ export const VideoInfoContainer = ({
       <div className={styles.video}>
         {isOnlineMode ? (
           <div className={styles.cameraContainer}>
-            <video ref={localVideoRef} autoPlay playsInline muted={false} />
+            <video ref={localVideoRef} autoPlay playsInline muted={true} />
             {cameraError && (
               <div className={styles.errorMessage}>
                 <ErrorIcon className={styles.errorIcon} />
@@ -668,9 +749,24 @@ export const VideoInfoContainer = ({
               </div>
             )}
             {!cameraError && mediaStream && (
-              <div className={styles.recordButtonContainer}>
-                <PrimaryButton text="Начать" icon={VideoIcon} />
-              </div>
+              <>
+                <div className={styles.recordButtonContainer}>
+                  {!hasRecording ? (
+                    <PrimaryButton
+                      text={isRecording ? "Завершить" : "Начать"}
+                      icon={isRecording ? VideoSaveIcon : VideoIcon}
+                      onClick={isRecording ? stopRecording : startRecording}
+                    />
+                  ) : (
+                    <PrimaryButton text="Запись завершена" disabled={true} />
+                  )}
+                </div>
+                {(isRecording || (hasRecording && recordSeconds > 0)) && (
+                  <div className={styles.recordTimerContainer}>
+                    <p>{formatTime(recordSeconds)}</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         ) : (

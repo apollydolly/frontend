@@ -8,6 +8,7 @@ import VideoIcon from "@icons/video.svg?react";
 import VideoSaveIcon from "@icons/video-save.svg?react";
 import ErrorIcon from "@icons/error.svg?react";
 import { InputField } from "@ui/shared/InputField";
+import { vadService } from "@services/vadService";
 
 export const VideoInfoContainer = ({
   uploadProgress,
@@ -65,6 +66,7 @@ export const VideoInfoContainer = ({
   const mediaRecorderRef = useRef(null);
   const recordedChunksRef = useRef([]);
   const [recordSeconds, setRecordSeconds] = useState(0);
+  const vadMicRef = useRef(null);
 
   const isCreating = isCreatingZone || isCreatingMask;
   const currentColor = isCreatingMask ? maskColor : zoneColor;
@@ -108,26 +110,71 @@ export const VideoInfoContainer = ({
     };
   }, [isOnlineMode, mediaStream, cameraError]);
 
+  // VAD
+  const startVAD = useCallback(async () => {
+    if (!mediaStream || vadMicRef.current) return;
+    // Ждём загрузки глобального объекта
+    while (!window.vad || !window.vad.MicVAD) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    const MicVAD = window.vad.MicVAD;
+    try {
+      const vad = await MicVAD.new({
+        getStream: async () => mediaStream,
+        baseAssetPath:
+          "https://cdn.jsdelivr.net/npm/@ricky0123/vad-web@0.0.29/dist/",
+        onnxWASMBasePath:
+          "https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/",
+        redemptionMs: 4000,
+        onSpeechStart: () => console.log("Пользователь начал говорить"),
+        onSpeechEnd: (audio) => {
+          console.log("Пользователь закончил говорить, длина:", audio.length);
+          vadService
+            .sendVoiceFragment(audio)
+            .catch((err) => console.warn("Ошибка отправки:", err));
+        },
+        onVADMisfire: () => console.log("Ложное срабатывание"),
+      });
+      vadMicRef.current = vad;
+      await vad.start();
+    } catch (err) {
+      console.error("Ошибка VAD:", err);
+    }
+  }, [mediaStream]);
+
+  // Остановка VAD
+  const stopVAD = useCallback(() => {
+    if (vadMicRef.current && vadMicRef.current.listening) {
+      vadMicRef.current.pause();
+    }
+  }, []);
+
+  // Освобождение VAD
+  useEffect(() => {
+    return () => {
+      if (vadMicRef.current) {
+        vadMicRef.current.pause();
+        vadMicRef.current = null;
+      }
+    };
+  }, []);
+
   // Функция начала записи
   const startRecording = useCallback(() => {
     if (!mediaStream) return;
 
     recordedChunksRef.current = [];
-    const options = { mimeType: "video/webm" }; // можно указать codecs, но webm работает везде
+    const options = { mimeType: "video/webm" };
     const mediaRecorder = new MediaRecorder(mediaStream, options);
     mediaRecorderRef.current = mediaRecorder;
 
     mediaRecorder.ondataavailable = (event) => {
-      if (event.data.size > 0) {
-        recordedChunksRef.current.push(event.data);
-      }
+      if (event.data.size > 0) recordedChunksRef.current.push(event.data);
     };
 
     mediaRecorder.onstop = () => {
       const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
       const url = URL.createObjectURL(blob);
-
-      // Автоматическое скачивание на компьютер
       const a = document.createElement("a");
       a.href = url;
       a.download = `recording_${Date.now()}.webm`;
@@ -135,23 +182,29 @@ export const VideoInfoContainer = ({
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-
       setHasRecording(true);
       setIsRecording(false);
       if (onRecordingStateChange) onRecordingStateChange(false, true);
+      // Останавливаем VAD
+      stopVAD();
     };
 
-    mediaRecorder.start(1000); // собирать данные каждую секунду
+    mediaRecorder.start(1000);
     setIsRecording(true);
     if (onRecordingStateChange) onRecordingStateChange(true, false);
-  }, [mediaStream, onRecordingStateChange]);
+
+    // Запускаем VAD
+    startVAD();
+  }, [mediaStream, onRecordingStateChange, startVAD, stopVAD]);
 
   // Функция остановки записи
   const stopRecording = useCallback(() => {
     if (mediaRecorderRef.current && isRecording) {
       mediaRecorderRef.current.stop();
+      // Останавливаем VAD
+      stopVAD();
     }
-  }, [isRecording]);
+  }, [isRecording, stopVAD]);
 
   // Очистка при размонтировании (если запись идёт)
   useEffect(() => {

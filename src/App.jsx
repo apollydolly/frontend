@@ -20,6 +20,24 @@ import { ScenariosPage } from "@pages/ScenariosPage";
 import { MyScenariosPage } from "@pages/MyScenariosPage";
 
 function App() {
+  const protectedRoutes = [
+    { path: "/", element: <DashboardsPage /> },
+    { path: "/dashboards", element: <DashboardsPage /> },
+    { path: "/templates", element: <TemplatesPage /> },
+    { path: "/my-scenarios", element: <MyScenariosPage /> },
+    { path: "/scenarios", element: <ScenariosPage /> },
+    { path: "/videos", element: <VideosPage /> },
+    { path: "/settings", element: <SettingsPage /> },
+    { path: "/support", element: <SupportPage /> },
+    { path: "/create_dashboard", element: <DashboardPage /> },
+    { path: "/edit_dashboard/:dashboardId", element: <EditDashboardPage /> },
+    { path: "/dashboard-fullscreen", element: <DashboardFullscreen /> },
+    { path: "/widget-fullscreen", element: <WidgetFullscreen /> },
+    { path: "/video/:videoId", element: <VideoPage /> },
+    { path: "/video/:videoId/view", element: <VideoPage /> },
+    { path: "*", element: <DashboardsPage /> },
+  ];
+
   return (
     <AuthProvider>
       <Router>
@@ -27,127 +45,14 @@ function App() {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
 
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <DashboardsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboards"
-            element={
-              <ProtectedRoute>
-                <DashboardsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/templates"
-            element={
-              <ProtectedRoute>
-                <TemplatesPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/my-scenarios"
-            element={
-              <ProtectedRoute>
-                <MyScenariosPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/scenarios"
-            element={
-              <ProtectedRoute>
-                <ScenariosPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/videos"
-            element={
-              <ProtectedRoute>
-                <VideosPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/support"
-            element={
-              <ProtectedRoute>
-                <SupportPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/create_dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/edit_dashboard/:dashboardId"
-            element={
-              <ProtectedRoute>
-                <EditDashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/dashboard-fullscreen"
-            element={
-              <ProtectedRoute>
-                <DashboardFullscreen />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/widget-fullscreen"
-            element={
-              <ProtectedRoute>
-                <WidgetFullscreen />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/video/:videoId"
-            element={
-              <ProtectedRoute>
-                <VideoPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/video/:videoId/view"
-            element={
-              <ProtectedRoute>
-                <VideoPage />
-              </ProtectedRoute>
-            }
-          />
-
-          <Route
-            path="*"
-            element={
-              <ProtectedRoute>
-                <DashboardsPage />
-              </ProtectedRoute>
-            }
-          />
+          {protectedRoutes.map(({ path, element }) => (
+            <Route
+              key={path}
+              path={path}
+              // element={<ProtectedRoute>{element}</ProtectedRoute>}
+              element={element}
+            />
+          ))}
         </Routes>
       </Router>
     </AuthProvider>

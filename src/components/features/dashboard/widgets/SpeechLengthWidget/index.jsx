@@ -5,9 +5,13 @@ import { prepareSpeechDurationData } from "@utils/speechAnalytics/prepareData.js
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Укажите ID спикеров, которых нужно отобразить (можно один или несколько)
-// Возможные значения: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const SELECTED_SPEAKERS = ["SPEAKER_02", "SPEAKER_03"];
+
+// // Точные длительности
+// const FIXED_DURATIONS = {
+//   SPEAKER_02: 211.8, // кандидат
+//   SPEAKER_03: 121.7, // ассистент
+// };
 
 export const SpeechLenghtWidget = ({
   data: propData,
@@ -20,8 +24,26 @@ export const SpeechLenghtWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // // Функция обработки данных: вычисляет длительности и заменяет их на фиксированные
+  // const processData = (rawData) => {
+  //   let source = prepareSpeechDurationData(rawData);
+  //   source = source.filter((row) => SELECTED_SPEAKERS.includes(row[1]));
+  //   // Заменяем длительности на известные
+  //   source = source.map((row) => {
+  //     const speakerId = row[1];
+  //     if (FIXED_DURATIONS[speakerId]) {
+  //       return [row[0], speakerId, FIXED_DURATIONS[speakerId]];
+  //     }
+  //     return row;
+  //   });
+  //   source.sort((a, b) => b[2] - a[2]);
+  //   return source;
+  // };
+
   useEffect(() => {
     if (realTimeData?.speechData) {
+      // const processed = processData(realTimeData.speechData);
+      // setChartData(processed);
       setChartData(realTimeData.speechData);
       setLoading(false);
       return;
@@ -31,6 +53,8 @@ export const SpeechLenghtWidget = ({
       try {
         const data = await loadSpeechData();
         if (data) {
+          // const processed = processData(data);
+          // setChartData(processed);
           setChartData(data);
         } else {
           setError("Не удалось загрузить данные");
@@ -48,11 +72,15 @@ export const SpeechLenghtWidget = ({
   useEffect(() => {
     if (!chartRef.current || !chartData) return;
 
-    // Уничтожаем старый график
     if (chartInstance.current) {
       chartInstance.current.dispose();
       chartInstance.current = null;
     }
+
+    // if (chartData.length === 0) {
+    //   setError("Нет данных для выбранных участников");
+    //   return;
+    // }
 
     let source = prepareSpeechDurationData(chartData);
     source = source.filter((row) => SELECTED_SPEAKERS.includes(row[1]));
@@ -63,7 +91,6 @@ export const SpeechLenghtWidget = ({
       return;
     }
 
-    // Создаём новый инстанс
     chartInstance.current = echarts.init(chartRef.current);
 
     const option = {
@@ -85,14 +112,11 @@ export const SpeechLenghtWidget = ({
           color: "#FFFFFF",
           fontFamily: "Roboto",
           fontWeight: 400,
-          fontStyle: "Regular",
-          fontSize: 14,
-        },
-        nameTextStyle: {
           fontSize: 14,
         },
       },
       dataset: {
+        // source: chartData,
         source: source,
         dimensions: ["name", "speakerId", "duration"],
       },
@@ -100,8 +124,6 @@ export const SpeechLenghtWidget = ({
         type: "category",
         axisLabel: {
           fontFamily: "Roboto",
-          fontWeight: 400,
-          fontStyle: "Regular",
           fontSize: 14,
         },
       },
@@ -111,8 +133,6 @@ export const SpeechLenghtWidget = ({
         nameTextStyle: { fontSize: 14, fontFamily: "Roboto" },
         axisLabel: {
           fontFamily: "Roboto",
-          fontWeight: 400,
-          fontStyle: "Regular",
           fontSize: 14,
         },
       },
@@ -123,8 +143,6 @@ export const SpeechLenghtWidget = ({
           show: true,
           position: "top",
           fontFamily: "Roboto",
-          fontWeight: 400,
-          fontStyle: "Regular",
           fontSize: 14,
           formatter: (params) => `${parseFloat(params.data[2]).toFixed(2)} сек`,
         },
@@ -132,7 +150,6 @@ export const SpeechLenghtWidget = ({
       },
     };
 
-    // Принудительная замена всей конфигурации
     chartInstance.current.setOption(option, true);
 
     const handleResize = () => chartInstance.current?.resize();
@@ -166,10 +183,10 @@ export const SpeechLenghtWidget = ({
         <div ref={chartRef} style={{ width: "100%", height: "100%" }} />
         <div className={styles.widgetText}>
           <p>
-            <span>Кандидат: </span>68% (отвечал на вопросы, приводил примеры)
+            <span>Кандидат: </span>50.9% (отвечал на вопросы, приводил примеры)
           </p>
           <p>
-            <span>Рекрутер (бот): </span>32% (задавал вопросы, подводил итоги)
+            <span>Рекрутер (бот): </span>29.2% (задавал вопросы, подводил итоги)
           </p>
           <p>
             Неравномерность обусловлена форматом собеседования – кандидат

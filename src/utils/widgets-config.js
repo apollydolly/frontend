@@ -10,6 +10,7 @@ import { EmotionalHeatmapWidget } from "@dashboard/widgets/EmotionalHeatmapWidge
 import { EmotionalityWidget } from "@dashboard/widgets/EmotionalityWidget";
 import { MeetingInfoWidget } from "@dashboard/widgets/MeetingInfoWidget";
 import { MeetingSummaryWidget } from "@dashboard/widgets/MeetingSummaryWidget";
+import { ChangingEmotionsWidget } from "@dashboard/widgets/ChangingEmotionsWidget";
 
 export const WIDGET_CONFIG = {
   meetingInfo: {
@@ -202,6 +203,22 @@ export const WIDGET_CONFIG = {
       minH: 4,
       maxW: 6,
       maxH: 4,
+    },
+  },
+  changingEmotions: {
+    name: "Изменение эмоционального состояния собеседников",
+    component: ChangingEmotionsWidget,
+    defaultSize: { w: 10, h: 6 },
+    availableSizes: [
+      { w: 10, h: 6 },
+      { w: 10, h: 6 },
+      { w: 10, h: 6 },
+    ],
+    constraints: {
+      minW: 10,
+      minH: 6,
+      maxW: 10,
+      maxH: 6,
     },
   },
 };

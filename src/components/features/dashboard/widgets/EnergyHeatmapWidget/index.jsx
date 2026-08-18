@@ -5,8 +5,25 @@ import { prepareHeatmapData } from "@utils/speechAnalytics/prepareData.js";
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Укажите ID спикеров, которых нужно отобразить
 const SELECTED_SPEAKERS = ["SPEAKER_02", "SPEAKER_03"];
+
+// const scaleTimeData = (rawData, targetMaxTime = 416) => {
+//   if (!rawData || !rawData.end || rawData.end.length === 0) return rawData;
+//   const maxEnd = Math.max(...rawData.end);
+//   if (maxEnd <= targetMaxTime) return rawData;
+//   const scale = targetMaxTime / maxEnd;
+
+//   const scaledStart = rawData.start
+//     ? rawData.start.map((t) => t * scale)
+//     : undefined;
+//   const scaledEnd = rawData.end.map((t) => t * scale);
+
+//   return {
+//     ...rawData,
+//     start: scaledStart,
+//     end: scaledEnd,
+//   };
+// };
 
 export const EnergyHeatmapWidget = ({
   data: propData,
@@ -21,6 +38,8 @@ export const EnergyHeatmapWidget = ({
 
   useEffect(() => {
     if (realTimeData?.speechData) {
+      // const scaled = scaleTimeData(realTimeData.speechData);
+      // setChartData(scaled);
       setChartData(realTimeData.speechData);
       setLoading(false);
       return;
@@ -30,6 +49,8 @@ export const EnergyHeatmapWidget = ({
       try {
         const data = await loadSpeechData();
         if (data) {
+          // const scaled = scaleTimeData(data);
+          // setChartData(scaled);
           setChartData(data);
         } else {
           setError("Не удалось загрузить данные");
@@ -52,7 +73,6 @@ export const EnergyHeatmapWidget = ({
       chartInstance.current = null;
     }
 
-    // Фильтрация данных (без изменений)
     const filteredSpeaker = [];
     const filteredEnergy = [];
     const filteredEnd = [];
@@ -63,10 +83,12 @@ export const EnergyHeatmapWidget = ({
         filteredEnd.push(chartData.end[idx]);
       }
     });
+
     if (filteredSpeaker.length === 0) {
       setError("Нет данных для выбранных участников");
       return;
     }
+
     const filteredData = {
       ...chartData,
       speaker: filteredSpeaker,
@@ -100,7 +122,6 @@ export const EnergyHeatmapWidget = ({
           color: "#FFFFFF",
           fontFamily: "Roboto",
           fontWeight: 400,
-          fontStyle: "Regular",
           fontSize: 14,
         },
       },
@@ -160,7 +181,6 @@ export const EnergyHeatmapWidget = ({
 
     chartInstance.current = echarts.init(chartRef.current);
     chartInstance.current.setOption(option, true);
-    // Принудительно пересчитываем размеры, чтобы применить стили
     setTimeout(() => chartInstance.current?.resize(), 0);
 
     const handleResize = () => chartInstance.current?.resize();

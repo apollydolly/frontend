@@ -19,7 +19,7 @@ export const MeetingInfoWidget = ({}) => {
         </div>
         <div className={styles.widgetText}>
           <h2>Длительность:</h2>
-          <p>48 мин. 53 сек.</p>
+          <p>6 мин. 56 сек.</p>
         </div>
         <div className={styles.widgetText}>
           <h2>Участники:</h2>

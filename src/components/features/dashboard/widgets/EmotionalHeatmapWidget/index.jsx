@@ -5,9 +5,25 @@ import { prepareHeatmapData } from "@utils/speechAnalytics/prepareData";
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Укажите ID спикеров, которых нужно отобразить
-// Возможные значения: SPEAKER_00, SPEAKER_01, SPEAKER_02, SPEAKER_03, SPEAKER_04, SPEAKER_05
 const SELECTED_SPEAKERS = ["SPEAKER_02", "SPEAKER_03"];
+
+// const scaleTimeData = (rawData, targetMaxTime = 416) => {
+//   if (!rawData || !rawData.end || rawData.end.length === 0) return rawData;
+//   const maxEnd = Math.max(...rawData.end);
+//   if (maxEnd <= targetMaxTime) return rawData;
+//   const scale = targetMaxTime / maxEnd;
+
+//   const scaledStart = rawData.start
+//     ? rawData.start.map((t) => t * scale)
+//     : undefined;
+//   const scaledEnd = rawData.end.map((t) => t * scale);
+
+//   return {
+//     ...rawData,
+//     start: scaledStart,
+//     end: scaledEnd,
+//   };
+// };
 
 export const EmotionalHeatmapWidget = ({
   data: propData,
@@ -20,9 +36,10 @@ export const EmotionalHeatmapWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Загрузка данных
   useEffect(() => {
     if (realTimeData?.speechData) {
+      // const scaled = scaleTimeData(realTimeData.speechData);
+      // setRawData(scaled);
       setRawData(realTimeData.speechData);
       setLoading(false);
       return;
@@ -32,6 +49,8 @@ export const EmotionalHeatmapWidget = ({
       try {
         const data = await loadSpeechData();
         if (data) {
+          // const scaled = scaleTimeData(data);
+          // setRawData(scaled);
           setRawData(data);
         } else {
           setError("Не удалось загрузить данные");
@@ -46,7 +65,6 @@ export const EmotionalHeatmapWidget = ({
     fetchData();
   }, [realTimeData]);
 
-  // Отрисовка графика
   useEffect(() => {
     if (!chartRef.current || !rawData) return;
 
@@ -55,7 +73,6 @@ export const EmotionalHeatmapWidget = ({
       chartInstance.current = null;
     }
 
-    // Фильтруем данные только для выбранных спикеров
     const filteredSpeaker = [];
     const filteredJoyWordsRatio = [];
     const filteredEnd = [];
@@ -80,7 +97,6 @@ export const EmotionalHeatmapWidget = ({
       end: filteredEnd,
     };
 
-    // Подготовка данных для тепловой карты (joy_words_ratio)
     const { days, hours, heatmapData, maxValue, timeValues } =
       prepareHeatmapData(filteredData, "joy_words_ratio");
     const axisInterval = Math.ceil(hours.length / 15);
@@ -108,7 +124,6 @@ export const EmotionalHeatmapWidget = ({
           color: "#FFFFFF",
           fontFamily: "Roboto",
           fontWeight: 400,
-          fontStyle: "Regular",
           fontSize: 14,
         },
       },
@@ -174,9 +189,7 @@ export const EmotionalHeatmapWidget = ({
       ],
     };
 
-    if (chartInstance.current) {
-      chartInstance.current.setOption(option);
-    }
+    chartInstance.current.setOption(option);
 
     const handleResize = () => {
       if (chartInstance.current) {

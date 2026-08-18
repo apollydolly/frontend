@@ -22,6 +22,13 @@ export const CongruenceWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.016, 5), 16);
+  };
+
   // Загрузка данных
   useEffect(() => {
     if (realTimeData?.speechData) {
@@ -66,6 +73,7 @@ export const CongruenceWidget = ({
     }
 
     chartInstance.current = echarts.init(chartRef.current);
+    const fontSize = getFontSize();
 
     const option = {
       tooltip: {
@@ -93,7 +101,7 @@ export const CongruenceWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       legend: {
@@ -102,7 +110,7 @@ export const CongruenceWidget = ({
         left: "center",
         textStyle: {
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       xAxis: {
@@ -110,7 +118,7 @@ export const CongruenceWidget = ({
         axisLabel: {
           formatter: (value) => Math.abs(value).toFixed(2),
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       yAxis: {
@@ -120,7 +128,7 @@ export const CongruenceWidget = ({
           margin: 40,
           align: "right",
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
         },
         data: speakerData.map((item) => item.end.toFixed(0) + "сек"),
       },
@@ -133,7 +141,7 @@ export const CongruenceWidget = ({
             show: true,
             position: "right",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
             formatter: (params) => params.value.toFixed(2),
           },
           emphasis: { focus: "series" },
@@ -150,7 +158,7 @@ export const CongruenceWidget = ({
             show: true,
             position: "left",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
             formatter: (params) => (-params.value).toFixed(2),
           },
           emphasis: { focus: "series" },
@@ -164,7 +172,23 @@ export const CongruenceWidget = ({
 
     chartInstance.current.setOption(option);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          legend: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          yAxis: { axisLabel: { fontSize: newFontSize } },
+          series: [
+            { label: { fontSize: newFontSize } },
+            { label: { fontSize: newFontSize } },
+          ],
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

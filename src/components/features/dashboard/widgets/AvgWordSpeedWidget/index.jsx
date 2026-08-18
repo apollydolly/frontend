@@ -9,7 +9,6 @@ import { SPEAKER_COLORS } from "@utils/speechAnalytics/speakersConfig.js";
 import styles from "../widgets.module.scss";
 import Icon from "@icons/checkout.svg";
 
-// Укажите ID спикеров, которых нужно отобразить
 const SELECTED_SPEAKERS = ["SPEAKER_02", "SPEAKER_03"];
 
 export const AvgWordSpeedWidget = ({
@@ -22,6 +21,14 @@ export const AvgWordSpeedWidget = ({
   const [chartData, setChartData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  // Функция получения актуального размера шрифта
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.013, 5), 16);
+  };
 
   const updatePieChart = (chart) => {
     chart.off("updateAxisPointer");
@@ -73,6 +80,7 @@ export const AvgWordSpeedWidget = ({
     fetchData();
   }, [realTimeData]);
 
+  // Основной эффект для построения графика
   useEffect(() => {
     if (!chartRef.current || !chartData) return;
 
@@ -81,7 +89,6 @@ export const AvgWordSpeedWidget = ({
       chartInstance.current = null;
     }
 
-    // Получаем полные имена выбранных спикеров
     const selectedFullNames = SELECTED_SPEAKERS.map((id) =>
       getSpeakerFullName(id),
     );
@@ -114,13 +121,13 @@ export const AvgWordSpeedWidget = ({
 
     const filteredDataset = [headers, ...filteredRows];
     const speakerNames = filteredRows.map((row) => row[0]);
-
-    // Массив цветов для линий (в том же порядке, что и спикеры)
     const lineColors = filteredSpeakerIds.map(
       (id) => SPEAKER_COLORS[id] || "#5470C6",
     );
 
     chartInstance.current = echarts.init(chartRef.current);
+
+    const fontSize = getFontSize();
 
     const option = {
       tooltip: {
@@ -136,7 +143,7 @@ export const AvgWordSpeedWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       dataset: {
@@ -150,10 +157,10 @@ export const AvgWordSpeedWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
         nameTextStyle: {
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       yAxis: {
@@ -163,20 +170,19 @@ export const AvgWordSpeedWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
         nameTextStyle: {
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       grid: {
         top: "55%",
         bottom: "15%",
         left: "8%",
-        right: "5%",
+        right: "12%",
       },
       series: [
-        // Линейные серии для каждого выбранного спикера
         ...filteredRows.map((_, idx) => ({
           type: "line",
           smooth: true,
@@ -192,14 +198,13 @@ export const AvgWordSpeedWidget = ({
           symbolSize: 6,
           label: { show: false },
         })),
-        // Круговая диаграмма — используем те же цвета, что и для линий
         {
           type: "pie",
           id: "pie",
           radius: "30%",
           center: ["50%", "25%"],
           emphasis: { focus: "self" },
-          color: lineColors, // 👈 теперь цвета круговой диаграммы совпадают с цветами линий
+          color: lineColors,
           label: {
             formatter: (params) => {
               const value = parseFloat(params.data[params.encode.value[0]]);
@@ -208,7 +213,7 @@ export const AvgWordSpeedWidget = ({
             fontFamily: "Roboto",
             fontWeight: 400,
             fontStyle: "Regular",
-            fontSize: 14,
+            fontSize: fontSize,
           },
           encode: {
             itemName: "product",
@@ -222,7 +227,30 @@ export const AvgWordSpeedWidget = ({
     chartInstance.current.setOption(option);
     updatePieChart(chartInstance.current);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          legend: {
+            textStyle: { fontSize: newFontSize },
+          },
+          xAxis: {
+            axisLabel: { fontSize: newFontSize },
+            nameTextStyle: { fontSize: newFontSize },
+          },
+          yAxis: {
+            axisLabel: { fontSize: newFontSize },
+            nameTextStyle: { fontSize: newFontSize },
+          },
+          series: {
+            id: "pie",
+            label: { fontSize: newFontSize },
+          },
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

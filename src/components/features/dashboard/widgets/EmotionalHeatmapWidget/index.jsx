@@ -36,6 +36,13 @@ export const EmotionalHeatmapWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.008, 5), 16);
+  };
+
   useEffect(() => {
     if (realTimeData?.speechData) {
       // const scaled = scaleTimeData(realTimeData.speechData);
@@ -100,6 +107,7 @@ export const EmotionalHeatmapWidget = ({
     const { days, hours, heatmapData, maxValue, timeValues } =
       prepareHeatmapData(filteredData, "joy_words_ratio");
     const axisInterval = Math.ceil(hours.length / 15);
+    const fontSize = getFontSize();
 
     chartInstance.current = echarts.init(chartRef.current);
     const option = {
@@ -124,7 +132,7 @@ export const EmotionalHeatmapWidget = ({
           color: "#FFFFFF",
           fontFamily: "Roboto",
           fontWeight: 400,
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       grid: {
@@ -139,7 +147,7 @@ export const EmotionalHeatmapWidget = ({
         splitArea: { show: true },
         axisLabel: {
           interval: axisInterval,
-          fontSize: 14,
+          fontSize: fontSize,
           fontFamily: "Roboto",
           formatter: (value) => value.replace("сек", ""),
         },
@@ -148,7 +156,7 @@ export const EmotionalHeatmapWidget = ({
         type: "category",
         data: days,
         splitArea: { show: true },
-        axisLabel: { fontSize: 14, fontFamily: "Roboto" },
+        axisLabel: { fontSize: fontSize, fontFamily: "Roboto" },
       },
       visualMap: {
         min: 0,
@@ -176,7 +184,7 @@ export const EmotionalHeatmapWidget = ({
           label: {
             show: true,
             formatter: (params) => params.data[2].toFixed(2),
-            fontSize: 14,
+            fontSize: fontSize,
             fontFamily: "Roboto",
           },
           emphasis: {
@@ -193,9 +201,17 @@ export const EmotionalHeatmapWidget = ({
 
     const handleResize = () => {
       if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          yAxis: { axisLabel: { fontSize: newFontSize } },
+          series: { label: { fontSize: newFontSize } },
+        });
         chartInstance.current.resize();
       }
     };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

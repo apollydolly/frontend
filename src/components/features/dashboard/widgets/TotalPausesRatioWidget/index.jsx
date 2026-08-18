@@ -22,6 +22,13 @@ export const TotalPausesRatioWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.02, 5), 16);
+  };
+
   // Загрузка данных
   useEffect(() => {
     if (realTimeData?.speechData) {
@@ -70,6 +77,8 @@ export const TotalPausesRatioWidget = ({
 
     chartInstance.current = echarts.init(chartRef.current);
     const speakerId = TARGET_SPEAKER_ID;
+    const fontSize = getFontSize();
+
     const option = {
       tooltip: {
         trigger: "axis",
@@ -92,20 +101,20 @@ export const TotalPausesRatioWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       xAxis: {
         type: "category",
         axisLabel: {
-          fontSize: 14,
+          fontSize: fontSize,
           fontFamily: "Roboto",
         },
         data: speakerData.map((item) => item.end.toFixed(2)),
       },
       yAxis: {
         axisLabel: {
-          fontSize: 14,
+          fontSize: fontSize,
           fontFamily: "Roboto",
         },
         //   type: "value",
@@ -131,7 +140,7 @@ export const TotalPausesRatioWidget = ({
           label: {
             show: true,
             position: "top",
-            fontSize: 14,
+            fontSize: fontSize,
             fontFamily: "Roboto",
             formatter: (params) => `${params.value}%`,
           },
@@ -140,7 +149,19 @@ export const TotalPausesRatioWidget = ({
     };
     chartInstance.current.setOption(option);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          yAxis: { axisLabel: { fontSize: newFontSize } },
+          series: { label: { fontSize: newFontSize } },
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

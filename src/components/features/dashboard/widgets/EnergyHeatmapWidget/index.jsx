@@ -36,6 +36,13 @@ export const EnergyHeatmapWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.008, 5), 16);
+  };
+
   useEffect(() => {
     if (realTimeData?.speechData) {
       // const scaled = scaleTimeData(realTimeData.speechData);
@@ -99,6 +106,7 @@ export const EnergyHeatmapWidget = ({
     const { days, hours, heatmapData, maxValue, timeValues } =
       prepareHeatmapData(filteredData, "mean_norm_energy");
     const axisInterval = Math.ceil(hours.length / 20);
+    const fontSize = getFontSize();
 
     const option = {
       tooltip: {
@@ -122,7 +130,7 @@ export const EnergyHeatmapWidget = ({
           color: "#FFFFFF",
           fontFamily: "Roboto",
           fontWeight: 400,
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       grid: { height: "50%", top: "10%", left: "10%", right: "5%" },
@@ -132,7 +140,7 @@ export const EnergyHeatmapWidget = ({
         splitArea: { show: true },
         axisLabel: {
           interval: axisInterval,
-          fontSize: 14,
+          fontSize: fontSize,
           fontFamily: "Roboto",
           formatter: (value) => value.replace("сек", ""),
         },
@@ -141,7 +149,7 @@ export const EnergyHeatmapWidget = ({
         type: "category",
         data: days,
         splitArea: { show: true },
-        axisLabel: { fontSize: 14, fontFamily: "Roboto" },
+        axisLabel: { fontSize: fontSize, fontFamily: "Roboto" },
       },
       visualMap: {
         min: 0,
@@ -169,7 +177,7 @@ export const EnergyHeatmapWidget = ({
           label: {
             show: true,
             formatter: (params) => params.data[2].toFixed(2),
-            fontSize: 14,
+            fontSize: fontSize,
             fontFamily: "Roboto",
           },
           emphasis: {
@@ -183,8 +191,21 @@ export const EnergyHeatmapWidget = ({
     chartInstance.current.setOption(option, true);
     setTimeout(() => chartInstance.current?.resize(), 0);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          yAxis: { axisLabel: { fontSize: newFontSize } },
+          series: { label: { fontSize: newFontSize } },
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
+
     return () => {
       window.removeEventListener("resize", handleResize);
       if (chartInstance.current) {

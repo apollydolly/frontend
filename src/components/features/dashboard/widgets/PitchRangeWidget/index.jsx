@@ -22,6 +22,13 @@ export const PitchRangeWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.02, 5), 16);
+  };
+
   useEffect(() => {
     if (realTimeData?.speechData) {
       setRawData(realTimeData.speechData);
@@ -64,6 +71,8 @@ export const PitchRangeWidget = ({
 
     chartInstance.current = echarts.init(chartRef.current);
     const speakerId = TARGET_SPEAKER_ID;
+    const fontSize = getFontSize();
+
     const option = {
       tooltip: {
         trigger: "axis",
@@ -86,13 +95,13 @@ export const PitchRangeWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       xAxis: {
         type: "category",
         axisLabel: {
-          fontSize: 14,
+          fontSize: fontSize,
           fontFamily: "Roboto",
         },
         // name: "Время окончания высказывания (сек)",
@@ -101,7 +110,7 @@ export const PitchRangeWidget = ({
       yAxis: {
         type: "value",
         axisLabel: {
-          fontSize: 14,
+          fontSize: fontSize,
           fontFamily: "Roboto",
         },
         // name: "Диапазон тона",
@@ -126,7 +135,7 @@ export const PitchRangeWidget = ({
           label: {
             show: true,
             position: "top",
-            fontSize: 14,
+            fontSize: fontSize,
             fontFamily: "Roboto",
             formatter: (params) => `${params.value}`,
           },
@@ -135,7 +144,19 @@ export const PitchRangeWidget = ({
     };
     chartInstance.current.setOption(option);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          yAxis: { axisLabel: { fontSize: newFontSize } },
+          series: { label: { fontSize: newFontSize } },
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

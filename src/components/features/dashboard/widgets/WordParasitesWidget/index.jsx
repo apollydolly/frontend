@@ -22,6 +22,13 @@ export const WordParasitesWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.013, 5), 16);
+  };
+
   // Загрузка данных
   useEffect(() => {
     if (realTimeData?.speechData) {
@@ -68,6 +75,7 @@ export const WordParasitesWidget = ({
     }
 
     chartInstance.current = echarts.init(chartRef.current);
+    const fontSize = getFontSize();
 
     const option = {
       tooltip: {
@@ -89,24 +97,24 @@ export const WordParasitesWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       legend: {
-        top: "bottom",
-        orient: "horizontal",
+        bottom: 10,
         left: "center",
+        orient: "horizontal",
         textStyle: {
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       series: [
         {
           name: "Слова-паразиты",
           type: "pie",
-          radius: [50, 250],
-          center: ["50%", "45%"],
+          radius: ["40%", "70%"],
+          center: ["50%", "38%"],
           roseType: "area",
           itemStyle: {
             borderRadius: 8,
@@ -115,7 +123,7 @@ export const WordParasitesWidget = ({
           label: {
             formatter: "{b}: {c} ({d}%)",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
           },
           emphasis: {
             itemStyle: {
@@ -124,13 +132,25 @@ export const WordParasitesWidget = ({
               shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
+          avoidLabelOverlap: true,
         },
       ],
     };
 
     chartInstance.current.setOption(option);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          legend: { textStyle: { fontSize: newFontSize } },
+          series: { label: { fontSize: newFontSize } },
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

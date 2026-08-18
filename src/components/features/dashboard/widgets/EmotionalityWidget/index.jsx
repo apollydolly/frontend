@@ -22,6 +22,13 @@ export const EmotionalityWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.016, 5), 16);
+  };
+
   useEffect(() => {
     if (realTimeData?.speechData) {
       setRawData(realTimeData.speechData);
@@ -105,6 +112,7 @@ export const EmotionalityWidget = ({
     };
 
     chartInstance.current = echarts.init(chartRef.current);
+    const fontSize = getFontSize();
 
     const option = {
       tooltip: {
@@ -140,7 +148,7 @@ export const EmotionalityWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       xAxis: {
@@ -149,7 +157,7 @@ export const EmotionalityWidget = ({
         splitLine: { lineStyle: { type: "dashed" } },
         axisLabel: {
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       yAxis: {
@@ -176,7 +184,7 @@ export const EmotionalityWidget = ({
             formatter: (params) => Math.abs(params.value).toFixed(2),
             position: "right",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
           },
           itemStyle: {
             color: (params) => (params.value >= 0 ? "#3CAB17" : "#EB3134"),
@@ -198,8 +206,17 @@ export const EmotionalityWidget = ({
     }
 
     const handleResize = () => {
-      if (chartInstance.current) chartInstance.current.resize();
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          series: { label: { fontSize: newFontSize } },
+        });
+        chartInstance.current.resize();
+      }
     };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

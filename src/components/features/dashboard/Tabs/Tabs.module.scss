@@ -114,6 +114,12 @@
   border: none;
   border-left: 0.0521vw solid $gray_d8;
   color: $light_gray;
+
+  svg {
+    height: 1.25vw;
+    width: 1.25vw;
+  }
+
   &:hover {
     color: $primary_blue;
   }

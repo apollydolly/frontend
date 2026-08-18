@@ -22,6 +22,14 @@ export const PsycholinguisticWidget = ({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Функция получения актуального размера шрифта
+  const getFontSize = () => {
+    const container = chartRef.current;
+    if (!container) return 12;
+    const width = container.clientWidth;
+    return Math.min(Math.max(width * 0.016, 5), 16);
+  };
+
   // Загрузка данных
   useEffect(() => {
     if (realTimeData?.speechData) {
@@ -66,6 +74,7 @@ export const PsycholinguisticWidget = ({
     }
 
     chartInstance.current = echarts.init(chartRef.current);
+    const fontSize = getFontSize();
 
     const option = {
       tooltip: {
@@ -85,7 +94,7 @@ export const PsycholinguisticWidget = ({
           fontFamily: "Roboto",
           fontWeight: 400,
           fontStyle: "Regular",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       legend: {
@@ -98,7 +107,7 @@ export const PsycholinguisticWidget = ({
         left: "center",
         textStyle: {
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
         },
       },
       xAxis: {
@@ -107,14 +116,14 @@ export const PsycholinguisticWidget = ({
         data: speakerData.map((item) => item.end.toFixed(2)),
         axisLabel: {
           fontFamily: "Roboto",
-          fontSize: 14,
+          fontSize: fontSize,
           rotate: 30,
         },
         // name: "Время окончания (сек)",
       },
       yAxis: {
         type: "value",
-        axisLabel: { fontFamily: "Roboto", fontSize: 14 },
+        axisLabel: { fontFamily: "Roboto", fontSize: fontSize },
         // name: "Значение коэффициента",
       },
       series: [
@@ -129,7 +138,7 @@ export const PsycholinguisticWidget = ({
             show: true,
             position: "top",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
           },
           data: speakerData.map((item) => item.aggressiveness?.toFixed(2) ?? 0),
         },
@@ -144,7 +153,7 @@ export const PsycholinguisticWidget = ({
             show: true,
             position: "top",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
           },
           data: speakerData.map((item) => item.trager?.toFixed(2) ?? 0),
         },
@@ -159,7 +168,7 @@ export const PsycholinguisticWidget = ({
             show: true,
             position: "top",
             fontFamily: "Roboto",
-            fontSize: 14,
+            fontSize: fontSize,
           },
           data: speakerData.map(
             (item) => item.action_certainty?.toFixed(2) ?? 0,
@@ -170,7 +179,24 @@ export const PsycholinguisticWidget = ({
 
     chartInstance.current.setOption(option);
 
-    const handleResize = () => chartInstance.current?.resize();
+    const handleResize = () => {
+      if (chartInstance.current) {
+        const newFontSize = getFontSize();
+        chartInstance.current.setOption({
+          tooltip: { textStyle: { fontSize: newFontSize } },
+          legend: { textStyle: { fontSize: newFontSize } },
+          xAxis: { axisLabel: { fontSize: newFontSize } },
+          yAxis: { axisLabel: { fontSize: newFontSize } },
+          series: [
+            { label: { fontSize: newFontSize } },
+            { label: { fontSize: newFontSize } },
+            { label: { fontSize: newFontSize } },
+          ],
+        });
+        chartInstance.current.resize();
+      }
+    };
+
     window.addEventListener("resize", handleResize);
 
     return () => {

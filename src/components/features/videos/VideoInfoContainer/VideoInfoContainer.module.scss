@@ -3,7 +3,8 @@
 
 .videoInfoContainer {
   width: 55.8333vw;
-  height: 48.9063vw;
+  // height: 48.9063vw;
+  height: 45vw;
   opacity: 1;
   gap: 0.8333vw;
   display: flex;
@@ -218,13 +219,13 @@
 
 // .video {
 //   position: relative;
-//   width: 1072px;
-//   height: 603px;
+//   width: 55.8333vw;
+//   height: 31.4063vw;
 
 //   // Убедитесь, что видео занимает всю область
 //   video {
-//     width: 1072px;
-//     height: 603px;
+//     width: 55.8333vw;
+//     height: 31.4063vw;
 //     object-fit: contain;
 //   }
 // }

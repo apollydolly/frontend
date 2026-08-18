@@ -917,7 +917,9 @@ export const VideoInfoContainer = ({
             // value={videoName}
             // onChange={handleVideoNameChange}
             placeholder="Здесь будут выводиться реплики разговорного ассистента"
+            minHeight="5.729167vw"
             type="textarea"
+            padding="1.04167vw"
             disabled={true}
             viewMode={videoState === "view"}
           />
@@ -927,6 +929,8 @@ export const VideoInfoContainer = ({
             onChange={handleVideoNoteChange}
             placeholder="Ваша заметка о видео"
             type="text"
+            minHeight="3.125vw"
+            padding="1.04167vw"
             disabled={isProcessing || errorType || videoState === "view"}
           />
         </>

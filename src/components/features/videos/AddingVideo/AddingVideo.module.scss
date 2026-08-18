@@ -7,15 +7,16 @@
   display: grid;
   justify-content: center;
   background: $gray_f6;
+  padding-bottom: 1.041667vw;
 }
 
 .header {
-  width: 80.2083vw;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   opacity: 1;
-  padding-top: 1.6667vw;
-  padding-bottom: 0.2083vw;
+  padding-top: 1.25vw;
+  padding-bottom: 1.041667vw;
 
   h2 {
     @include RMed_32;
@@ -51,6 +52,11 @@
   display: flex;
   align-items: center;
   color: $light_gray;
+
+  svg {
+    width: 1.25vw;
+    height: 1.25vw;
+  }
 
   p {
     @include RMed_20;
@@ -88,7 +94,8 @@
 
 .mainContainer {
   width: 80.2083vw;
-  height: 49.9479vw;
+  // height: 49.9479vw;
+  height: 100%;
   opacity: 1;
   gap: 1.0417vw;
   padding-bottom: 1.0417vw;

@@ -18,16 +18,38 @@ import { Submenu } from "@ui/shared/Submenu";
 import { ButtonGray } from "@ui/buttons/ButtonGray";
 
 // тестовые данные
-// const mockDashboards = [
-//   { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
-//   { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
-//   { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
-//   { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
-//   { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
-//   { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
-// ];
-
-const mockDashboards = [];
+const mockDashboards = [
+  { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
+  { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
+  { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
+  { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
+  { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
+  { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
+  { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
+  { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
+  { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
+  { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
+  { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
+  { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
+  { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
+  { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
+  { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
+  { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
+  { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
+  { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
+  { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
+  { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
+  { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
+  { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
+  { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
+  { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
+  { dashboard_id: "dashboard-1", title: "Дашборд 1", type: "dashboard" },
+  { dashboard_id: "dashboard-2", title: "Дашборд 2", type: "dashboard" },
+  { dashboard_id: "dashboard-3", title: "Дашборд 3", type: "dashboard" },
+  { dashboard_id: "dashboard-4", title: "Дашборд 4", type: "dashboard" },
+  { dashboard_id: "dashboard-5", title: "Дашборд 5", type: "dashboard" },
+  { dashboard_id: "dashboard-6", title: "Дашборд 6", type: "dashboard" },
+];
 
 const mockTemplates = [
   { id: "template-1", title: "Шаблон 1", type: "template" },
@@ -57,7 +79,7 @@ export const menuItems = {
       hasSubmenu: true,
       subItems: mockDashboards,
       type: "dashboards",
-      maxVisibleItems: 3,
+      maxVisibleItems: 1,
     },
     {
       id: "templates",
@@ -67,6 +89,7 @@ export const menuItems = {
       hasSubmenu: true,
       subItems: mockTemplates,
       type: "templates",
+      maxVisibleItems: 2,
     },
     {
       id: "my-scenarios",
@@ -86,6 +109,7 @@ export const menuItems = {
       hasSubmenu: true,
       subItems: mockScenarios,
       type: "scenarios",
+      maxVisibleItems: 2,
     },
     {
       id: "videos",
@@ -401,7 +425,10 @@ export const Menu = ({
           />
           <SimpleBar
             className={styles.simplebarContainer}
-            style={{ width: "292px", height: "735px" }}
+            style={{
+              width: "15.2083vw",
+              // height: "38.2813vw",
+            }}
             forceVisible="y"
           >
             <div className={styles.mainMenu}>

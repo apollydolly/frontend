@@ -2,15 +2,15 @@
 @use "@styles/mixins.scss" as *;
 
 .secondaryButton {
-  height: 44px;
-  gap: 8px;
+  height: 2.2917vw;
+  gap: 0.4167vw;
   opacity: 1;
-  padding-top: 12px;
-  padding-right: 16px;
-  padding-bottom: 12px;
-  padding-left: 16px;
-  border-radius: 8px;
-  border: 1.5px solid $primary_blue;
+  padding-top: 0.625vw;
+  padding-right: 0.8333vw;
+  padding-bottom: 0.625vw;
+  padding-left: 0.8333vw;
+  border-radius: 0.4167vw;
+  border: 0.0781vw solid $primary_blue;
   display: flex;
   align-items: center;
   background-color: transparent;
@@ -19,8 +19,8 @@
   cursor: pointer;
   transition: all 0.2s ease;
   .icon {
-    width: 20px;
-    height: 20px;
+    width: 1.0417vw;
+    height: 1.0417vw;
     fill: currentColor;
   }
   &:hover:not(:disabled) {

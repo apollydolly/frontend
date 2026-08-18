@@ -6,22 +6,22 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 20px;
+  padding: 1.0417vw;
 }
 
 .authForm {
   width: 100%;
-  max-width: 400px;
-  padding: 40px;
+  max-width: 20.8333vw;
+  padding: 2.0833vw;
   background: $white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  gap: 10px;
+  border-radius: 0.4167vw;
+  box-shadow: 0 0.1042vw 0.5208vw rgba(0, 0, 0, 0.1);
+  gap: 0.5208vw;
   display: grid;
 
   h2 {
     text-align: center;
-    padding-top: 30px;
+    padding-top: 1.5625vw;
     @include RReg_16;
     color: $dark_gray;
   }
@@ -32,18 +32,18 @@
 }
 
 .error {
-  margin-top: 10px;
+  margin-top: 0.5208vw;
   background: $red_10;
   color: $red;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  border: 1px solid $red_30;
+  padding: 0.5208vw;
+  border-radius: 0.2083vw;
+  margin-bottom: 0.7813vw;
+  border: 0.0521vw solid $red_30;
 }
 
 .authLinks {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 1.0417vw;
 
   a {
     color: $primary_blue;
@@ -56,7 +56,7 @@
 }
 
 .buttonsContainer {
-  padding-top: 20px;
+  padding-top: 1.0417vw;
   display: flex;
   justify-content: center;
 }

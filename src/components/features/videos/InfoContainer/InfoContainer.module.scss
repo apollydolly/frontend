@@ -2,34 +2,34 @@
 @use "@styles/mixins.scss" as *;
 
 .infoContainer {
-  width: 448px;
-  height: 939px;
+  width: 23.3333vw;
+  height: 48.9063vw;
   opacity: 1;
-  gap: 16px;
-  border-radius: 16px;
-  border: 1px solid $gray_f0;
-  padding: 20px;
+  gap: 0.8333vw;
+  border-radius: 0.8333vw;
+  border: 0.0521vw solid $gray_f0;
+  padding: 1.0417vw;
   background: $white;
-  box-shadow: 0px 2px 2px 0px #7d88931a;
+  box-shadow: 0px 0.1042vw 0.1042vw 0px #7d88931a;
   display: flex;
   flex-direction: column;
 }
 
 .fileInfo {
-  width: 408px;
+  width: 21.25vw;
   opacity: 1;
-  gap: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid $gray_d8;
+  gap: 1.0417vw;
+  padding-bottom: 0.8333vw;
+  border-bottom: 0.0521vw solid $gray_d8;
   display: grid;
-  padding-top: 8px;
+  padding-top: 0.4167vw;
 }
 
 .fileName {
-  width: 408px;
-  height: 47px;
+  width: 21.25vw;
+  height: 2.4479vw;
   opacity: 1;
-  gap: 8px;
+  gap: 0.4167vw;
   display: grid;
 
   h2 {
@@ -44,13 +44,12 @@
 }
 
 .videoFrame {
-  width: 408px;
-  height: 230px;
+  width: 21.25vw;
+  height: 11.9792vw;
   opacity: 1;
-  gap: 10px;
-  // padding: 16px;
-  border-radius: 16.08px;
-  border: 1px solid $gray_d8;
+  gap: 0.5208vw;
+  border-radius: 0.8375vw;
+  border: 0.0521vw solid $gray_d8;
   background: $gray_f0;
   display: flex;
   justify-content: center;
@@ -59,18 +58,18 @@
 }
 
 .uploadingInfo {
-  width: 408px;
-  height: 43px;
+  width: 21.25vw;
+  height: 2.2396vw;
   opacity: 1;
-  gap: 32px;
+  gap: 1.6667vw;
   display: flex;
 }
 
 .loadingTime {
-  width: 188px;
-  height: 43px;
+  width: 9.7917vw;
+  height: 2.2396vw;
   opacity: 1;
-  gap: 8px;
+  gap: 0.4167vw;
   display: grid;
 
   &.date {
@@ -89,10 +88,10 @@
 }
 
 .connectedDashboards {
-  width: 408px;
+  width: 21.25vw;
   height: 100%;
   opacity: 1;
-  gap: 16px;
+  gap: 0.8333vw;
   display: flex;
   flex-direction: column;
 
@@ -108,7 +107,7 @@
 }
 
 .dashboardButtons {
-  gap: 8px;
+  gap: 0.4167vw;
   opacity: 1;
   display: flex;
   flex-direction: column;
@@ -117,30 +116,30 @@
 }
 
 .dashboardsList {
-  width: 408px;
-  gap: 8px;
+  width: 21.25vw;
+  gap: 0.4167vw;
   display: flex;
   flex-direction: column;
 }
 
 .dashboardItem {
-  width: 408px;
-  height: 48px;
+  width: 21.25vw;
+  height: 2.5vw;
   justify-content: space-between;
   opacity: 1;
-  border-radius: 8px;
-  padding-top: 8px;
-  padding-right: 8px;
-  padding-bottom: 8px;
-  padding-left: 16px;
+  border-radius: 0.4167vw;
+  padding-top: 0.4167vw;
+  padding-right: 0.4167vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 0.8333vw;
   display: flex;
   background: $gray_f6;
 }
 
 .dashboardName {
-  height: 24px;
+  height: 1.25vw;
   opacity: 1;
-  gap: 4px;
+  gap: 0.2083vw;
   display: flex;
   cursor: pointer;
   color: $primary_blue;
@@ -154,21 +153,21 @@
 }
 
 .zones {
-  width: 408px;
+  width: 21.25vw;
   flex: 1;
   opacity: 1;
-  padding-top: 8px;
-  border-radius: 16px;
-  border: 1px solid $gray_d8;
+  padding-top: 0.4167vw;
+  border-radius: 0.8333vw;
+  border: 0.0521vw solid $gray_d8;
   display: flex;
   flex-direction: column;
   min-height: 0;
 }
 
 .zonesMasks {
-  width: 408px;
+  width: 21.25vw;
   flex: 1;
-  gap: 16px;
+  gap: 0.8333vw;
   opacity: 1;
   display: flex;
   flex-direction: column;
@@ -176,15 +175,15 @@
 }
 
 .zonesList {
-  width: 408px;
+  width: 21.25vw;
   flex: 1;
-  gap: 10px;
+  gap: 0.5208vw;
   opacity: 1;
-  padding-top: 8px;
-  padding-right: 24px;
-  padding-bottom: 8px;
-  padding-left: 8px;
-  border-bottom-width: 1px;
+  padding-top: 0.4167vw;
+  padding-right: 1.25vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 0.4167vw;
+  border-bottom-width: 0.0521vw;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -196,14 +195,14 @@
 }
 
 .zonesHeader {
-  width: 408px;
-  height: 40px;
+  width: 21.25vw;
+  height: 2.0833vw;
   justify-content: space-between;
   opacity: 1;
-  padding-right: 8px;
-  padding-bottom: 8px;
-  padding-left: 16px;
-  border-bottom: 1px solid $gray_d8;
+  padding-right: 0.4167vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 0.8333vw;
+  border-bottom: 0.0521vw solid $gray_d8;
   display: flex;
   align-items: center;
 
@@ -214,8 +213,8 @@
 }
 
 .zonesItems {
-  width: 376px;
-  gap: 16px;
+  width: 19.5833vw;
+  gap: 0.8333vw;
   opacity: 1;
   display: flex;
   flex-direction: column;
@@ -224,11 +223,11 @@
 
 .zoneItem {
   width: 100%;
-  height: 40px;
+  height: 2.0833vw;
   justify-content: space-between;
   opacity: 1;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 0.4167vw;
+  padding: 0.4167vw;
   display: flex;
   transition: all 0.2s ease;
 
@@ -243,9 +242,9 @@
 }
 
 .zoneName {
-  height: 24px;
-  max-width: 280px;
-  gap: 8px;
+  height: 1.25vw;
+  max-width: 14.5833vw;
+  gap: 0.4167vw;
   opacity: 1;
   display: flex;
   align-items: center;
@@ -255,8 +254,8 @@
 }
 
 .zoneButtons {
-  height: 28px;
-  gap: 8px;
+  height: 1.4583vw;
+  gap: 0.4167vw;
   opacity: 1;
   display: flex;
   align-items: center;

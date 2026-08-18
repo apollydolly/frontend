@@ -67,8 +67,8 @@ export const WidgetPanel = () => {
         <SimpleBar
           className={styles.simplebarContainer}
           style={{
-            width: "292px",
-            height: "735px",
+            width: "15.2083vw",
+            // height: "38.2813vw",
           }}
           autoHide={false}
           forceVisible="y"

@@ -7,7 +7,6 @@ export const ScenariosPage = () => {
   const [selectedScenario, setSelectedScenario] = useState(null);
   const navigate = useNavigate();
 
-  // Автоматический выбор первого готового сценария
   useEffect(() => {
     const scenariosItem = menuItems.main.find(
       (item) => item.id === "scenarios",
@@ -24,7 +23,6 @@ export const ScenariosPage = () => {
     else if (menuItemId === "settings") navigate("/settings");
     else if (menuItemId === "support") navigate("/support");
     else if (menuItemId === "my-scenarios") navigate("/my-scenarios");
-    // scenarios — текущая страница
   };
 
   const handleScenarioSelect = (scenario) => {
@@ -43,7 +41,9 @@ export const ScenariosPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+    <div
+      style={{ display: "flex", width: "100vw", height: "min(100vh, 56.25vw)" }}
+    >
       <Menu
         activeItem="scenarios"
         onMenuItemClick={handleMenuItemClick}

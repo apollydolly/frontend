@@ -14,32 +14,32 @@
 }
 
 .modal {
-  width: 960px;
-  height: 540px;
+  width: 50vw;
+  height: 28.125vw;
   opacity: 1;
   display: grid;
-  gap: 16px;
-  border-radius: 20px;
-  border: 1px solid $gray_d8;
-  padding: 20px;
+  gap: 0.8333vw;
+  border-radius: 1.0417vw;
+  border: 0.0521vw solid $gray_d8;
+  padding: 1.0417vw;
   background: $white;
-  box-shadow: 0px 4px 16px 0px #7d889326;
+  box-shadow: 0px 0.2083vw 0.8333vw 0px #7d889326;
   overflow: hidden;
 }
 
 .modalHeader {
-  width: 920px;
-  height: 61px;
+  width: 47.9167vw;
+  height: 3.1771vw;
   opacity: 1;
-  gap: 10px;
+  gap: 0.5208vw;
   display: flex;
   justify-content: space-between;
 
   .headerText {
-    width: 878px;
-    height: 61px;
+    width: 45.7292vw;
+    height: 3.1771vw;
     opacity: 1;
-    gap: 4px;
+    gap: 0.2083vw;
     display: grid;
   }
 
@@ -54,24 +54,24 @@
 }
 
 .tabs {
-  width: 562px;
-  height: 51px;
-  gap: 16px;
+  width: 29.2708vw;
+  height: 2.6563vw;
+  gap: 0.8333vw;
   opacity: 1;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 0.4167vw;
+  padding: 0.4167vw;
   background: $gray_f0;
-  box-shadow: 0px 4px 8px 0px #7d889333 inset;
+  box-shadow: 0px 0.2083vw 0.4167vw 0px #7d889333 inset;
   display: flex;
 }
 
 .uploadArea {
-  width: 920px;
-  height: 423px;
+  width: 47.9167vw;
+  height: 22.0313vw;
   opacity: 1;
-  gap: 20px;
-  border-radius: 16px;
-  border: 1px dashed $gray_d8;
+  gap: 1.0417vw;
+  border-radius: 0.8333vw;
+  border: 0.0521vw dashed $gray_d8;
   background: $gray_f6;
   text-align: center;
   transition: all 0.3s ease;
@@ -80,19 +80,19 @@
   align-content: center;
   justify-items: center;
   &.dragOver {
-    border: 2px dashed $primary_blue;
+    border: 0.1042vw dashed $primary_blue;
     background: $primary_blue_15;
   }
   &.short {
-    height: 364px;
+    height: 18.9583vw;
   }
 }
 
 .uploadText {
-  width: 511px;
-  height: 69px;
+  width: 26.6146vw;
+  height: 3.5938vw;
   opacity: 1;
-  gap: 4px;
+  gap: 0.2083vw;
   display: grid;
   h2 {
     @include RMed_20;
@@ -109,15 +109,15 @@
 }
 
 .errorMessage {
-  height: 40px;
+  height: 2.0833vw;
   opacity: 1;
-  gap: 8px;
-  padding-top: 12px;
-  padding-right: 16px;
-  padding-bottom: 12px;
-  padding-left: 16px;
-  border-radius: 8px;
-  border: 1px solid $red_15;
+  gap: 0.4167vw;
+  padding-top: 0.625vw;
+  padding-right: 0.8333vw;
+  padding-bottom: 0.625vw;
+  padding-left: 0.8333vw;
+  border-radius: 0.4167vw;
+  border: 0.0521vw solid $red_15;
   background: $white;
   position: absolute;
   top: 43%;
@@ -138,22 +138,22 @@
 }
 
 .connectOnlineContainer {
-  width: 920px;
-  height: 364px;
-  gap: 40px;
+  width: 47.9167vw;
+  height: 18.9583vw;
+  gap: 2.0833vw;
   opacity: 1;
-  border-radius: 16px;
-  border: 1px solid $gray_d8;
+  border-radius: 0.8333vw;
+  border: 0.0521vw solid $gray_d8;
   background: $gray_f6;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 0 30px;
+  padding: 0 1.5625vw;
 }
 
 .onlineText {
-  gap: 15px;
+  gap: 0.7813vw;
   opacity: 1;
   display: flex;
   flex-direction: column;
@@ -173,7 +173,7 @@
     @include RReg_16;
     color: $light_gray;
     line-height: 1.1;
-    padding-bottom: 10px;
+    padding-bottom: 0.5208vw;
 
     &:last-child {
       padding-bottom: 0;
@@ -186,7 +186,7 @@
   }
 
   ol {
-    padding-left: 17px;
+    padding-left: 0.8854vw;
   }
 }
 
@@ -194,68 +194,68 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 16px;
+  gap: 0.8333vw;
 }
 
 .videoListContainer {
-  width: 920px;
-  height: 248px;
-  gap: 20px;
+  width: 47.9167vw;
+  height: 12.9167vw;
+  gap: 1.0417vw;
   opacity: 1;
-  padding-top: 8px;
-  padding-right: 24px;
-  padding-bottom: 8px;
-  padding-left: 8px;
-  border-radius: 16px;
-  border: 1px solid $gray_d8;
+  padding-top: 0.4167vw;
+  padding-right: 1.25vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 0.4167vw;
+  border-radius: 0.8333vw;
+  border: 0.0521vw solid $gray_d8;
   background: $gray_f6;
 }
 
 .videoList {
-  width: 872px;
-  height: 476px;
-  gap: 4px;
+  width: 45.4167vw;
+  height: 24.7917vw;
+  gap: 0.2083vw;
   opacity: 1;
-  border-radius: 8px;
+  border-radius: 0.4167vw;
   display: flex;
   flex-direction: column;
 }
 
 .videoListItem {
-  width: 872px;
-  height: 76px;
-  gap: 16px;
+  width: 45.4167vw;
+  height: 3.9583vw;
+  gap: 0.8333vw;
   opacity: 1;
-  border-radius: 8px;
-  padding: 8px;
+  border-radius: 0.4167vw;
+  padding: 0.4167vw;
   background: $white;
   display: flex;
   align-items: center;
 
   &:hover {
     background: $gray_f6;
-    border: 1px solid $gray_d8;
+    border: 0.0521vw solid $gray_d8;
     cursor: pointer;
   }
 
   &.selected {
-    border: 1px solid $primary_blue;
+    border: 0.0521vw solid $primary_blue;
   }
 }
 
 .video {
-  width: 106px;
-  height: 60px;
+  width: 5.5208vw;
+  height: 3.125vw;
   opacity: 1;
-  border-radius: 4px;
-  border: 1px solid $gray_d8;
+  border-radius: 0.2083vw;
+  border: 0.0521vw solid $gray_d8;
   background: $gray_f6;
 }
 
 .videoInfo {
-  width: 700px;
-  height: 43px;
-  gap: 8px;
+  width: 36.4583vw;
+  height: 2.2396vw;
+  gap: 0.4167vw;
   opacity: 1;
   display: grid;
   white-space: nowrap;
@@ -269,8 +269,8 @@
 }
 
 .timeDate {
-  height: 16px;
-  gap: 16px;
+  height: 0.8333vw;
+  gap: 0.8333vw;
   opacity: 1;
   display: flex;
 

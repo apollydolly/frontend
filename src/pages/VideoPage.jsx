@@ -10,17 +10,14 @@ export const VideoPage = () => {
 
   const isViewMode = location.pathname.includes("/view");
 
-  // Получаем данные из state
   const videoFile = location.state?.videoFile || null;
   const originalFileName = location.state?.originalFileName || "";
   const videoDataFromState = location.state?.videoData;
   const isOnlineMode = location.state?.isOnlineMode || false;
 
-  // Если вернулись с созданным дашбордом, используем данные из state
   const [videoData, setVideoData] = useState(videoDataFromState || null);
 
   useEffect(() => {
-    // Если есть данные в state, обновляем локальное состояние
     if (videoDataFromState) {
       console.log("Получены данные видео из state:", videoDataFromState);
       setVideoData(videoDataFromState);
@@ -54,7 +51,9 @@ export const VideoPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+    <div
+      style={{ display: "flex", width: "100vw", height: "min(100vh, 56.25vw)" }}
+    >
       <Menu activeItem={activeMenuItem} onMenuItemClick={handleMenuItemClick} />
       <AddingVideo
         videoFile={videoFile}

@@ -3,23 +3,23 @@
 
 .mainArea {
   display: grid;
-  width: 1594px;
+  width: 83.0208vw;
   height: 100%;
-  gap: 23px;
+  gap: 1.1979vw;
   opacity: 1;
-  padding-right: 34px;
-  padding-left: 20px;
+  padding-right: 1.7708vw;
+  padding-left: 1.0417vw;
   background: $gray_f6;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  height: 48px;
-  gap: 8px;
+  height: 2.5vw;
+  gap: 0.4167vw;
   opacity: 1;
-  padding-top: 24px;
-  padding-bottom: 8px;
+  padding-top: 1.25vw;
+  padding-bottom: 0.4167vw;
 }
 
 .headerFullscreen {
@@ -28,10 +28,10 @@
   left: 0;
   right: 0;
   background: rgba(246, 246, 246, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid $gray_d8;
+  backdrop-filter: blur(0.5208vw);
+  border-bottom: 0.0521vw solid $gray_d8;
   z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0.1042vw 0.4167vw rgba(0, 0, 0, 0.1);
   opacity: 0.5;
 }
 
@@ -53,23 +53,24 @@ h3 {
 
 .buttonsContainer {
   display: flex;
-  gap: 20px;
+  gap: 1.0417vw;
   opacity: 1;
 }
 
 .dashboardInfo {
-  gap: 12px;
+  gap: 0.625vw;
   opacity: 1;
   display: grid;
   justify-items: start;
 }
 
 .dashboard {
-  width: 1540px;
-  height: 935px;
-  gap: 20px;
+  width: 80.2083vw;
+  height: 48.6979vw;
+  gap: 1.0417vw;
   opacity: 1;
-  padding-bottom: 20px;
+  // padding-bottom: 1.0417vw;
+  padding-bottom: 5.5vw;
   display: grid;
 }
 
@@ -94,13 +95,13 @@ h3 {
 
 .layoutFullscreen {
   width: 100%;
-  height: calc(100vh - 48px); // Минус высота header
+  height: calc(100vh - 2.5vw);
   position: relative;
   background-color: #f8f9fa;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 1.0417vw;
   box-sizing: border-box;
 }
 
@@ -109,19 +110,19 @@ h3 {
   align-items: center;
   justify-content: space-between;
   background: #f5f5f5;
-  border-bottom: 1px solid #d0d0d0;
-  padding: 0 16px;
-  height: 48px;
+  border-bottom: 0.0521vw solid #d0d0d0;
+  padding: 0 0.8333vw;
+  height: 2.5vw;
   flex-shrink: 0;
 }
 
 .fullscreenBtn {
   background: none;
   border: none;
-  font-size: 18px;
+  font-size: 0.9375vw;
   cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 4px;
+  padding: 0.4167vw 0.625vw;
+  border-radius: 0.2083vw;
 
   &:hover {
     background: #e0e0e0;
@@ -151,7 +152,7 @@ h3 {
 // Ячейки сетки
 .gridCell {
   background: $gray_f0;
-  border-radius: 8px;
+  border-radius: 0.4167vw;
   transition: background-color 0.2s;
 
   &:hover {
@@ -196,10 +197,10 @@ h3 {
   @include RMed_32;
   color: $dark_gray;
   background: $white;
-  border: 1px solid $primary_blue;
-  border-radius: 4px;
+  border: 0.0521vw solid $primary_blue;
+  border-radius: 0.2083vw;
   outline: none;
-  height: 36px;
+  height: 1.875vw;
   caret-color: $primary_blue;
   transition: border-color 0.2s;
 }

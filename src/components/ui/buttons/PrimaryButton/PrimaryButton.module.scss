@@ -2,14 +2,14 @@
 @use "@styles/mixins.scss" as *;
 
 .primaryButton {
-  height: 44px;
+  height: 2.2917vw;
   opacity: 1;
-  gap: 8px;
-  border-radius: 8px;
-  padding-top: 12px;
-  padding-right: 16px;
-  padding-bottom: 12px;
-  padding-left: 16px;
+  gap: 0.4167vw;
+  border-radius: 0.4167vw;
+  padding-top: 0.625vw;
+  padding-right: 0.8333vw;
+  padding-bottom: 0.625vw;
+  padding-left: 0.8333vw;
   background: $primary_blue;
   color: $white;
   border: none;
@@ -19,8 +19,8 @@
   @include RMed_16;
   transition: all 0.2s ease;
   .icon {
-    height: 20px;
-    width: 20px;
+    height: 1.0417vw;
+    width: 1.0417vw;
     fill: currentColor;
   }
   &:hover:not(:disabled) {

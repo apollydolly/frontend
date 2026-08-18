@@ -1,0 +1,39 @@
+@use "@styles/base/variables.scss" as *;
+@use "@styles/mixins.scss" as *;
+
+.mainArea {
+  height: 100%;
+  width: 78.59375vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: $gray_f6;
+  padding-right: 1.770833vw;
+  padding-left: 1.041667vw;
+  padding-bottom: 1.041667vw;
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  opacity: 1;
+  padding-top: 1.25vw;
+  padding-bottom: 1.041667vw;
+
+  h2 {
+    @include RMed_32;
+    color: $dark_gray;
+  }
+  h3 {
+    @include RReg_20;
+    color: $light_gray;
+  }
+}
+
+.headerText {
+  display: grid;
+  gap: 0.416667vw;
+  flex: 1;
+  min-width: 0;
+}

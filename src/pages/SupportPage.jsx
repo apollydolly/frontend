@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Menu } from "@ui/shared/Menu";
+import { Support } from "@others/Support";
 
 export const SupportPage = () => {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ export const SupportPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+    <div
+      style={{ display: "flex", width: "100vw", height: "min(100vh, 56.25vw)" }}
+    >
       <Menu
         activeItem="support"
         onMenuItemClick={handleMenuItemClick}
@@ -29,7 +32,7 @@ export const SupportPage = () => {
         selectedTemplate={null}
         selectedDashboard={null}
       />
-      <div>Поддержка</div>
+      <Support />
     </div>
   );
 };

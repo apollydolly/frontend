@@ -194,8 +194,8 @@ export const DashboardViewer = ({
 }) => {
   const COLS = 10;
   const ROWS = 6;
-  const FIXED_CELL_WIDTH = 136;
-  const FIXED_CELL_HEIGHT = 136;
+  const FIXED_CELL_WIDTH = 7.0833;
+  const FIXED_CELL_HEIGHT = 7.0833;
   const COLUMN_GAP = 20;
   const ROW_GAP = 23;
 
@@ -237,7 +237,7 @@ export const DashboardViewer = ({
       // Получаем обновленный список дашбордов
       const dashboards = await dashboardService.getUserDashboards();
       const updatedDashboard = dashboards.find(
-        (d) => d.dashboard_id === dashboardId
+        (d) => d.dashboard_id === dashboardId,
       );
 
       if (updatedDashboard) {
@@ -313,7 +313,7 @@ export const DashboardViewer = ({
         eventData,
         hasImageId: !!eventData?.image_id,
         imageId: eventData?.image_id,
-      }
+      },
     );
 
     const safeEventData = eventData || {
@@ -359,7 +359,7 @@ export const DashboardViewer = ({
       console.error("Ошибка при удалении дашборда:", error);
 
       setDeleteError(
-        error.message || "Не удалось удалить дашборд. Попробуйте позже."
+        error.message || "Не удалось удалить дашборд. Попробуйте позже.",
       );
     } finally {
       setIsDeleting(false);
@@ -437,7 +437,7 @@ export const DashboardViewer = ({
             eventService.getEventImage(imageId).catch((err) => {
               console.log(
                 `Не удалось предзагрузить изображение ${imageId}:`,
-                err.message
+                err.message,
               );
             });
           });
@@ -486,7 +486,7 @@ export const DashboardViewer = ({
       });
 
       const newMapping = widgetMappingService.convertWidgetsForWebSocket(
-        currentTab.widgets
+        currentTab.widgets,
       );
 
       widgetMappingRef.current = newMapping;
@@ -517,7 +517,7 @@ export const DashboardViewer = ({
     if (cleanupRef.current) {
       console.log(
         "Очистка предыдущего WebSocket соединения для дашборда:",
-        currentDashboardIdRef.current
+        currentDashboardIdRef.current,
       );
       cleanupRef.current();
       cleanupRef.current = null;
@@ -767,7 +767,7 @@ export const DashboardViewer = ({
       xs: widgets,
       xxs: widgets,
     }),
-    []
+    [],
   );
 
   const hasTabs = parsedData.tabs && parsedData.tabs.length > 0;
@@ -855,13 +855,13 @@ export const DashboardViewer = ({
               <div
                 className={styles.gridContainer}
                 style={{
-                  width: `1540px`,
-                  height: `931px`,
+                  width: "80.2083vw",
+                  height: "48.4896vw",
                   display: "grid",
-                  gridTemplateColumns: `repeat(${COLS}, ${FIXED_CELL_WIDTH}px)`,
-                  gridTemplateRows: `repeat(${ROWS}, ${FIXED_CELL_HEIGHT}px)`,
-                  rowGap: `${ROW_GAP}px`,
-                  columnGap: `${COLUMN_GAP}px`,
+                  gridTemplateColumns: `repeat(${COLS}, 7.0833vw)`,
+                  gridTemplateRows: `repeat(${ROWS}, 7.0833vw)`,
+                  rowGap: "1.1979vw",
+                  columnGap: "1.0417vw",
                 }}
               >
                 {Array.from({ length: COLS * ROWS }).map((_, index) => (
@@ -880,8 +880,8 @@ export const DashboardViewer = ({
               <div
                 className={styles.gridLayoutContainer}
                 style={{
-                  width: `1540px`,
-                  height: `931px`,
+                  width: "80.2083vw",
+                  height: "48.4896vw",
                 }}
               >
                 <ResponsiveGridLayout

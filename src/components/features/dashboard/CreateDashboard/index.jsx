@@ -172,11 +172,10 @@ export const CreateDashboard = ({
 }) => {
   const COLS = 10;
   const ROWS = 6;
-  const MIN_CELL_SIZE = 80;
+  const MIN_CELL_SIZE = 10;
   const GAP_RATIO = 0.14;
   const MAX_TABS = 5;
 
-  const containerRef = useRef(null);
   const layoutRef = useRef(null);
   const titleInputRef = useRef(null);
   const navigate = useNavigate();
@@ -332,7 +331,6 @@ export const CreateDashboard = ({
     const userId = getUserId();
     const currentDashboardId = tempDashboardId || finalDashboardId;
 
-    // Если ничего не изменилось, не делаем ничего
     if (
       currentDashboardId === currentDashboardIdRef.current &&
       isConnectingRef.current === shouldConnectWebSocket
@@ -347,7 +345,6 @@ export const CreateDashboard = ({
       previousConnectionState: isConnectingRef.current,
     });
 
-    // Очищаем предыдущее соединение
     if (cleanupRef.current) {
       console.log(
         "Очистка предыдущего WebSocket соединения для дашборда:",
@@ -366,14 +363,11 @@ export const CreateDashboard = ({
         userId,
       });
 
-      // Добавляем слушатель для этого дашборда
       webSocketService.addListener(currentDashboardId, handleWebSocketData);
       wsListenerRef.current = handleWebSocketData;
 
-      // Подключаем WebSocket для этого дашборда
       webSocketService.connectForDashboard(userId, currentDashboardId);
 
-      // Проверяем статус соединения
       const checkConnectionStatus = () => {
         const status = webSocketService.getStatus();
         console.log("Статус WebSocket (Create):", status);
@@ -383,13 +377,10 @@ export const CreateDashboard = ({
         }
       };
 
-      // Первоначальная проверка
       checkConnectionStatus();
 
-      // Периодическая проверка статуса
       const statusInterval = setInterval(checkConnectionStatus, 5000);
 
-      // Функция очистки
       const cleanup = () => {
         console.log(
           "Очистка WebSocket для дашборда (Create):",
@@ -401,7 +392,6 @@ export const CreateDashboard = ({
           wsListenerRef.current,
         );
 
-        // Отключаем соединение только если это текущий дашборд
         const currentStatus = webSocketService.getStatus();
         if (currentStatus.currentDashboardId === currentDashboardId) {
           console.log(
@@ -414,7 +404,6 @@ export const CreateDashboard = ({
 
       cleanupRef.current = cleanup;
 
-      // Возвращаем функцию очистки
       return cleanup;
     } else if (!shouldConnectWebSocket) {
       console.log("⏸WebSocket не подключен (Create): условия не выполнены", {
@@ -426,7 +415,7 @@ export const CreateDashboard = ({
       setWsStatus("Не подключено");
     }
 
-    return () => {}; // Пустая функция очистки
+    return () => {};
   }, [tempDashboardId, finalDashboardId, shouldConnectWebSocket]);
 
   // Отдельный эффект для обновления слушателя при изменении маппинга
@@ -438,10 +427,8 @@ export const CreateDashboard = ({
       "Обновление WebSocket слушателя из-за изменения маппинга (Create)",
     );
 
-    // Удаляем старый слушатель
     webSocketService.removeListener(currentDashboardId, wsListenerRef.current);
 
-    // Создаем новую функцию с актуальным маппингом
     const newHandler = (data) => {
       if (
         data.event_type === "widget_update" &&
@@ -476,7 +463,6 @@ export const CreateDashboard = ({
       }
     };
 
-    // Добавляем новый слушатель
     webSocketService.addListener(currentDashboardId, newHandler);
     wsListenerRef.current = newHandler;
 
@@ -513,7 +499,6 @@ export const CreateDashboard = ({
       show: !hasConnectedVideos && hasDashboardId,
     });
 
-    // Показываем кнопку если есть ID дашборда и нет подключенных видео
     return !hasConnectedVideos;
   }, [connectedVideos, tempDashboardId, finalDashboardId]);
 
@@ -544,19 +529,17 @@ export const CreateDashboard = ({
   // Эффект для отслеживания изменений
   useEffect(() => {
     const currentState = JSON.stringify({ tabs, dashboardTitle });
-    setHasUnsavedChanges(true); // Упрощенная логика - всегда считаем, что есть изменения
+    setHasUnsavedChanges(true);
   }, [tabs, dashboardTitle]);
 
   // Эффект для загрузки информации о видео при монтировании
   useEffect(() => {
     if (fromVideo && videoId) {
-      // Сохраняем информацию о видео
       setVideoInfo({
         id: videoId,
         name: videoName,
       });
 
-      // Можно также сохранить в localStorage для надежности
       localStorage.setItem(
         "creatingDashboardForVideo",
         JSON.stringify({
@@ -567,7 +550,6 @@ export const CreateDashboard = ({
       );
     }
 
-    // Очистка при размонтировании
     return () => {
       localStorage.removeItem("creatingDashboardForVideo");
     };
@@ -612,7 +594,6 @@ export const CreateDashboard = ({
           finalDashboardId,
         );
 
-        // Загружаем информацию о дашборде
         const dashboards = await dashboardService.getUserDashboards();
         const dashboard = dashboards.find(
           (d) => d.dashboard_id === finalDashboardId,
@@ -623,7 +604,6 @@ export const CreateDashboard = ({
           setDashboardTitle(dashboard.name || "Дашборд");
           setConnectedVideos(dashboard.video_id || []);
 
-          // Парсим данные дашборда
           if (dashboard.data) {
             const parsedData = parseDashboardData(dashboard.data);
             console.log("Парсированные данные:", {
@@ -637,7 +617,6 @@ export const CreateDashboard = ({
             });
 
             if (parsedData && parsedData.tabs && parsedData.tabs.length > 0) {
-              // Преобразуем данные в формат для редактирования
               const transformedTabs = parsedData.tabs.map((tab) => ({
                 id: tab.id,
                 name: tab.name,
@@ -653,25 +632,19 @@ export const CreateDashboard = ({
                 })),
               );
 
-              // Всегда используем первую вкладку
               const firstTabId = transformedTabs[0].id;
               console.log(
                 "Игнорируем поврежденный activeTab из данных, используем первую вкладку:",
                 firstTabId,
               );
 
-              // Устанавливаем вкладки
               setTabs(transformedTabs);
-
-              // Устанавливаем первую вкладку как активную
               setActiveTab(firstTabId);
-
               setNextTabNumber(transformedTabs.length + 1);
 
               console.log("Активная вкладка установлена:", firstTabId);
             } else {
               console.warn("Нет вкладок в данных дашборда");
-              // Создаем пустую вкладку по умолчанию
               const defaultTab = {
                 id: "tab-1",
                 name: "Вкладка 1",
@@ -683,7 +656,6 @@ export const CreateDashboard = ({
             }
           } else {
             console.warn("Нет данных дашборда");
-            // Создаем пустую вкладку по умолчанию
             const defaultTab = {
               id: "tab-1",
               name: "Вкладка 1",
@@ -718,14 +690,12 @@ export const CreateDashboard = ({
 
   // Функция для подготовки данных дашборда
   const prepareDashboardData = useCallback(() => {
-    // Получаем уникальные коды виджетов
     const widgetCodes = [
       ...new Set(
         tabs.flatMap((tab) => tab.widgets.map((widget) => widget.type)),
       ),
     ];
 
-    // Преобразуем коды в ID
     const widgetIds = widgetCodes
       .map((code) => widgetsMap[code])
       .filter((id) => id);
@@ -736,13 +706,11 @@ export const CreateDashboard = ({
       mapping: widgetsMap,
     });
 
-    // Проверяем, что все виджеты найдены
     if (widgetIds.length !== widgetCodes.length) {
       const missingCodes = widgetCodes.filter((code) => !widgetsMap[code]);
       console.warn("Некоторые виджеты не найдены:", missingCodes);
     }
 
-    // Создаем структуру данных
     const dashboardLayout = {
       version: 1,
       tabs: tabs.map((tab) => ({
@@ -776,29 +744,25 @@ export const CreateDashboard = ({
     const dataString = JSON.stringify(dashboardLayout);
 
     if (editMode) {
-      // Режим редактирования - используем finalDashboardId
       return {
         dashboard_id: finalDashboardId,
         name: dashboardTitle,
         data: dataString,
         widget_id: widgetIds,
-        video_id: connectedVideos, // Добавляем подключенные видео
+        video_id: connectedVideos,
       };
     } else {
-      // Режим создания - используем tempDashboardId если есть
       const dashboardId = tempDashboardId || finalDashboardId;
 
       if (dashboardId) {
-        // Если дашборд уже сохранен, обновляем его с видео
         return {
-          dashboard_id: dashboardId, // Используем существующий ID
+          dashboard_id: dashboardId,
           name: dashboardTitle,
           data: dataString,
           widget_id: widgetIds,
-          video_id: connectedVideos, // Добавляем подключенные видео
+          video_id: connectedVideos,
         };
       } else {
-        // Первое сохранение
         return {
           name: dashboardTitle,
           data: dataString,
@@ -814,7 +778,7 @@ export const CreateDashboard = ({
     editMode,
     finalDashboardId,
     connectedVideos,
-    tempDashboardId, // Добавляем в зависимости
+    tempDashboardId,
   ]);
 
   // Функция для поиска созданного дашборда
@@ -832,16 +796,13 @@ export const CreateDashboard = ({
         return null;
       }
 
-      // Сначала ищем точное совпадение по имени и данным
       for (const dashboard of dashboards) {
         if (dashboard.name === dashboardData.name) {
-          // Если есть данные дашборда, проверяем содержимое
           if (dashboard.data) {
             try {
               const parsedData = JSON.parse(dashboard.data);
               const newData = JSON.parse(dashboardData.data);
 
-              // Сравниваем структуру (без глубокого сравнения)
               if (parsedData.tabs?.length === newData.tabs?.length) {
                 console.log(
                   "Найден дашборд с совпадающими данными:",
@@ -849,14 +810,11 @@ export const CreateDashboard = ({
                 );
                 return dashboard.dashboard_id;
               }
-            } catch (e) {
-              // Если не удалось распарсить, пропускаем
-            }
+            } catch (e) {}
           }
         }
       }
 
-      // Если не нашли точного совпадения, берем последний
       const lastDashboard = dashboards[dashboards.length - 1];
       console.log(
         "Берем последний дашборд в списке:",
@@ -892,11 +850,9 @@ export const CreateDashboard = ({
         let result;
         let savedDashboardId = null;
 
-        // Определяем, нужно ли создавать или обновлять
         const shouldUpdate = editMode || tempDashboardId;
 
         if (shouldUpdate) {
-          // Режим обновления существующего дашборда
           console.log("Обновление дашборда:", {
             dashboard_id: dashboardData.dashboard_id,
             videoCount: dashboardData.video_id?.length,
@@ -907,17 +863,14 @@ export const CreateDashboard = ({
           savedDashboardId = dashboardData.dashboard_id;
           setTempDashboardId(savedDashboardId);
         } else {
-          // Создание нового дашборда
           console.log("Создание нового дашборда...");
           result = await dashboardService.saveDashboard(dashboardData);
           console.log("Результат создания дашборда:", result);
 
-          // Получаем обновленный список дашбордов
-          await new Promise((resolve) => setTimeout(resolve, 1000)); // Даем время серверу
+          await new Promise((resolve) => setTimeout(resolve, 1000));
           const dashboards = await dashboardService.getUserDashboards();
 
           if (dashboards.length > 0) {
-            // Ищем последний дашборд с таким же именем
             const matchingDashboards = dashboards.filter(
               (d) => d.name === dashboardData.name,
             );
@@ -939,7 +892,6 @@ export const CreateDashboard = ({
           setTempDashboardId(savedDashboardId);
           console.log("Установлен tempDashboardId:", savedDashboardId);
 
-          // Привязываем видео если нужно
           if (videoInfo?.id && savedDashboardId) {
             await attachDashboardToVideo(videoInfo.id, {
               dashboard_id: savedDashboardId,
@@ -949,7 +901,6 @@ export const CreateDashboard = ({
 
         setHasUnsavedChanges(false);
 
-        // Навигация после сохранения
         if (navigateAfterSave) {
           if (fromVideo && videoInfo) {
             navigate(`/video/${videoInfo.id}/view`, {
@@ -1004,8 +955,6 @@ export const CreateDashboard = ({
     try {
       setIsSavingBeforeConnect(true);
 
-      // Если редактируем существующий дашборд, просто открываем модалку
-      // if (editMode && finalDashboardId) {
       console.log(
         "Режим редактирования, используем существующий ID:",
         finalDashboardId,
@@ -1013,26 +962,6 @@ export const CreateDashboard = ({
       setTempDashboardId(finalDashboardId);
       setIsModalOpen(true);
       setIsSavingBeforeConnect(false);
-      return;
-      // }
-
-      // Если создаем новый дашборд, сохраняем его
-      // if (!tempDashboardId) {
-      //   console.log("Создание нового дашборда перед подключением видео");
-      //   const result = await handleSaveDashboard(false); // false - не навигируем после сохранения
-      //   if (result?.dashboard_id) {
-      //     const dashboardId = result.dashboard_id;
-      //     console.log("Дашборд сохранен с ID:", dashboardId);
-      //     setTempDashboardId(dashboardId);
-      //     setIsModalOpen(true);
-      //   } else {
-      //     throw new Error("Не удалось получить ID сохраненного дашборда");
-      //   }
-      // } else {
-      //   // Если уже сохранен, используем существующий ID
-      //   console.log("Используем существующий ID дашборда:", tempDashboardId);
-      //   setIsModalOpen(true);
-      // }
     } catch (error) {
       console.error("Ошибка при сохранении дашборда:", error);
     } finally {
@@ -1051,20 +980,14 @@ export const CreateDashboard = ({
       console.log("Видео успешно подключено, ID:", videoId);
 
       try {
-        // Добавляем видео к подключенным
         setConnectedVideos((prev) => {
           const updated = [...prev, videoId];
           console.log("Обновленные подключенные видео:", updated);
           return updated;
         });
 
-        // Обновляем информацию о дашборде с сервера
         await updateDashboardInfoAfterVideoConnect();
-
-        // Закрываем модальное окно
         setIsModalOpen(false);
-
-        // Показываем уведомление
         console.log("Видео подключено к дашборду");
       } catch (error) {
         console.error("Ошибка в handleVideoConnected:", error);
@@ -1076,21 +999,16 @@ export const CreateDashboard = ({
   // Функция для привязки дашборда к видео
   const attachDashboardToVideo = async (videoId, dashboardResult) => {
     try {
-      // Получаем ID нового дашборда
       const dashboardId = dashboardResult.dashboard_id || dashboardResult.id;
       if (!dashboardId) {
         console.error("Не удалось получить ID созданного дашборда");
         return;
       }
 
-      // Получаем текущие данные видео
       const videoData = await videoService.getVideo(videoId);
-
-      // Собираем обновленные дашборды
       const currentDashboards = videoData.dashboards || [];
       const updatedDashboards = [...currentDashboards, dashboardId];
 
-      // Подготавливаем зоны и маски
       const zones = videoData.zones
         ? videoData.zones.map((zone) => ({
             name: zone.name,
@@ -1109,7 +1027,6 @@ export const CreateDashboard = ({
           }))
         : null;
 
-      // Обновляем данные видео
       await videoService.setVideoData({
         videoId: videoId,
         name: videoData.name || "Без названия",
@@ -1128,7 +1045,6 @@ export const CreateDashboard = ({
       return true;
     } catch (error) {
       console.error("Ошибка при привязке дашборда к видео:", error);
-      // Не бросаем ошибку, чтобы не ломать создание дашборда
       return false;
     }
   };
@@ -1145,7 +1061,6 @@ export const CreateDashboard = ({
     setMaxRows(ROWS);
   }, []);
 
-  // Фокусировка на поле ввода при активации редактирования
   useEffect(() => {
     if (isEditingTitle && titleInputRef.current) {
       titleInputRef.current.focus();
@@ -1153,61 +1068,45 @@ export const CreateDashboard = ({
     }
   }, [isEditingTitle]);
 
-  // Функция для проверки, нужно ли показывать кнопку добавления вкладки
   const shouldShowAddButton = useCallback(() => {
     if (tabs.length >= MAX_TABS) {
       return false;
     }
     const lastTab = tabs[tabs.length - 1];
-
     if (!lastTab) {
       return false;
     }
-
     return lastTab.widgets && lastTab.widgets.length > 0;
   }, [tabs]);
 
-  // Получаем текущее состояние для кнопки
   const showAddButton = shouldShowAddButton();
 
-  // Расчет адаптивных размеров
+  // === РАСЧЁТ РАЗМЕРОВ СЕТКИ (исправлено: используем layoutRef) ===
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!layoutRef.current) return;
 
     const updateSizes = () => {
-      const container = containerRef.current;
-
-      // Проверяем, что элемент все еще существует
+      const container = layoutRef.current;
       if (!container || !document.body.contains(container)) {
-        console.warn("Container element not found or removed from DOM");
+        console.warn("Layout element not found");
         return;
       }
 
       try {
         const containerRect = container.getBoundingClientRect();
-
-        // В полноэкранном режиме используем всю высоту окна
-        const headerHeight = 48;
         let availableWidth, availableHeight;
 
         if (isFullscreen) {
-          // В полноэкранном режиме - вся высота окна минус header
+          // В полноэкранном режиме высота шапки в пикселях = 2.5vw, переводим в px относительно ширины окна
+          const headerHeightPx = (2.5 * window.innerWidth) / 100;
           availableWidth = window.innerWidth;
-          availableHeight = window.innerHeight - headerHeight;
+          availableHeight = window.innerHeight - headerHeightPx;
         } else {
-          // В обычном режиме - размер контейнера
           availableWidth = containerRect.width;
-          availableHeight = containerRect.height - headerHeight;
+          availableHeight = containerRect.height;
         }
 
-        console.log("Available space:", {
-          availableWidth,
-          availableHeight,
-          isFullscreen,
-          windowHeight: window.innerHeight,
-        });
-
-        // Вычисляем адаптивный gap
+        // Вычисляем адаптивный gap (один для обоих направлений)
         const avgCellSize = Math.min(
           availableWidth / COLS,
           availableHeight / ROWS,
@@ -1217,12 +1116,11 @@ export const CreateDashboard = ({
           Math.min(16, Math.floor(avgCellSize * GAP_RATIO)),
         );
 
-        // Вычисляем размер ячейки с учетом gap
         const cellWidth = (availableWidth - (COLS - 1) * adaptiveGap) / COLS;
         const cellHeight = (availableHeight - (ROWS - 1) * adaptiveGap) / ROWS;
 
-        const finalCellWidth = Math.max(MIN_CELL_SIZE, cellWidth);
-        const finalCellHeight = Math.max(MIN_CELL_SIZE, cellHeight);
+        const finalCellWidth = Math.max(MIN_CELL_SIZE, Math.floor(cellWidth));
+        const finalCellHeight = Math.max(MIN_CELL_SIZE, Math.floor(cellHeight));
 
         setCellSize({
           width: finalCellWidth,
@@ -1245,13 +1143,8 @@ export const CreateDashboard = ({
 
     updateSizes();
 
-    // Следим за изменением размеров окна в полноэкранном режиме
     const resizeObserver = new ResizeObserver(() => {
-      // Проверяем перед обновлением
-      if (
-        containerRef.current &&
-        document.body.contains(containerRef.current)
-      ) {
+      if (layoutRef.current && document.body.contains(layoutRef.current)) {
         updateSizes();
       }
     });
@@ -1259,34 +1152,27 @@ export const CreateDashboard = ({
     let cleanupObserver = null;
 
     if (isFullscreen) {
-      // В полноэкранном режиме следим за всем окном
       window.addEventListener("resize", updateSizes);
-
-      // Безопасное наблюдение за document.body
       if (document.body) {
         resizeObserver.observe(document.body);
         cleanupObserver = () => resizeObserver.unobserve(document.body);
       }
     } else {
-      // В обычном режиме следим за контейнером
-      if (containerRef.current) {
-        resizeObserver.observe(containerRef.current);
+      if (layoutRef.current) {
+        resizeObserver.observe(layoutRef.current);
         cleanupObserver = () => {
-          if (containerRef.current) {
-            resizeObserver.unobserve(containerRef.current);
+          if (layoutRef.current) {
+            resizeObserver.unobserve(layoutRef.current);
           }
         };
       }
     }
 
     return () => {
-      // Очистка
       if (cleanupObserver) {
         cleanupObserver();
       }
-
       resizeObserver.disconnect();
-
       if (isFullscreen) {
         window.removeEventListener("resize", updateSizes);
       }
@@ -1388,10 +1274,9 @@ export const CreateDashboard = ({
     );
   }, [tabs, activeTab, nextTabNumber]);
 
-  // Функции для редактирования названия по двойному щелчку
+  // Редактирование названия
   const handleTitleDoubleClick = () => {
     setIsEditingTitle(true);
-
     requestAnimationFrame(() => {
       if (titleMeasureRef.current) {
         const newWidth = titleMeasureRef.current.offsetWidth + 20;
@@ -1422,35 +1307,26 @@ export const CreateDashboard = ({
   const handleTitleBlur = () => {
     handleTitleSave();
   };
-  // Функция для сворачивания/разворачивания header
+
   const toggleHeader = () => {
     setIsHeaderCollapsed(!isHeaderCollapsed);
   };
 
-  // Drop target для виджетов
+  // === DROP TARGET (используем layoutRef) ===
   const [{ isOver }, drop] = useDrop({
     accept: "widget",
     drop: (item, monitor) => {
-      console.log("Drop event in edit mode:", {
-        item,
-        editMode,
-        hasContainer: !!containerRef.current,
-      });
-
-      if (!containerRef.current) {
-        console.error("Container ref not available");
-        return;
-      }
+      if (!layoutRef.current) return;
 
       const offset = monitor.getClientOffset();
-      const rect = containerRef.current?.getBoundingClientRect();
+      const rect = layoutRef.current.getBoundingClientRect();
 
       if (offset && rect) {
         const relativeX = offset.x - rect.left;
         const relativeY = offset.y - rect.top;
 
-        const cellWidthWithGap = 136 + 20;
-        const cellHeightWithGap = 136 + 23;
+        const cellWidthWithGap = cellSize.width + gap;
+        const cellHeightWithGap = cellSize.height + gap;
 
         const gridX = Math.floor(relativeX / cellWidthWithGap);
         const gridY = Math.floor(relativeY / cellHeightWithGap);
@@ -1459,14 +1335,6 @@ export const CreateDashboard = ({
         const boundedX = Math.max(0, Math.min(gridX, COLS - defaultSize.w));
         const boundedY = Math.max(0, Math.min(gridY, ROWS - defaultSize.h));
 
-        console.log("Adding widget at:", {
-          type: item.type,
-          x: boundedX,
-          y: boundedY,
-          size: defaultSize,
-        });
-
-        // Используем функцию addWidget из useWidgetOperations
         addWidget(item.type, {
           x: boundedX,
           y: boundedY,
@@ -1474,22 +1342,20 @@ export const CreateDashboard = ({
           h: defaultSize.h,
         });
         setDropPreview(null);
-      } else {
-        console.error("No offset or rect available");
       }
     },
     hover: (item, monitor) => {
-      if (!containerRef.current) return;
+      if (!layoutRef.current) return;
 
       const offset = monitor.getClientOffset();
-      const rect = containerRef.current?.getBoundingClientRect();
+      const rect = layoutRef.current.getBoundingClientRect();
 
       if (offset && rect) {
         const relativeX = offset.x - rect.left;
         const relativeY = offset.y - rect.top;
 
-        const cellWidthWithGap = 136 + 20;
-        const cellHeightWithGap = 136 + 23;
+        const cellWidthWithGap = cellSize.width + gap;
+        const cellHeightWithGap = cellSize.height + gap;
 
         const gridX = Math.floor(relativeX / cellWidthWithGap);
         const gridY = Math.floor(relativeY / cellHeightWithGap);
@@ -1512,7 +1378,6 @@ export const CreateDashboard = ({
     }),
   });
 
-  // Используем хук синхронизации
   useDashboardSync({
     isFullscreen,
     isInitialized,
@@ -1536,63 +1401,34 @@ export const CreateDashboard = ({
     [],
   );
 
-  // Рассчитываем общие размеры сетки
   const gridWidth = cellSize.width * COLS + gap * (COLS - 1);
-  const gridHeight = cellSize.height * ROWS + gap * (ROWS - 1);
+  const gridHeight = Math.floor(cellSize.height * ROWS + gap * (ROWS - 1));
 
+  // === PREVIEW CELLS (используем динамические размеры) ===
   const getPreviewCells = () => {
-    // Приоритет: ресайз > перетаскивание > дроп из панели
     const preview = resizePreview || dragPreview || dropPreview;
-    if (!preview) {
-      return null;
-    }
-
-    console.log("Rendering preview:", {
-      type: resizePreview ? "resize" : dragPreview ? "drag" : "drop",
-      preview,
-    });
-
-    const cellWidth = 136;
-    const cellHeight = 136;
-    const columnGap = 20;
-    const rowGap = 23;
+    if (!preview) return null;
 
     const cells = [];
-
-    // Цвета для разных типов подсветки
-    // let color, borderColor;
-    // if (resizePreview) {
-    //   color = "#FFA72626"; // оранжевый с прозрачностью
-    //   borderColor = "#FFA726";
-    // } else if (dragPreview) {
-    //   color = "#26A69A26"; // зеленый с прозрачностью
-    //   borderColor = "#26A69A";
-    // } else {
-    //   color = "#1776E026"; // синий с прозрачностью
-    //   borderColor = "#1776E0";
-    // }
-
-    let color = "#1776E026";
+    const color = "#1776E026";
 
     for (let y = 0; y < preview.h; y++) {
       for (let x = 0; x < preview.w; x++) {
         const cellX = preview.x + x;
         const cellY = preview.y + y;
-
-        // Проверяем, чтобы ячейки не выходили за границы сетки
         if (cellX >= COLS || cellY >= ROWS) continue;
 
         cells.push(
           <div
-            key={`${preview.type}-${cellX}-${cellY}-${Date.now()}`} // Добавляем timestamp для уникальности
+            key={`${preview.type}-${cellX}-${cellY}-${Date.now()}`}
             style={{
               position: "absolute",
-              left: cellX * (cellWidth + columnGap),
-              top: cellY * (cellHeight + rowGap) - 8,
-              width: cellWidth,
-              height: cellHeight,
+              left: cellX * (cellSize.width + gap),
+              top: cellY * (cellSize.height + gap),
+              width: cellSize.width,
+              height: cellSize.height,
               backgroundColor: color,
-              borderRadius: "8px",
+              borderRadius: "0.4167vw",
               pointerEvents: "none",
               zIndex: 1000,
             }}
@@ -1600,11 +1436,10 @@ export const CreateDashboard = ({
         );
       }
     }
-
     return cells;
   };
 
-  // Обработчик начала перетаскивания
+  // === ОБРАБОТЧИКИ DRAG/RESIZE ===
   const handleDragStart = useCallback(
     (widgetId, layoutItem) => {
       const widget = currentTab.widgets.find((w) => w.i === widgetId);
@@ -1622,7 +1457,6 @@ export const CreateDashboard = ({
     [currentTab.widgets],
   );
 
-  // Обработчик перетаскивания
   const handleDrag = useCallback(
     (layout, oldItem, newItem) => {
       const widget = currentTab.widgets.find((w) => w.i === newItem.i);
@@ -1639,13 +1473,11 @@ export const CreateDashboard = ({
     [currentTab.widgets],
   );
 
-  // Обработчик окончания перетаскивания
   const handleDragStop = useCallback(() => {
     setActiveDrag(null);
     setDragPreview(null);
   }, []);
 
-  // Обработчик начала ресайза
   const handleResizeStart = useCallback(
     (widgetId, layoutItem) => {
       const widget = currentTab.widgets.find((w) => w.i === widgetId);
@@ -1663,12 +1495,10 @@ export const CreateDashboard = ({
     [currentTab.widgets],
   );
 
-  // Обработчик ресайза
   const handleResize = useCallback(
     (layout, oldItem, newItem) => {
       const widget = currentTab.widgets.find((w) => w.i === newItem.i);
       if (widget) {
-        // Находим ближайший допустимый размер
         const availableSizes = getAvailableSizes(widget.type);
         const closestSize = availableSizes.reduce((closest, size) => {
           const currentDiff =
@@ -1690,59 +1520,11 @@ export const CreateDashboard = ({
     [currentTab.widgets],
   );
 
-  // Добавьте этот useEffect для отслеживания изменений layout
-  useEffect(() => {
-    const handleLayoutChange = (
-      layout,
-      oldItem,
-      newItem,
-      placeholder,
-      eventType,
-    ) => {
-      if (eventType === "drag" || eventType === "resize") {
-        const widget = currentTab.widgets.find((w) => w.i === newItem.i);
-        if (!widget) return;
-
-        if (eventType === "drag") {
-          setDragPreview({
-            x: newItem.x,
-            y: newItem.y,
-            w: newItem.w,
-            h: newItem.h,
-            type: widget.type,
-          });
-        } else if (eventType === "resize") {
-          // При ресайзе находим ближайший допустимый размер
-          const availableSizes = getAvailableSizes(widget.type);
-          const closestSize = availableSizes.reduce((closest, size) => {
-            const currentDiff =
-              Math.abs(newItem.w - closest.w) + Math.abs(newItem.h - closest.h);
-            const newDiff =
-              Math.abs(newItem.w - size.w) + Math.abs(newItem.h - size.h);
-            return newDiff < currentDiff ? size : closest;
-          });
-
-          setResizePreview({
-            x: newItem.x,
-            y: newItem.y,
-            w: closestSize.w,
-            h: closestSize.h,
-            type: widget.type,
-          });
-        }
-      }
-    };
-
-    // Этот код будет выполняться при каждом обновлении
-  }, [currentTab.widgets]);
-
-  // Обработчик окончания ресайза
   const handleResizeStop = useCallback(
     (layout, oldItem, newItem) => {
       const widget = currentTab.widgets.find((w) => w.i === newItem.i);
 
       if (widget) {
-        // Применяем ближайший допустимый размер
         const availableSizes = getAvailableSizes(widget.type);
         const closestSize = availableSizes.reduce((closest, size) => {
           const currentDiff =
@@ -1752,7 +1534,6 @@ export const CreateDashboard = ({
           return newDiff < currentDiff ? size : closest;
         });
 
-        // Обновляем виджет с допустимым размером
         if (closestSize.w !== newItem.w || closestSize.h !== newItem.h) {
           const updatedWidgets = currentTab.widgets.map((w) =>
             w.i === newItem.i
@@ -1769,21 +1550,16 @@ export const CreateDashboard = ({
     [currentTab.widgets, onLayoutChange],
   );
 
-  // Добавьте вспомогательную функцию для поиска ближайшего размера
   const findClosestSize = (availableSizes, targetSize) => {
-    // Сначала ищем точное соответствие по площади
     const targetArea = targetSize.w * targetSize.h;
-
     return availableSizes.reduce((closest, size) => {
       const currentAreaDiff = Math.abs(closest.w * closest.h - targetArea);
       const newAreaDiff = Math.abs(size.w * size.h - targetArea);
 
-      // Предпочитаем размеры с ближайшей площадью
       if (newAreaDiff < currentAreaDiff) {
         return size;
       }
 
-      // Если площади одинаковые, выбираем по минимальному изменению размеров
       if (newAreaDiff === currentAreaDiff) {
         const currentSizeDiff =
           Math.abs(targetSize.w - closest.w) +
@@ -1797,120 +1573,17 @@ export const CreateDashboard = ({
     });
   };
 
+  // === РЕНДЕР ===
   return (
-    // <div
-    //   className={isFullscreen ? styles.dashboardFullscreen : styles.dashboard}
-    // >
-    //   <div
-    //     ref={(node) => {
-    //       containerRef.current = node;
-    //       drop(node);
-    //     }}
-    //     className={
-    //       isFullscreen
-    //         ? styles.dashboardContainerFullscreen
-    //         : styles.dashboardContainer
-    //     }
-    //   >
-    //     <div className={styles.dashboardHeader}>
-    //       <Tabs
-    //         activeTab={activeTab}
-    //         tabs={tabs}
-    //         onTabAdd={handleAddTab}
-    //         onTabChange={handleTabChange}
-    //         onTabRename={handleTabRename}
-    //         onTabRemove={handleTabRemove}
-    //       />
-    //       {!isFullscreen && (
-    //         <button
-    //           className={styles.fullscreenBtn}
-    //           onClick={openDashboardFullscreen}
-    //           title="Развернуть в отдельном окне"
-    //         >
-    //           ⛶
-    //         </button>
-    //       )}
-    //     </div>
-
-    //     <div
-    //       ref={layoutRef}
-    //       className={isFullscreen ? styles.layoutFullscreen : styles.layout}
-    //     >
-    //       {/* ВИЗУАЛЬНАЯ СЕТКА */}
-    //       <div
-    //         className={styles.gridContainer}
-    //         style={{
-    //           width: `${gridWidth}px`,
-    //           height: `${gridHeight}px`,
-    //           display: "grid",
-    //           gridTemplateColumns: `repeat(${COLS}, ${cellSize.width}px)`,
-    //           gridTemplateRows: `repeat(${ROWS}, ${cellSize.height}px)`,
-    //           gap: `${gap}px`,
-    //         }}
-    //       >
-    //         {Array.from({ length: COLS * ROWS }).map((_, index) => (
-    //           <div
-    //             key={index}
-    //             className={styles.gridCell}
-    //             style={{
-    //               width: cellSize.width,
-    //               height: cellSize.height,
-    //             }}
-    //           />
-    //         ))}
-    //       </div>
-
-    //       {/* React Grid Layout */}
-    //       <div
-    //         className={styles.gridLayoutContainer}
-    //         style={{
-    //           width: `${gridWidth}px`,
-    //           height: `${gridHeight}px`,
-    //         }}
-    //       >
-    //         <ResponsiveGridLayout
-    //           layouts={getLayouts(currentTab.widgets)}
-    //           breakpoints={{ lg: 1200 }}
-    //           cols={{ lg: COLS }}
-    //           rowHeight={cellSize.height + gap}
-    //           margin={[gap, gap]}
-    //           containerPadding={[0, 0]}
-    //           onLayoutChange={onLayoutChange}
-    //           isDraggable={true}
-    //           isResizable={true}
-    //           draggableCancel=".noDrag"
-    //           compactType={null}
-    //           autoSize={false}
-    //           isBounded={true}
-    //           useCSSTransforms={false}
-    //           transformScale={1}
-    //         >
-    //           {currentTab.widgets.map((widget) => (
-    //             <div key={widget.i} data-grid={widget}>
-    //               <Widget
-    //                 widget={widget}
-    //                 onRemove={() => removeWidget(widget.i)}
-    //               />
-    //             </div>
-    //           ))}
-    //         </ResponsiveGridLayout>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
     <div
-      className={isFullscreen ? styles.dashboardFullscreen : styles.dashboard}
+    // className={isFullscreen ? styles.dashboardFullscreen : styles.dashboard}
     >
       <div
-        ref={(node) => {
-          containerRef.current = node;
-          drop(node);
-        }}
-        className={
-          isFullscreen
-            ? styles.dashboardContainerFullscreen
-            : styles.dashboardContainer
-        }
+      // className={
+      //   isFullscreen
+      //     ? styles.dashboardContainerFullscreen
+      //     : styles.dashboardContainer
+      // }
       >
         <div className={styles.mainArea}>
           <div
@@ -1924,7 +1597,6 @@ export const CreateDashboard = ({
                   <span ref={titleMeasureRef} className={styles.titleMeasure}>
                     {dashboardTitle || " "}
                   </span>
-
                   <input
                     ref={titleInputRef}
                     type="text"
@@ -1936,9 +1608,7 @@ export const CreateDashboard = ({
                     className={`${styles.titleInput} ${
                       dashboardTitle.length >= 60 ? styles.titleInputMax : ""
                     }`}
-                    style={{
-                      width: `${inputWidth}px`,
-                    }}
+                    style={{ width: `${inputWidth}px` }}
                   />
                 </>
               ) : (
@@ -1968,17 +1638,9 @@ export const CreateDashboard = ({
                 disabled={isSaving || isLoading}
                 loading={isSaving || isLoading}
               />
-              {/* {!isFullscreen && (
-                <button
-                  className={styles.fullscreenBtn}
-                  onClick={openDashboardFullscreen}
-                  title="Развернуть в отдельном окне"
-                >
-                  ⛶
-                </button>
-              )} */}
             </div>
           </div>
+
           <Tabs
             activeTab={activeTab}
             tabs={tabs}
@@ -1989,16 +1651,13 @@ export const CreateDashboard = ({
             showAddButton={showAddButton}
             maxTabs={MAX_TABS}
           />
+
           <div
             className={
               isFullscreen ? styles.dashboardFullscreen : styles.dashboard
             }
           >
             <div
-              ref={(node) => {
-                containerRef.current = node;
-                drop(node);
-              }}
               className={
                 isFullscreen
                   ? styles.dashboardContainerFullscreen
@@ -2006,27 +1665,24 @@ export const CreateDashboard = ({
               }
             >
               <div
-                ref={layoutRef}
+                ref={(node) => {
+                  layoutRef.current = node;
+                  drop(node);
+                }}
                 className={
                   isFullscreen ? styles.layoutFullscreen : styles.layout
                 }
               >
-                {/* ВИЗУАЛЬНАЯ СЕТКА */}
+                {/* Визуальная сетка */}
                 <div
                   className={styles.gridContainer}
                   style={{
-                    // width: `${gridWidth}px`,
-                    // height: `${gridHeight}px`,
-                    width: `1540px`,
-                    height: `931px`,
+                    width: `${gridWidth}px`,
+                    height: `${gridHeight}px`,
                     display: "grid",
-                    // gridTemplateColumns: `repeat(${COLS}, ${cellSize.width}px)`,
-                    // gridTemplateRows: `repeat(${ROWS}, ${cellSize.height}px)`,
-                    gridTemplateColumns: `repeat(${COLS}, 136px)`,
-                    gridTemplateRows: `repeat(${ROWS}, 136px)`,
-                    // gap: `${gap}px`,
-                    rowGap: `23px`,
-                    columnGap: `20px`,
+                    gridTemplateColumns: `repeat(${COLS}, ${cellSize.width}px)`,
+                    gridTemplateRows: `repeat(${ROWS}, ${cellSize.height}px)`,
+                    gap: `${gap}px`,
                   }}
                 >
                   {Array.from({ length: COLS * ROWS }).map((_, index) => (
@@ -2034,34 +1690,30 @@ export const CreateDashboard = ({
                       key={index}
                       className={styles.gridCell}
                       style={{
-                        // width: cellSize.width,
-                        // height: cellSize.height,
-                        width: `136`,
-                        height: `136`,
+                        width: cellSize.width,
+                        height: cellSize.height,
                       }}
                     />
                   ))}
                 </div>
 
-                {/* Подсветка области дропа */}
+                {/* Подсветка дропа */}
                 {getPreviewCells()}
 
                 {/* React Grid Layout */}
                 <div
                   className={styles.gridLayoutContainer}
                   style={{
-                    // width: `${gridWidth}px`,
-                    // height: `${gridHeight}px`,
-                    width: `1540px`,
-                    height: `931px`,
+                    width: `${gridWidth}px`,
+                    height: `${gridHeight}px`,
                   }}
                 >
                   <ResponsiveGridLayout
                     layouts={getLayouts(currentTab.widgets)}
                     breakpoints={{ lg: 1200 }}
                     cols={{ lg: COLS }}
-                    rowHeight={136}
-                    margin={[20, 23]}
+                    rowHeight={cellSize.height}
+                    margin={[gap, gap]}
                     containerPadding={[0, 0]}
                     onLayoutChange={onLayoutChange}
                     isDraggable={true}
@@ -2074,128 +1726,15 @@ export const CreateDashboard = ({
                     useCSSTransforms={false}
                     transformScale={1}
                     resizeHandles={["se"]}
-                    // Обработчики для drag
-                    onDragStart={(layout, oldItem, newItem) => {
-                      console.log("Drag start:", newItem);
-                      const widget = currentTab.widgets.find(
-                        (w) => w.i === newItem.i,
-                      );
-                      if (widget) {
-                        setDragPreview({
-                          x: newItem.x,
-                          y: newItem.y,
-                          w: newItem.w,
-                          h: newItem.h,
-                          type: widget.type,
-                        });
-                      }
-                    }}
-                    onDrag={(layout, oldItem, newItem) => {
-                      const widget = currentTab.widgets.find(
-                        (w) => w.i === newItem.i,
-                      );
-                      if (widget) {
-                        setDragPreview({
-                          x: newItem.x,
-                          y: newItem.y,
-                          w: newItem.w,
-                          h: newItem.h,
-                          type: widget.type,
-                        });
-                      }
-                    }}
-                    onDragStop={() => {
-                      console.log("Drag stop");
-                      setDragPreview(null);
-                    }}
-                    // Обработчики для resize
-                    onResizeStart={(layout, oldItem, newItem) => {
-                      console.log("🔧 Resize START:", newItem.i);
-                      const widget = currentTab.widgets.find(
-                        (w) => w.i === newItem.i,
-                      );
-                      if (widget) {
-                        setResizePreview({
-                          x: newItem.x,
-                          y: newItem.y,
-                          w: newItem.w,
-                          h: newItem.h,
-                          type: widget.type,
-                        });
-                      }
-                    }}
-                    onResize={(layout, oldItem, newItem) => {
-                      console.log("🔧 Resize MOVE:", newItem.i, {
-                        w: newItem.w,
-                        h: newItem.h,
-                      });
-                      const widget = currentTab.widgets.find(
-                        (w) => w.i === newItem.i,
-                      );
-                      if (widget) {
-                        const availableSizes = getAvailableSizes(widget.type);
-                        const closestSize = availableSizes.reduce(
-                          (closest, size) => {
-                            const currentDiff =
-                              Math.abs(newItem.w - closest.w) +
-                              Math.abs(newItem.h - closest.h);
-                            const newDiff =
-                              Math.abs(newItem.w - size.w) +
-                              Math.abs(newItem.h - size.h);
-                            return newDiff < currentDiff ? size : closest;
-                          },
-                        );
-
-                        setResizePreview({
-                          x: newItem.x,
-                          y: newItem.y,
-                          w: closestSize.w,
-                          h: closestSize.h,
-                          type: widget.type,
-                        });
-                      }
-                    }}
-                    onResizeStop={(layout, oldItem, newItem) => {
-                      console.log("🔧 Resize STOP:", newItem);
-                      const widget = currentTab.widgets.find(
-                        (w) => w.i === newItem.i,
-                      );
-
-                      if (widget) {
-                        // Находим ближайший допустимый размер
-                        const availableSizes = getAvailableSizes(widget.type);
-                        const closestSize = findClosestSize(availableSizes, {
-                          w: newItem.w,
-                          h: newItem.h,
-                        });
-
-                        console.log("🔧 Closest allowed size:", closestSize);
-
-                        // Принудительно применяем допустимый размер
-                        const updatedWidgets = currentTab.widgets.map((w) =>
-                          w.i === newItem.i
-                            ? {
-                                ...w,
-                                w: closestSize.w,
-                                h: closestSize.h,
-                                // Обновляем ограничения на всякий случай
-                                minW: getWidgetConstraints(widget.type).minW,
-                                minH: getWidgetConstraints(widget.type).minH,
-                                maxW: getWidgetConstraints(widget.type).maxW,
-                                maxH: getWidgetConstraints(widget.type).maxH,
-                              }
-                            : w,
-                        );
-
-                        onLayoutChange(updatedWidgets);
-                      }
-
-                      setResizePreview(null);
-                    }}
+                    onDragStart={handleDragStart}
+                    onDrag={handleDrag}
+                    onDragStop={handleDragStop}
+                    onResizeStart={handleResizeStart}
+                    onResize={handleResize}
+                    onResizeStop={handleResizeStop}
                   >
                     {currentTab.widgets.map((widget) => {
                       const widgetRealTimeData = widgetsData[widget.i] || {};
-
                       return (
                         <div key={widget.i} data-grid={widget}>
                           <Widget

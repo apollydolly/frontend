@@ -4,13 +4,13 @@
 .tabsContainer {
   display: flex;
   align-items: center;
-  height: 51px;
-  gap: 16px;
+  height: 2.6563vw;
+  gap: 0.8333vw;
   opacity: 1;
-  padding: 8px;
-  border-radius: 8px;
+  padding: 0.4167vw;
+  border-radius: 0.4167vw;
   background: $gray_f0;
-  box-shadow: 0px 4px 8px 0px #7d889333 inset;
+  box-shadow: 0px 0.2083vw 0.4167vw 0px #7d889333 inset;
   justify-self: flex-start;
 }
 
@@ -21,18 +21,21 @@
 }
 
 .tab {
-  height: 35px;
-  gap: 8px;
+  height: 1.8229vw;
+  gap: 0.4167vw;
   opacity: 1;
-  padding-top: 8px;
-  padding-right: 12px;
-  padding-bottom: 8px;
-  padding-left: 12px;
-  border-radius: 8px;
+  padding-top: 0.4167vw;
+  padding-right: 0.625vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 0.625vw;
+  border-radius: 0.4167vw;
   cursor: pointer;
-  box-shadow: 0px 2px 2px 0px #7d88931a;
+  box-shadow: 0px 0.1042vw 0.1042vw 0px #7d88931a;
   animation-timing-function: ease-out;
   animation-duration: 200ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .tabName {
     @include RReg_16;
@@ -62,21 +65,21 @@
 }
 
 .tabInput {
-  height: 35px;
+  height: 1.8229vw;
   opacity: 1;
-  padding-top: 8px;
-  padding-right: 12px;
-  padding-bottom: 8px;
-  padding-left: 12px;
-  border-radius: 8px;
+  padding-top: 0.4167vw;
+  padding-right: 0.625vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 0.625vw;
+  border-radius: 0.4167vw;
   @include RReg_16;
-  border: 1px solid $primary_blue;
-  border-radius: 8px;
-  padding: 4px 8px;
+  border: 0.0521vw solid $primary_blue;
+  border-radius: 0.4167vw;
+  padding: 0.2083vw 0.4167vw;
   outline: none;
   background: $white;
   transition: border-color 0.2s;
-  box-shadow: 0px 2px 2px 0px #7d88931a;
+  box-shadow: 0px 0.1042vw 0.1042vw 0px #7d88931a;
   caret-color: $primary_blue;
 }
 
@@ -87,11 +90,11 @@
 .tabClose {
   background: none;
   border: none;
-  font-size: 16px;
+  font-size: 0.8333vw;
   cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 2px;
-  margin-left: 4px;
+  padding: 0.1042vw 0.2083vw;
+  border-radius: 0.1042vw;
+  margin-left: 0.2083vw;
   opacity: 0;
 
   &:hover {
@@ -104,12 +107,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 48px;
-  height: 35px;
-  gap: 10px;
+  width: 2.5vw;
+  height: 1.8229vw;
+  gap: 0.5208vw;
   opacity: 1;
   border: none;
-  border-left: 1px solid $gray_d8;
+  border-left: 0.0521vw solid $gray_d8;
   color: $light_gray;
   &:hover {
     color: $primary_blue;

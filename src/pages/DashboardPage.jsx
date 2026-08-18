@@ -15,7 +15,6 @@ export const DashboardPage = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Проверяем, перешли ли мы из видео
     const fromVideo = location.state?.fromVideo;
     const videoId = location.state?.videoId;
     const videoName = location.state?.videoName;
@@ -27,7 +26,6 @@ export const DashboardPage = () => {
         name: videoName,
       });
 
-      // Также проверяем localStorage на случай если state не сохранился
       const savedVideoInfo = localStorage.getItem("videoForDashboard");
       if (savedVideoInfo) {
         try {
@@ -39,14 +37,13 @@ export const DashboardPage = () => {
         } catch (error) {
           console.error(
             "Ошибка парсинга сохраненной информации о видео:",
-            error
+            error,
           );
         }
       }
     }
   }, [location.state]);
 
-  // Функция для привязки дашборда к видео
   const attachDashboardToVideo = async (dashboardId) => {
     if (!videoInfo?.serverVideoId) {
       console.error("Нет videoId для привязки дашборда");
@@ -59,25 +56,21 @@ export const DashboardPage = () => {
         dashboardId,
       });
 
-      // Получаем текущие данные видео
       const videoData = await videoService.getVideo(videoInfo.serverVideoId);
       console.log("Данные видео получены:", {
         dashboards: videoData.dashboards,
         videoName: videoData.name,
       });
 
-      // Проверяем, не привязан ли уже этот дашборд
       const currentDashboards = videoData.dashboards || [];
       if (currentDashboards.includes(dashboardId)) {
         console.log("Дашборд уже привязан к видео");
         return true;
       }
 
-      // Добавляем новый дашборд
       const updatedDashboards = [...currentDashboards, dashboardId];
       console.log("Обновленные дашборды:", updatedDashboards);
 
-      // Подготавливаем данные для обновления видео
       const updateData = {
         videoId: videoInfo.serverVideoId,
         name: videoData.name || videoInfo.videoName || "Без названия",
@@ -85,7 +78,6 @@ export const DashboardPage = () => {
         dashboards: updatedDashboards,
       };
 
-      // Добавляем зоны и маски, если они есть
       if (videoData.zones && videoData.zones.length > 0) {
         updateData.zones = videoData.zones.map((zone) => ({
           name: zone.name,
@@ -106,7 +98,6 @@ export const DashboardPage = () => {
 
       console.log("Данные для обновления видео:", updateData);
 
-      // Обновляем данные видео
       const updateResult = await videoService.setVideoData(updateData);
 
       console.log("Дашборд успешно привязан к видео:", {
@@ -124,7 +115,6 @@ export const DashboardPage = () => {
         status: error.response?.status,
       });
 
-      // Если ошибка авторизации
       if (error.response?.data?.code === 10004) {
         window.dispatchEvent(new Event("tokenExpired"));
       }
@@ -133,22 +123,18 @@ export const DashboardPage = () => {
     }
   };
 
-  // Обработчик сохранения дашборда
   const handleSaveDashboard = async (dashboardData) => {
     try {
       setIsLoading(true);
 
-      // 1. Сохраняем дашборд
       await dashboardService.saveDashboard(dashboardData);
       console.log("Дашборд сохранен, получаем список дашбордов...");
 
       if (!isCreatingForVideo || !videoInfo) {
-        // Если не создаем для видео - просто перенаправляем
         navigate("/dashboards");
         return;
       }
 
-      // 2. Получаем список всех дашбордов пользователя
       const userDashboards = await dashboardService.getUserDashboards();
       console.log("Получен список дашбордов:", userDashboards);
 
@@ -156,7 +142,6 @@ export const DashboardPage = () => {
         throw new Error("Нет доступных дашбордов после сохранения");
       }
 
-      // 3. Берем последний дашборд из списка
       const lastDashboard = userDashboards[userDashboards.length - 1];
       const dashboardId = lastDashboard.dashboard_id;
 
@@ -166,10 +151,8 @@ export const DashboardPage = () => {
         totalDashboards: userDashboards.length,
       });
 
-      // 4. Привязываем дашборд к видео
       const attached = await attachDashboardToVideo(dashboardId);
 
-      // 5. Загружаем сохраненные данные видео из localStorage
       const savedVideoData = localStorage.getItem("videoForDashboard");
       let videoDataForReturn = null;
 
@@ -183,7 +166,6 @@ export const DashboardPage = () => {
               videoDataForReturn.connectedDashboards?.length,
           });
 
-          // Добавляем новый дашборд в список
           videoDataForReturn.connectedDashboards =
             videoDataForReturn.connectedDashboards || [];
           videoDataForReturn.connectedDashboards.push({
@@ -193,7 +175,7 @@ export const DashboardPage = () => {
 
           console.log(
             "Обновленные данные видео с новым дашбордом:",
-            videoDataForReturn
+            videoDataForReturn,
           );
         } catch (error) {
           console.error("Ошибка парсинга сохраненных данных видео:", error);
@@ -201,13 +183,12 @@ export const DashboardPage = () => {
       }
 
       if (attached) {
-        // 6. Возвращаемся на страницу видео с полными данными
         navigate(`/video/${videoInfo.serverVideoId}/view`, {
           state: {
             dashboardCreated: true,
             newDashboardId: dashboardId,
             dashboardName: lastDashboard.name,
-            videoData: videoDataForReturn, // Передаем сохраненные данные с URL и миниатюрой
+            videoData: videoDataForReturn,
           },
         });
 
@@ -216,10 +197,8 @@ export const DashboardPage = () => {
           hasVideoData: !!videoDataForReturn,
         });
 
-        // 7. Очищаем localStorage
         localStorage.removeItem("videoForDashboard");
       } else {
-        // Если не удалось привязать, все равно переходим к видео
         navigate(`/video/${videoInfo.serverVideoId}/view`, {
           state: {
             videoData: videoDataForReturn,
@@ -237,7 +216,13 @@ export const DashboardPage = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+      <div
+        style={{
+          display: "flex",
+          width: "100vw",
+          height: "min(100vh, 56.25vw)",
+        }}
+      >
         <WidgetPanel />
         {isCreatingForVideo && videoInfo ? (
           <CreateDashboard

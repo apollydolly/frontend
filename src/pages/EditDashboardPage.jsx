@@ -10,7 +10,13 @@ export const EditDashboardPage = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+      <div
+        style={{
+          display: "flex",
+          width: "100vw",
+          height: "min(100vh, 56.25vw)",
+        }}
+      >
         <WidgetPanel />
         <CreateDashboard editMode={true} dashboardId={dashboardId} />
       </div>

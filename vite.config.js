@@ -39,6 +39,9 @@ export default defineConfig({
       "@auth": fileURLToPath(
         new URL("./src/components/features/auth/", import.meta.url),
       ),
+      "@others": fileURLToPath(
+        new URL("./src/components/features/others/", import.meta.url),
+      ),
     },
   },
 });

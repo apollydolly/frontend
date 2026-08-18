@@ -2,13 +2,13 @@
 @use "@styles/mixins.scss" as *;
 
 .widgetItem {
-  width: 268px;
-  height: 120px;
+  width: 13.9583vw;
+  height: 6.25vw;
   opacity: 1;
-  gap: 8px;
-  border: 1px solid $gray_d8;
-  border-radius: 16px;
-  padding: 8px;
+  gap: 0.4167vw;
+  border: 0.0521vw solid $gray_d8;
+  border-radius: 0.8333vw;
+  padding: 0.4167vw;
   cursor: grab;
   background: $white;
   display: flex;
@@ -18,7 +18,7 @@
 
   &:hover {
     background-color: #f8f9fa;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0.1042vw 0.2083vw rgba(0, 0, 0, 0.05);
   }
 
   &.dragging {

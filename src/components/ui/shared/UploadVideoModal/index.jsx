@@ -637,7 +637,7 @@ export const UploadVideoModal = ({
                 ref={simpleBarRef}
                 className={styles.simplebarContainer}
                 style={{
-                  width: "910px",
+                  width: "47.3958vw",
                   height: "100%",
                 }}
                 autoHide={false}

@@ -3,7 +3,7 @@
 
 .mainArea {
   height: 100%;
-  width: 1594px;
+  width: 83.0208vw;
   display: flex;
   justify-content: center;
   background: $gray_f6;
@@ -11,13 +11,13 @@
 
 .header {
   display: grid;
-  width: 1540px;
-  height: 169px;
-  gap: 8px;
+  width: 80.2083vw;
+  height: 8.8021vw;
+  gap: 0.4167vw;
   opacity: 1;
-  padding-top: 32px;
-  padding-left: 27px;
-  padding-right: 27px;
+  padding-top: 1.6667vw;
+  padding-left: 1.4063vw;
+  padding-right: 1.4063vw;
 }
 
 h2 {
@@ -32,7 +32,7 @@ h3 {
 
 .buttonsContainer {
   display: flex;
-  gap: 16px;
+  gap: 0.8333vw;
   opacity: 1;
-  padding-top: 16px;
+  padding-top: 0.8333vw;
 }

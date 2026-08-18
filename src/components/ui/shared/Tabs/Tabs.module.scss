@@ -2,28 +2,28 @@
 @use "@styles/mixins.scss" as *;
 
 .tabsContainer {
-  height: 51px;
+  height: 2.6563vw;
   width: fit-content;
   min-width: min-content;
   opacity: 1;
-  gap: 16px;
-  border-radius: 8px;
-  padding: 8px;
+  gap: 0.8333vw;
+  border-radius: 0.4167vw;
+  padding: 0.4167vw;
   display: flex;
   background: $gray_f0;
-  box-shadow: 0px 4px 8px 0px #7d889333 inset;
+  box-shadow: 0px 0.2083vw 0.4167vw 0px #7d889333 inset;
 }
 
 .tab {
-  height: 35px;
+  height: 1.8229vw;
   width: auto;
   opacity: 1;
-  gap: 8px;
-  padding: 8px 12px;
-  border-radius: 8px;
+  gap: 0.4167vw;
+  padding: 0.4167vw 0.625vw;
+  border-radius: 0.4167vw;
   display: flex;
   background: $white;
-  box-shadow: 0px 2px 2px 0px #7d88931a;
+  box-shadow: 0px 0.1042vw 0.1042vw 0px #7d88931a;
   align-items: center;
   justify-content: center;
   border: none;

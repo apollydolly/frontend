@@ -3,27 +3,27 @@
 
 .mainArea {
   display: grid;
-  width: 1594px;
+  width: 83.0208vw;
   height: 100%;
-  gap: 23px;
+  gap: 1.1979vw;
   opacity: 1;
-  padding-right: 34px;
-  padding-left: 20px;
+  padding-right: 1.7708vw;
+  padding-left: 1.0417vw;
   background: $gray_f6;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
-  height: 48px;
-  gap: 8px;
+  height: 2.5vw;
+  gap: 0.4167vw;
   opacity: 1;
-  padding-top: 24px;
-  padding-bottom: 8px;
+  padding-top: 1.25vw;
+  padding-bottom: 0.4167vw;
 }
 
 .dashboardInfo {
-  gap: 12px;
+  gap: 0.625vw;
   opacity: 1;
   display: grid;
   justify-items: start;
@@ -35,19 +35,19 @@
 
 .buttonsContainer {
   display: flex;
-  gap: 20px;
+  gap: 1.0417vw;
   opacity: 1;
   &.small {
-    gap: 10px;
+    gap: 0.5208vw;
   }
 }
 
 .dashboard {
-  width: 1540px;
-  height: 935px;
-  gap: 20px;
+  width: 80.2083vw;
+  height: 48.6979vw;
+  gap: 1.0417vw;
   opacity: 1;
-  padding-bottom: 20px;
+  padding-bottom: 1.0417vw;
   display: grid;
 }
 
@@ -69,7 +69,7 @@
 
 .gridCell {
   background: $gray_f0;
-  border-radius: 8px;
+  border-radius: 0.4167vw;
   transition: background-color 0.2s;
 
   &:hover {

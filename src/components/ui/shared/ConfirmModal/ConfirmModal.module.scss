@@ -17,10 +17,10 @@
 
 .modalContent {
   background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 0.4167vw;
+  box-shadow: 0 0.2083vw 1.0417vw rgba(0, 0, 0, 0.15);
   width: 90%;
-  max-width: 500px;
+  max-width: 26.0417vw;
   animation: slideIn 0.3s ease;
 }
 
@@ -28,8 +28,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid $light_gray_15;
+  padding: 1.0417vw 1.25vw;
+  border-bottom: 0.0521vw solid $light_gray_15;
 }
 
 .modalTitle {
@@ -40,12 +40,12 @@
 .closeButton {
   background: none;
   border: none;
-  font-size: 24px;
+  font-size: 1.25vw;
   cursor: pointer;
   color: $light_gray;
   padding: 0;
-  width: 24px;
-  height: 24px;
+  width: 1.25vw;
+  height: 1.25vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +61,7 @@
 }
 
 .modalBody {
-  padding: 24px;
+  padding: 1.25vw;
 }
 
 .message {
@@ -70,11 +70,11 @@
 }
 
 .errorMessage {
-  margin-top: 12px;
-  padding: 12px;
+  margin-top: 0.625vw;
+  padding: 0.625vw;
   background-color: $red_30;
-  border: 1px solid $red_15;
-  border-radius: 4px;
+  border: 0.0521vw solid $red_15;
+  border-radius: 0.2083vw;
   color: $red;
   @include RReg_14;
 }
@@ -82,15 +82,15 @@
 .modalFooter {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  padding: 20px 24px;
-  border-top: 1px solid $gray_d8;
+  gap: 0.625vw;
+  padding: 1.0417vw 1.25vw;
+  border-top: 0.0521vw solid $gray_d8;
 }
 
 .button {
-  padding: 10px 20px;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 0.5208vw 1.0417vw;
+  border-radius: 0.2083vw;
+  font-size: 0.7292vw;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -105,7 +105,7 @@
 .cancelButton {
   background-color: $gray_f6;
   color: $dark_gray;
-  border: 1px solid $gray_d8;
+  border: 0.0521vw solid $gray_d8;
 
   &:hover:not(:disabled) {
     background-color: $gray_d8;
@@ -132,7 +132,7 @@
 
 @keyframes slideIn {
   from {
-    transform: translateY(-20px);
+    transform: translateY(-1.0417vw);
     opacity: 0;
   }
   to {

@@ -45,16 +45,18 @@ export const MyScenariosPage = () => {
   const renderContent = () => {
     if (!isLoading && scenarios.length === 0) {
       return (
-        <div style={{ padding: "20px" }}>
+        <div style={{ padding: "1.0417vw" }}>
           <h2>Нет сценариев</h2>
         </div>
       );
     }
     if (!selectedScenario) {
-      return <div style={{ padding: "20px" }}>Выберите сценарий из списка</div>;
+      return (
+        <div style={{ padding: "1.0417vw" }}>Выберите сценарий из списка</div>
+      );
     }
     return (
-      <div style={{ padding: "20px" }}>
+      <div style={{ padding: "1.0417vw" }}>
         <h1>{selectedScenario.title}</h1>
         <p>ID: {selectedScenario.id}</p>
       </div>
@@ -62,7 +64,9 @@ export const MyScenariosPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+    <div
+      style={{ display: "flex", width: "100vw", height: "min(100vh, 56.25vw)" }}
+    >
       <Menu
         activeItem="my-scenarios"
         onMenuItemClick={handleMenuItemClick}

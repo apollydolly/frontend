@@ -46,7 +46,9 @@ export const TemplatesPage = () => {
   };
 
   return (
-    <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+    <div
+      style={{ display: "flex", width: "100vw", height: "min(100vh, 56.25vw)" }}
+    >
       <Menu
         activeItem="templates"
         onMenuItemClick={handleMenuItemClick}

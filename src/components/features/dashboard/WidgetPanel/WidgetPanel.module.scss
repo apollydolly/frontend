@@ -2,37 +2,37 @@
 @use "@styles/mixins.scss" as *;
 
 .leftMenu {
-  width: 326px;
+  width: 16.9792vw;
   height: 100%;
-  gap: 8px;
+  gap: 0.4167vw;
   opacity: 1;
-  border: 1px solid $gray_d8;
+  border: 0.0521vw solid $gray_d8;
   background-color: $gray_f0;
   display: grid;
 }
 
 .header {
   width: 100%;
-  height: 90px;
+  height: 4.6875vw;
   display: flex;
-  gap: 8px;
+  gap: 0.4167vw;
   opacity: 1;
-  padding-top: 32px;
-  padding-right: 32px;
-  padding-left: 34px;
+  padding-top: 1.6667vw;
+  padding-right: 1.6667vw;
+  padding-left: 1.7708vw;
 }
 
 .logo {
-  width: 250px;
-  height: 48px;
-  gap: 8px;
+  width: 13.0208vw;
+  height: 2.5vw;
+  gap: 0.4167vw;
   opacity: 1;
   display: flex;
   align-items: center;
 
   img {
-    width: 48px;
-    height: 48px;
+    width: 2.5vw;
+    height: 2.5vw;
   }
 }
 
@@ -48,20 +48,22 @@
 }
 
 .main {
-  gap: 16px;
+  gap: 0.8333vw;
   opacity: 1;
-  padding-right: 24px;
-  padding-left: 34px;
+  padding-right: 1.25vw;
+  padding-left: 1.7708vw;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  height: 100%;
+  overflow: hidden;
+  padding-bottom: 1.25vw;
 }
 
 .creatingDashboard {
-  width: 256px;
-  // height: 93px;
+  width: 13.3333vw;
   opacity: 1;
-  gap: 4px;
+  gap: 0.2083vw;
   display: grid;
   h2 {
     @include RMed_20;
@@ -76,34 +78,43 @@
 }
 
 .backButton {
-  width: 268px;
-  height: 83px;
+  width: 13.9583vw;
+  height: 4.3229vw;
   display: flex;
-  padding-top: 16px;
+  padding-top: 0.8333vw;
 }
 
 .mainMenu {
-  width: 268px;
-  height: 735px;
-  gap: 16px;
+  width: 13.9583vw;
+  // height: 38.2813vw;
+  height: 100%;
+  flex: 1; // добавить
+  min-height: 0;
+  gap: 0.8333vw;
   opacity: 1;
-  border-top: 1px solid $gray_d8;
+  border-top: 0.0521vw solid $gray_d8;
   display: grid;
 }
 
 .widgetList {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding-top: 16px;
-  padding-bottom: 32px;
-  border-bottom: 1px solid $gray_d8;
+  gap: 0.4167vw;
+  padding-top: 0.8333vw;
+  padding-bottom: 1.6667vw;
+  border-bottom: 0.0521vw solid $gray_d8;
 }
 
 .noResults {
-  padding-left: 24px;
+  padding-left: 1.25vw;
   p {
     @include RReg_20;
     color: $light_gray;
   }
+}
+
+.simplebarContainer {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
 }

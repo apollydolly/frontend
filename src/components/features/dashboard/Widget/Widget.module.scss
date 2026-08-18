@@ -5,10 +5,10 @@
   height: 100%;
   width: 100%;
   background-color: $white;
-  border: 1px solid $gray_f0;
-  box-shadow: 0px 4px 16px 0px #252e380d;
-  border-radius: 16px;
-  padding: 16px;
+  border: 0.0521vw solid $gray_f0;
+  box-shadow: 0px 0.2083vw 0.8333vw 0px #252e380d;
+  border-radius: 0.8333vw;
+  padding: 0.8333vw;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -21,8 +21,8 @@
 
 .widgetActions {
   position: absolute;
-  right: 16px;
-  top: 16px;
+  right: 0.8333vw;
+  top: 0.8333vw;
 }
 
 .removeBtn,
@@ -30,10 +30,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 0.8333vw;
   line-height: 1;
   color: #999;
-  padding: 0 5px;
+  padding: 0 0.2604vw;
   opacity: 0;
   transition: opacity 0.2s ease;
 
@@ -52,8 +52,8 @@
 
 :global(.react-resizable-handle) {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 1.0417vw;
+  height: 1.0417vw;
   bottom: 0;
   right: 0;
   background: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2IDYiIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOiNmZmZmZmYwMCIgeD0iMHB4IiB5PSIwcHgiIHdpZHRoPSI2cHgiIGhlaWdodD0iNnB4Ij48ZyBvcGFjaXR5PSIwLjMwMiI+PHBhdGggZD0iTSA2IDYgTCAwIDYgTCAwIDQuMiBMIDQgNC4yIEwgNC4yIDQuMiBMIDQuMiAwIEwgNiAwIEwgNiA2IEwgNiA2IFoiIGZpbGw9IiMwMDAwMDAiLz48L2c+PC9zdmc+")

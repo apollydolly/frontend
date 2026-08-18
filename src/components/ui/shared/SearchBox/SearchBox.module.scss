@@ -2,33 +2,37 @@
 @use "@styles/mixins.scss" as *;
 
 .searchBox {
-  width: 268px;
-  height: 40px;
+  width: 13.9583vw;
+  height: 2.0833vw;
   justify-content: space-between;
   opacity: 1;
-  border-width: 1px;
-  border-radius: 8px;
-  padding-left: 8px;
+  border-width: 0.0521vw;
+  border-radius: 0.4167vw;
+  padding-left: 0.4167vw;
   background: $white;
-  border: 1px solid $gray_d8;
+  border: 0.0521vw solid $gray_d8;
   display: flex;
   align-items: center;
 
   &.wide {
-    width: 920px;
+    width: 47.9167vw;
   }
 }
 
 .search {
-  height: 20px;
+  height: 1.0417vw;
   width: 100%;
   opacity: 1;
-  gap: 8px;
+  gap: 0.4167vw;
   display: flex;
   align-items: center;
   p {
     @include RReg_14;
     color: $light_gray;
+  }
+  img {
+    width: 1.04vw;
+    height: 1.04vw;
   }
 }
 
@@ -53,7 +57,7 @@
 }
 
 .noResults {
-  padding-left: 24px;
+  padding-left: 1.25vw;
   p {
     @include RReg_20;
     color: $light_gray;
@@ -61,20 +65,20 @@
 }
 
 .filter {
-  width: 48px;
-  height: 40px;
+  width: 2.5vw;
+  height: 2.0833vw;
   opacity: 1;
-  gap: 10px;
-  padding-top: 2px;
-  border-left: 1px solid $gray_d8;
+  gap: 0.5208vw;
+  padding-top: 0.1042vw;
+  border-left: 0.0521vw solid $gray_d8;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
 
   img {
-    width: 20px;
-    height: 20px;
+    width: 1.0417vw;
+    height: 1.0417vw;
     opacity: 0.5;
   }
   &:hover {

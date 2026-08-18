@@ -2,17 +2,26 @@
 @use "@styles/mixins.scss" as *;
 
 .smallButton {
-  width: 48px;
-  height: 48px;
+  width: 2.5vw;
+  height: 2.5vw;
   opacity: 1;
-  gap: 8px;
-  border-radius: 8px;
-  padding: 8px;
+  gap: 0.4167vw;
+  border-radius: 0.4167vw;
+  padding: 0.4167vw;
   background: $white;
-  box-shadow: 0px 2px 2px 0px #7d88931a;
+  box-shadow: 0px 0.1042vw 0.1042vw 0px #7d88931a;
   border: none;
   color: $light_gray;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .icon {
+    width: 1.25vw;
+    height: 1.25vw;
+  }
+
   &:hover:not(:disabled) {
     .icon {
       color: $primary_blue;

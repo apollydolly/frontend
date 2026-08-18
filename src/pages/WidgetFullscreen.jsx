@@ -10,15 +10,12 @@ export const WidgetFullscreen = () => {
   }, [widgetData?.name]);
 
   useEffect(() => {
-    //загружаем данные виджета из localStorage
     const savedData = localStorage.getItem("fullscreenWidgetData");
     if (savedData) {
       try {
         const data = JSON.parse(savedData);
         console.log("Загрузка данных виджета для полного экрана:", data);
         setWidgetData(data);
-
-        //очищаем после загрузки
         localStorage.removeItem("fullscreenWidgetData");
       } catch (error) {
         console.error("Ошибка загрузки данных виджета:", error);
@@ -47,7 +44,7 @@ export const WidgetFullscreen = () => {
       style={{
         width: "100vw",
         height: "100vh",
-        padding: "20px",
+        padding: "1.0417vw",
       }}
     >
       <Widget widget={widgetData.widget} />

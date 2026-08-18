@@ -6,7 +6,7 @@
   width: 100%;
   height: 100%;
   background: $gray_f0;
-  border-radius: 16px;
+  border-radius: 0.8333vw;
   overflow: hidden;
   cursor: pointer;
 
@@ -24,14 +24,14 @@
 }
 
 .controls {
-  width: 1072px;
-  height: 96px;
-  gap: 8px;
+  width: 55.8333vw;
+  height: 5vw;
+  gap: 0.4167vw;
   display: grid;
-  padding-top: 8px;
-  padding-right: 20px;
-  padding-bottom: 8px;
-  padding-left: 20px;
+  padding-top: 0.4167vw;
+  padding-right: 1.0417vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 1.0417vw;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -53,18 +53,15 @@
 }
 
 .progressContainer {
-  width: 1032px;
-  height: 8px;
-  gap: 10px;
+  width: 53.75vw;
+  height: 0.4167vw;
+  gap: 0.5208vw;
   opacity: 1;
-  border-radius: 8px;
-  background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.2)
-    ),
+  border-radius: 0.4167vw;
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  backdrop-filter: blur(32px);
+  backdrop-filter: blur(1.6667vw);
   cursor: pointer;
   position: relative;
 }
@@ -72,26 +69,26 @@
 .progressBar {
   height: 100%;
   background: $white;
-  border-radius: 32px;
+  border-radius: 1.6667vw;
   transition: width 0.1s ease;
 }
 
 .controlsBottom {
-  width: 1032px;
-  height: 64px;
+  width: 53.75vw;
+  height: 3.3333vw;
   justify-content: space-between;
   display: flex;
   align-items: center;
 }
 
 .controlsLeft {
-  width: 136px;
-  height: 64px;
-  gap: 12px;
+  width: 7.0833vw;
+  height: 3.3333vw;
+  gap: 0.625vw;
   opacity: 1;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  border-radius: 12px;
+  padding-top: 0.4167vw;
+  padding-bottom: 0.4167vw;
+  border-radius: 0.625vw;
   display: flex;
   align-items: center;
 }
@@ -105,28 +102,28 @@
     color: $gray_d8;
   }
   svg {
-    height: 32px;
-    width: 32px;
+    height: 1.6667vw;
+    width: 1.6667vw;
   }
   &.pause {
     svg {
-      height: 48px;
-      width: 48px;
+      height: 2.5vw;
+      width: 2.5vw;
     }
   }
 }
 
 .controlsRight {
-  height: 23px;
-  gap: 8px;
+  height: 1.1979vw;
+  gap: 0.4167vw;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
 .timeDisplay {
-  height: 23px;
-  gap: 4px;
+  height: 1.1979vw;
+  gap: 0.2083vw;
   opacity: 1;
   display: flex;
   align-items: center;
@@ -146,11 +143,11 @@
 }
 
 .speedButton {
-  width: 70px;
-  height: 23px;
-  gap: 10px;
-  padding-right: 16px;
-  padding-left: 16px;
+  width: 3.6458vw;
+  height: 1.1979vw;
+  gap: 0.5208vw;
+  padding-right: 0.8333vw;
+  padding-left: 0.8333vw;
   background: transparent;
   border: none;
   @include RMed_20;
@@ -167,18 +164,15 @@
 }
 
 .speedMenu {
-  width: 70px;
-  height: 210px;
-  border-radius: 8px;
-  background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.2),
-      rgba(255, 255, 255, 0.2)
-    ),
+  width: 3.6458vw;
+  height: 10.9375vw;
+  border-radius: 0.4167vw;
+  background:
+    linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
     linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
-  backdrop-filter: blur(32px);
+  backdrop-filter: blur(1.6667vw);
   position: absolute;
-  bottom: 70px;
+  bottom: 3.6458vw;
   right: 0;
   z-index: 10;
   display: flex;
@@ -187,14 +181,14 @@
 }
 
 .speedOption {
-  width: 70px;
-  height: 35px;
-  gap: 10px;
+  width: 3.6458vw;
+  height: 1.8229vw;
+  gap: 0.5208vw;
   opacity: 1;
-  padding-top: 8px;
-  padding-right: 20px;
-  padding-bottom: 8px;
-  padding-left: 20px;
+  padding-top: 0.4167vw;
+  padding-right: 1.0417vw;
+  padding-bottom: 0.4167vw;
+  padding-left: 1.0417vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -207,14 +201,13 @@
   transition: all 0.2s ease;
   position: relative;
 
-  // Добавляем разделитель после каждого элемента, кроме последнего
   &:not(:last-child)::after {
     content: "";
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    height: 1px;
+    height: 0.0521vw;
     background: $white_20;
   }
 
@@ -224,21 +217,21 @@
 
   &.active {
     justify-content: space-between;
-    padding-right: 6px;
-    padding-left: 6px;
+    padding-right: 0.3125vw;
+    padding-left: 0.3125vw;
     color: $white;
 
     .checkIcon {
       opacity: 1;
-      width: 12px;
-      height: 12px;
+      width: 0.625vw;
+      height: 0.625vw;
     }
   }
 }
 
 .checkIcon {
-  width: 16px;
-  height: 16px;
+  width: 0.8333vw;
+  height: 0.8333vw;
   opacity: 0;
   transition: opacity 0.2s ease;
 }

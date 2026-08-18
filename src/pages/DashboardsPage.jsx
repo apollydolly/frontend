@@ -8,7 +8,7 @@ import { DashboardViewer } from "@dashboard/DashboardViewer";
 export const DashboardsPage = () => {
   const [selectedDashboard, setSelectedDashboard] = useState(null);
   const [dashboards, setDashboards] = useState([]);
-  const [isLoading, setIsLoading] = useState(false); // для моков сразу false
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   // const hasLoaded = useRef(false);
   // const location = useLocation();
@@ -90,7 +90,6 @@ export const DashboardsPage = () => {
     setSelectedDashboard(dashboard);
   };
 
-  // Для моков упрощённое удаление
   const handleDashboardDeleted = (deletedDashboardId) => {
     const allDashboards =
       menuItems.main.find((i) => i.id === "dashboards")?.subItems || [];
@@ -104,13 +103,6 @@ export const DashboardsPage = () => {
       setSelectedDashboard(null);
     }
   };
-
-  // const handleDashboardDeleted = async (deletedDashboardId) => {
-  //   const dashboardsData = await dashboardService.getUserDashboards();
-  //   setDashboards(dashboardsData);
-  //   if (dashboardsData.length > 0) setSelectedDashboard(dashboardsData[0]);
-  //   else setSelectedDashboard(null);
-  // };
 
   const handleCreateDashboard = () => {
     navigate("/create_dashboard");
@@ -142,14 +134,16 @@ export const DashboardsPage = () => {
       );
     }
     return (
-      <div>
+      <div style={{ padding: "1.0417vw" }}>
         <p>Выберите дашборд из списка слева</p>
       </div>
     );
   };
 
   return (
-    <div style={{ display: "flex", width: "1920px", height: "1080px" }}>
+    <div
+      style={{ display: "flex", width: "100vw", height: "min(100vh, 56.25vw)" }}
+    >
       <Menu
         activeItem="dashboards"
         onMenuItemClick={handleMenuItemClick}
@@ -162,7 +156,7 @@ export const DashboardsPage = () => {
         selectedDashboard={selectedDashboard}
         selectedScenario={null}
         selectedMyScenario={null}
-        dashboards={[]} // Пустой массив, чтобы Menu брал моки из menuItems
+        dashboards={[]}
         myScenarios={[]}
         isLoadingDashboards={isLoading}
       />

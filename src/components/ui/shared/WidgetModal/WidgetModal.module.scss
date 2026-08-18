@@ -14,32 +14,32 @@
 }
 
 .modal {
-  width: 960px;
-  height: 540px;
+  width: 50vw;
+  height: 28.125vw;
   opacity: 1;
   display: grid;
-  gap: 16px;
-  border-radius: 20px;
-  border: 1px solid $gray_d8;
-  padding: 20px;
+  gap: 0.8333vw;
+  border-radius: 1.0417vw;
+  border: 0.0521vw solid $gray_d8;
+  padding: 1.0417vw;
   background: $white;
-  box-shadow: 0px 4px 16px 0px #7d889326;
+  box-shadow: 0px 0.2083vw 0.8333vw 0px #7d889326;
   overflow: hidden;
 }
 
 .modalHeader {
-  width: 920px;
-  height: 61px;
+  width: 47.9167vw;
+  height: 3.1771vw;
   opacity: 1;
-  gap: 10px;
+  gap: 0.5208vw;
   display: flex;
   justify-content: space-between;
 
   .headerText {
-    width: 878px;
-    height: 61px;
+    width: 45.7292vw;
+    height: 3.1771vw;
     opacity: 1;
-    gap: 4px;
+    gap: 0.2083vw;
     display: grid;
   }
 
@@ -54,11 +54,11 @@
 }
 
 .video {
-  height: 423px;
-  width: 920px;
+  height: 22.0313vw;
+  width: 47.9167vw;
   opacity: 1;
-  border-radius: 16.08px;
-  border: 1px solid $gray_d8;
+  border-radius: 0.8375vw;
+  border: 0.0521vw solid $gray_d8;
   background: $gray_f0;
   overflow: hidden;
 }

@@ -10,12 +10,12 @@
 }
 
 .widgetHeader {
-  height: 50px;
-  gap: 8px;
+  height: 2.6042vw;
+  gap: 0.4167vw;
   display: flex;
   opacity: 1;
-  padding-bottom: 8px;
-  border-bottom: 1px solid $gray_f0;
+  padding-bottom: 0.4167vw;
+  border-bottom: 0.0521vw solid $gray_f0;
 }
 
 .headerText {
@@ -35,7 +35,7 @@
 }
 
 .widgetBody {
-  gap: 8px;
+  gap: 0.4167vw;
   display: flex;
   flex-direction: column;
   background: $white;
@@ -45,11 +45,11 @@
 .widgetText {
   display: flex;
   flex-direction: column;
-  gap: 5px;
-  padding-top: 10px;
+  gap: 0.2604vw;
+  padding-top: 0.5208vw;
 
   &:first-of-type {
-    padding-top: 20px;
+    padding-top: 1.0417vw;
   }
 
   h2 {

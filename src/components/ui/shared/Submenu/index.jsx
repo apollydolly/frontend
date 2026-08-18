@@ -93,7 +93,7 @@ export const Submenu = ({
             }}
           >
             <p className={styles.showAllText}>Показать все</p>
-            <Arrow className={styles.showAllArrow} />
+            <Arrow className={`${styles.showAllArrow} ${styles.icon}`} />
           </div>
         )}
 

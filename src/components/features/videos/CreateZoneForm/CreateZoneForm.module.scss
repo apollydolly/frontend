@@ -2,27 +2,27 @@
 @use "@styles/mixins.scss" as *;
 
 .createZone {
-  width: 448px;
-  height: 490px;
-  gap: 24px;
+  width: 23.3333vw;
+  height: 25.5208vw;
+  gap: 1.25vw;
   opacity: 1;
-  border-radius: 16px;
-  border: 1px solid $gray_f0;
-  padding: 20px;
+  border-radius: 0.8333vw;
+  border: 0.0521vw solid $gray_f0;
+  padding: 1.0417vw;
   background: $white;
-  box-shadow: 0px 2px 2px 0px #7d88931a;
+  box-shadow: 0px 0.1042vw 0.1042vw 0px #7d88931a;
   display: flex;
   flex-direction: column;
 
   &.mask {
-    height: 277px;
+    height: 14.4271vw;
   }
 }
 
 .createZoneHeader {
-  width: 408px;
-  height: 32px;
-  gap: 10px;
+  width: 21.25vw;
+  height: 1.6667vw;
+  gap: 0.5208vw;
   opacity: 1;
   display: flex;
   justify-content: space-between;
@@ -34,19 +34,19 @@
 }
 
 .zoneInfo {
-  width: 408px;
-  height: 326px;
-  gap: 24px;
+  width: 21.25vw;
+  height: 16.9792vw;
+  gap: 1.25vw;
   opacity: 1;
-  padding-bottom: 24px;
+  padding-bottom: 1.25vw;
   display: flex;
   flex-direction: column;
 }
 
 .colorSelection {
-  width: 408px;
-  height: 189px;
-  gap: 10px;
+  width: 21.25vw;
+  height: 9.8438vw;
+  gap: 0.5208vw;
   opacity: 1;
   display: flex;
   flex-direction: column;
@@ -59,14 +59,14 @@
 .colorOptions {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0.8333vw;
 }
 
 .colorOption {
-  height: 28px;
+  height: 1.4583vw;
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.625vw;
   cursor: pointer;
 }
 
@@ -77,20 +77,20 @@
 
     &::after {
       content: "";
-      width: 16px;
-      height: 16px;
+      width: 0.8333vw;
+      height: 0.8333vw;
       background-color: $primary_blue;
-      border-radius: 2px;
+      border-radius: 0.1042vw;
     }
   }
 }
 
 .colorCheckmark {
-  width: 28px;
-  height: 28px;
+  width: 1.4583vw;
+  height: 1.4583vw;
   opacity: 1;
-  border-radius: 6px;
-  border: 1px solid $light_gray;
+  border-radius: 0.3125vw;
+  border: 0.0521vw solid $light_gray;
   background: $white;
   display: flex;
   align-items: center;
@@ -99,10 +99,10 @@
 }
 
 .colorPreview {
-  width: 24px;
-  height: 24px;
+  width: 1.25vw;
+  height: 1.25vw;
   opacity: 1;
-  border-radius: 6px;
+  border-radius: 0.3125vw;
 }
 
 .colorName {

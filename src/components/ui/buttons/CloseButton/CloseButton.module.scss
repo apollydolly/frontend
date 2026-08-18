@@ -2,17 +2,22 @@
 @use "@styles/mixins.scss" as *;
 
 .closeButton {
-  width: 32px;
-  height: 32px;
+  width: 1.6667vw;
+  height: 1.6667vw;
   opacity: 1;
-  border-radius: 8px;
-  border: 1px solid $gray_d8;
+  border-radius: 0.4167vw;
+  border: 0.0521vw solid $gray_d8;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   display: grid;
   background: transparent;
   color: $light_gray;
+
+  svg {
+    height: 0.52083vw;
+    width: 0.52083vw;
+  }
 
   &:hover:not(:disabled) {
     background: $gray_d8;

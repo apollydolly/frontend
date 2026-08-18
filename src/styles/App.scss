@@ -11,8 +11,8 @@
 }
 
 body {
-  width: 1920px;
-  height: 1080px;
+  width: 100vw;
+  height: min(100vh, 56.25vw);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -22,6 +22,12 @@ body {
   display: flex;
   flex: 1;
   min-height: 0;
+}
+
+.simplebarContainer {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
 }
 
 .react-grid-item {

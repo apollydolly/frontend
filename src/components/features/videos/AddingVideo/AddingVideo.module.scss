@@ -3,19 +3,19 @@
 
 .mainArea {
   height: 100%;
-  width: 1594px;
+  width: 83.0208vw;
   display: grid;
   justify-content: center;
   background: $gray_f6;
 }
 
 .header {
-  width: 1540px;
+  width: 80.2083vw;
   display: flex;
   justify-content: space-between;
   opacity: 1;
-  padding-top: 32px;
-  padding-bottom: 4px;
+  padding-top: 1.6667vw;
+  padding-bottom: 0.2083vw;
 
   h2 {
     @include RMed_32;
@@ -31,23 +31,23 @@
 .headerText {
   opacity: 1;
   display: grid;
-  gap: 8px;
+  gap: 0.4167vw;
   flex: 1;
   min-width: 0;
 }
 
 .headerName {
-  height: 38px;
+  height: 1.9792vw;
   opacity: 1;
-  gap: 8px;
+  gap: 0.4167vw;
   display: flex;
 }
 
 .headerWay {
-  height: 38px;
+  height: 1.9792vw;
   opacity: 1;
-  gap: 8px;
-  padding-bottom: 4px;
+  gap: 0.4167vw;
+  padding-bottom: 0.2083vw;
   display: flex;
   align-items: center;
   color: $light_gray;
@@ -61,7 +61,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 600px;
+    max-width: 31.25vw;
   }
 
   .staticText {
@@ -72,34 +72,34 @@
 }
 
 .buttonsContainer {
-  width: 239px;
-  height: 60px;
+  width: 12.4479vw;
+  height: 3.125vw;
   opacity: 1;
-  gap: 16px;
-  padding-top: 16px;
+  gap: 0.8333vw;
+  padding-top: 0.8333vw;
   display: flex;
   &.small {
-    width: 106px;
-    height: 48px;
-    gap: 10px;
+    width: 5.5208vw;
+    height: 2.5vw;
+    gap: 0.5208vw;
     padding-top: 0;
   }
 }
 
 .mainContainer {
-  width: 1540px;
-  height: 959px;
+  width: 80.2083vw;
+  height: 49.9479vw;
   opacity: 1;
-  gap: 20px;
-  padding-bottom: 20px;
+  gap: 1.0417vw;
+  padding-bottom: 1.0417vw;
   display: flex;
 }
 
 .errorText {
-  height: 28px;
-  gap: 4px;
+  height: 1.4583vw;
+  gap: 0.2083vw;
   opacity: 1;
-  padding-top: 2px;
+  padding-top: 0.1042vw;
   display: flex;
   align-items: center;
 

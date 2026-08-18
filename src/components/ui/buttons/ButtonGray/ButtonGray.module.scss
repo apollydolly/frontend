@@ -2,15 +2,15 @@
 @use "@styles/mixins.scss" as *;
 
 .buttonGray {
-  height: 43px;
+  height: 2.2396vw;
   opacity: 1;
-  gap: 8px;
-  padding-top: 12px;
-  padding-right: 16px;
-  padding-bottom: 12px;
-  padding-left: 16px;
-  border-radius: 8px;
-  border: 1px solid $light_gray;
+  gap: 0.4167vw;
+  padding-top: 0.625vw;
+  padding-right: 0.8333vw;
+  padding-bottom: 0.625vw;
+  padding-left: 0.8333vw;
+  border-radius: 0.4167vw;
+  border: 0.0521vw solid $light_gray;
   background: $gray_f0;
   color: $light_gray;
   cursor: pointer;
@@ -18,6 +18,8 @@
   align-items: center;
   @include RMed_16;
   transition: all 0.2s ease;
+  z-index: 10;
+
   &:hover:not(:disabled) {
     background-color: $gray_d8;
   }

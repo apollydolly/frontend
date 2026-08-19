@@ -103,11 +103,14 @@ export const Tabs = ({
               onClick={() => handleTabClick(tab.id)}
               onDoubleClick={() => enableEdit(tab.id, tab.name)}
             >
-              <span title="Редактировать" className={styles.tabName}>
+              <span
+                title="Двойной щелчок для редактирования"
+                className={styles.tabName}
+              >
                 {tab.name}
               </span>
 
-              {/* {!isStatic && tabs.length > 1 && (
+              {!isStatic && tabs.length > 1 && (
                 <button
                   className={styles.tabClose}
                   onClick={(e) => {
@@ -117,7 +120,7 @@ export const Tabs = ({
                 >
                   ×
                 </button>
-              )} */}
+              )}
             </div>
           );
         })}
